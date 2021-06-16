@@ -279,7 +279,7 @@ function onModify() {
   let currentData = JSON.stringify(model.data);
   let previousData = JSON.stringify(dataQueue[dataQueueIndex - 1]);
   if (currentData != previousData) {
-    dataQueue.slice(dataQueueIndex++, dataQueue.length);
+    dataQueue = dataQueue.slice(0, ++dataQueueIndex);
     let dataCopy = JSON.parse(currentData);;
     dataQueue.push(dataCopy);
     console.log(dataQueue);
