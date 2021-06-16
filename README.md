@@ -30,8 +30,8 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    !- add
    !- remove
    !- duplicate
-   - move up
-   - move down
+   !- move up
+   !- move down
    - cancel
    !- undo
    !- redo
