@@ -19,6 +19,8 @@ footer con tasti CANCEL, EXPORT
 }
 function getById(id): ritorna il sottoalbero con l'id fornito
 
+ - bug:
+   - duplicate function
  - conversioni:
    !- XMLtoJSON
    !- JSONtoOurJSON
@@ -34,7 +36,7 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - undo
    - redo
    - reset
-   - show XML
+   !- show XML
    - export
  - funzionalità:
    - divisione schermo
