@@ -19,7 +19,7 @@ sap.ui.define(
       onInit: function () {
         model = new JSONModel(data);
         this.getView().setModel(model);
-
+        
       },
       
       // TODO: input checks
@@ -78,6 +78,11 @@ sap.ui.define(
         let id = getCustomIdFromRecord(getRecordElement(event));
         let subTree = findSubTreeById(data[0], id);
 
+        if (id == data[0].id) {
+          console.log("Cannot remove root node");
+          return;
+        }
+
         // TODO: confirm dialog
 
         delete subTree.key;
@@ -93,6 +98,11 @@ sap.ui.define(
         let id = getCustomIdFromRecord(getRecordElement(event));
         let parent = findParentFromId(data[0], id);
         let subTree = findSubTreeById(data[0], id);
+
+        if (id == data[0].id) {
+          console.log("Cannot duplicate root node");
+          return;
+        }
 
         let subTreeValue = {
           key: subTree.key,
