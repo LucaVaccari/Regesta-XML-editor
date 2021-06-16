@@ -33,9 +33,9 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - move up
    - move down
    - cancel
-   - undo
-   - redo
-   - reset
+   !- undo
+   !- redo
+   !- reset
    !- show XML
    - export
  - funzionalità:
