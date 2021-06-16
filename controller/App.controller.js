@@ -18,6 +18,11 @@ sap.ui.define(
 
         tree = view.byId("tree");
         tree.expandToLevel(10000);
+        tree.getItems()[0].getContent()[3].setVisible(false);
+        tree.getItems()[0].getContent()[5].setVisible(false);
+        tree.getItems()[0].getContent()[6].setVisible(false);
+        tree.getItems()[0].getContent()[7].setVisible(false);
+        tree.getItems()[0].getContent()[8].setVisible(false);
 
         update();
       },
@@ -215,6 +220,8 @@ sap.ui.define(
       },
 
       onExport: function () {},
+
+      onToggleOpenState: update,
     });
   }
 );

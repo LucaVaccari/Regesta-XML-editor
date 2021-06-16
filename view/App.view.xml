@@ -1,36 +1,43 @@
-<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" height="100%" width="100%">
 	<App>
-		<Page id="page">
-			<FlexBox class="sapUiResponsiveMargin" width="auto">
-				<Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree">
-					<items>
-						<CustomTreeItem cd:id="{id}">
-							<Input value="{key}" visible="false" submit="onKeySubmit" />
-							<Button text="{key}" visible="true" press="onKeyEdit" />
-							<Input value="{value}" visible="false" submit="onValueSubmit" />
-							<Button text="{value}" visible="true" press="onValueEdit" />
-							<Button text="+" press="onAdd" />
-							<Button text="-" press="onRemove" />
-							<Button text="Duplicate" press="onDuplicate" />
-							<Button text="MoveUp" press="onMoveUp" />
-							<Button text="MoveDown" press="onMoveDown" />
-						</CustomTreeItem>
-					</items>
-				</Tree>
-				<Panel visible="false" id="xmlView" class="sapUiResponsiveMargin">
-					<VBox>
+		<f:DynamicPage id="page" showFooter="true">
+			<f:title>
+				<f:DynamicPageTitle>
+					<f:heading>
+						<Title text="XML Visual Editor" />
+					</f:heading>
+				</f:DynamicPageTitle>
+			</f:title>
+			<f:content>
+				<HBox class="sapUiResponsiveMargin" width="100%" height="100%" fitContainer="true" alignContent="Stretch">
+					<Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState">
+						<items>
+							<CustomTreeItem cd:id="{id}">
+								<Input value="{key}" visible="false" submit="onKeySubmit" />
+								<Button text="{key}" visible="true" press="onKeyEdit" />
+								<Input value="{value}" visible="false" submit="onValueSubmit" />
+								<Button text="{value}" visible="true" press="onValueEdit" />
+								<Button text="+" press="onAdd" />
+								<Button text="-" press="onRemove" />
+								<Button text="Duplicate" press="onDuplicate" />
+								<Button text="MoveUp" press="onMoveUp" />
+								<Button text="MoveDown" press="onMoveDown" />
+							</CustomTreeItem>
+						</items>
+					</Tree>
+					<VBox visible="false" id="xmlView" class="sapUiResponsiveMargin">
 						<HBox>
 							<Button text="formattazione 1" press="onXMLSwitch1" />
 							<Button text="formattazione 2" press="onXMLSwitch2" />
 						</HBox>
 						<Text renderWhitespace="true" text="{/xml}" id="xmlText" />
 					</VBox>
-				</Panel>
-			</FlexBox>
-			<footer>
+				</HBox>
+			</f:content>
+			<f:footer>
 				<Bar>
 					<contentLeft>
-						<Button text="Cancel" press="onCancel" class="test" />
+						<Button type="Reject" text="Cancel" press="onCancel" class="test" />
 					</contentLeft>
 					<contentMiddle>
 						<Button text="Undo" press="onUndo" id="undoButton" />
@@ -39,10 +46,10 @@
 					</contentMiddle>
 					<contentRight>
 						<Button text="Show XML" press="onToggleXML" id="xmlButton" />
-						<Button text="Export" press="onExport" />
+						<Button type="Accept" text="Export" press="onExport" enabled="false" />
 					</contentRight>
 				</Bar>
-			</footer>
-		</Page>
+			</f:footer>
+		</f:DynamicPage>
 	</App>
 </mvc:View>
