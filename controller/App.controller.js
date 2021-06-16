@@ -16,7 +16,6 @@ sap.ui.define(
   (Controller, JSONModel) => {
     "use strict";
 
-
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
       onInit: function () {
         jsonModel = new JSONModel(model);
@@ -134,11 +133,43 @@ sap.ui.define(
       },
 
       onMoveUp: function (event) {
-        onModify();
+        let id = getCustomIdFromRecord(getRecordElement(event));
+        let parent = findParentFromId(model.data[0], id);
+        let subTree = findSubTreeById(model.data[0], id);
+
+        if (id == model.data[0].id) {
+          console.log("Cannot move root node");
+          return;
+        }
+
+        let index = parent.value.indexOf(subTree);
+        if (index > 0) {
+          [parent.value[index - 1], parent.value[index]] = [
+            parent.value[index],
+            parent.value[index - 1],
+          ];
+          onModify();
+        }
       },
 
       onMoveDown: function (event) {
-        onModify();
+        let id = getCustomIdFromRecord(getRecordElement(event));
+        let parent = findParentFromId(model.data[0], id);
+        let subTree = findSubTreeById(model.data[0], id);
+
+        if (id == model.data[0].id) {
+          console.log("Cannot move root node");
+          return;
+        }
+
+        let index = parent.value.indexOf(subTree);
+        if (index < parent.value.length - 1) {
+          [parent.value[index], parent.value[index + 1]] = [
+            parent.value[index + 1],
+            parent.value[index],
+          ];
+          onModify();
+        }
       },
 
       onCancel: function () {
@@ -149,6 +180,7 @@ sap.ui.define(
         if (dataQueueIndex >= 1) {
           model.data = JSON.parse(JSON.stringify(dataQueue[--dataQueueIndex]));
         }
+
         update();
       },
 
@@ -293,8 +325,7 @@ function onModify() {
   let previousData = JSON.stringify(dataQueue[dataQueueIndex - 1]);
   if (currentData != previousData) {
     dataQueue = dataQueue.slice(0, ++dataQueueIndex);
-    let dataCopy = JSON.parse(currentData);;
+    let dataCopy = JSON.parse(currentData);
     dataQueue.push(dataCopy);
-    console.log(dataQueue);
   }
 }
