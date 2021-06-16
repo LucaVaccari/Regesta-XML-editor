@@ -149,6 +149,7 @@ sap.ui.define(
             parent.value[index - 1],
           ];
           onModify();
+          update();
         }
       },
 
@@ -169,6 +170,7 @@ sap.ui.define(
             parent.value[index],
           ];
           onModify();
+          update();
         }
       },
 
@@ -204,6 +206,16 @@ sap.ui.define(
         panel.setVisible(visible);
         view.byId("xmlButton").setText(visible ? "Hide XML" : "Show XML");
 
+        update();
+      },
+
+      onXMLSwitch1: function() {
+        formatter = XMLFormatter1;
+        update();
+      },
+
+      onXMLSwitch2: function() {
+        formatter = XMLFormatter2;
         update();
       },
 
@@ -322,8 +334,9 @@ function update() {
 
 function onModify() {
   let currentData = JSON.stringify(model.data);
-  let previousData = JSON.stringify(dataQueue[dataQueueIndex - 1]);
+  let previousData = JSON.stringify(dataQueue[dataQueueIndex]);
   if (currentData != previousData) {
+    console.log("SUS");
     dataQueue = dataQueue.slice(0, ++dataQueueIndex);
     let dataCopy = JSON.parse(currentData);
     dataQueue.push(dataCopy);
