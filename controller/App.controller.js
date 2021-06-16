@@ -147,16 +147,24 @@ sap.ui.define(
 
       onUndo: function () {
         if (dataQueueIndex >= 1) {
-          //console.log(dataQueueIndex);
           model.data = JSON.parse(JSON.stringify(dataQueue[--dataQueueIndex]));
         }
-        console.log(dataQueue)
         update();
       },
 
-      onRedo: function () { },
+      onRedo: function () {
+        if (dataQueueIndex < dataQueue.length - 1) {
+          //console.log(dataQueueIndex);
+          model.data = JSON.parse(JSON.stringify(dataQueue[++dataQueueIndex]));
+        }
+        update();
+      },
 
-      onReset: function () { },
+      onReset: function () {
+        model.data = JSON.parse(JSON.stringify(dataQueue[0]));
+        onModify();
+        update();
+      },
 
       onToggleXML: function () {
         let panel = view.byId("xmlView");
@@ -270,7 +278,12 @@ function replaceIds(tree) {
 
 function update() {
   model.xml = JSONtoXML(customJSONtoJSON(model.data));
-  view.byId("undoButton").setVisible(dataQueueIndex > 0);
+  view.byId("undoButton").setEnabled(dataQueueIndex > 0);
+  view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
+
+  let currentData = JSON.stringify(model.data);
+  let originalData = JSON.stringify(dataQueue[0]);
+  view.byId("resetButton").setEnabled(currentData != originalData);
 
   jsonModel.updateBindings(true);
 }
@@ -284,5 +297,4 @@ function onModify() {
     dataQueue.push(dataCopy);
     console.log(dataQueue);
   }
-  update();
 }
