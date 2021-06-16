@@ -4,6 +4,7 @@ const KEY_INPUT_INDEX = 0,
   VALUE_BUTTON_INDEX = 3;
 
 let jsonModel;
+let view;
 
 sap.ui.define(
   [
@@ -19,17 +20,18 @@ sap.ui.define(
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
       onInit: function () {
         jsonModel = new JSONModel(model);
-        this.getView().setModel(jsonModel);
-        
+        view = this.getView();
+        view.setModel(jsonModel);
+
         update();
       },
-      
+
       // TODO: input checks
       onKeySubmit: function (event) {
         getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(false);
         getRecordElement(event).getContent()[KEY_BUTTON_INDEX].setVisible(true);
-        console.log(this.getView().byId("__item0-__xmlview0--tree-0"));
 
+        onModify();
         update();
       },
 
@@ -37,7 +39,7 @@ sap.ui.define(
         getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(true);
         getRecordElement(event)
           .getContent()
-          [KEY_BUTTON_INDEX].setVisible(false);
+        [KEY_BUTTON_INDEX].setVisible(false);
 
         update();
       },
@@ -46,23 +48,24 @@ sap.ui.define(
       onValueSubmit: function (event) {
         getRecordElement(event)
           .getContent()
-          [VALUE_INPUT_INDEX].setVisible(false);
+        [VALUE_INPUT_INDEX].setVisible(false);
         getRecordElement(event)
           .getContent()
-          [VALUE_BUTTON_INDEX].setVisible(true);
+        [VALUE_BUTTON_INDEX].setVisible(true);
 
-          update();
+        onModify();
+        update();
       },
 
       onValueEdit: function (event) {
         getRecordElement(event)
           .getContent()
-          [VALUE_INPUT_INDEX].setVisible(true);
+        [VALUE_INPUT_INDEX].setVisible(true);
         getRecordElement(event)
           .getContent()
-          [VALUE_BUTTON_INDEX].setVisible(false);
+        [VALUE_BUTTON_INDEX].setVisible(false);
 
-          update();
+        update();
       },
 
       onAdd: function (event) {
@@ -79,6 +82,7 @@ sap.ui.define(
           subTree.value = [subTreeValue];
         }
 
+        onModify();
         update();
       },
 
@@ -99,9 +103,11 @@ sap.ui.define(
 
         clearTree(model.data);
 
+        onModify();
         update();
       },
 
+      //TODO: fix
       onDuplicate: function (event) {
         let id = getCustomIdFromRecord(getRecordElement(event));
         let parent = findParentFromId(model.data[0], id);
@@ -123,33 +129,45 @@ sap.ui.define(
           parent.value = [subTreeValue];
         }
 
+        onModify();
         update();
       },
 
-      onMoveUp: function (event) {},
+      onMoveUp: function (event) {
+        onModify();
+      },
 
-      onMoveDown: function (event) {},
+      onMoveDown: function (event) {
+        onModify();
+      },
 
       onCancel: function () {
         // go to previous page
       },
 
-      onUndo: function () {},
+      onUndo: function () {
+        if (dataQueueIndex >= 1) {
+          //console.log(dataQueueIndex);
+          model.data = JSON.parse(JSON.stringify(dataQueue[--dataQueueIndex]));
+        }
+        console.log(dataQueue)
+        update();
+      },
 
-      onRedo: function () {},
+      onRedo: function () { },
 
-      onReset: function () {},
+      onReset: function () { },
 
       onToggleXML: function () {
-        let panel = this.getView().byId("xmlView");
+        let panel = view.byId("xmlView");
         let visible = !panel.getVisible();
         panel.setVisible(visible);
-        this.getView().byId("xmlButton").setText(visible ? "Hide XML" : "Show XML");
+        view.byId("xmlButton").setText(visible ? "Hide XML" : "Show XML");
 
         update();
       },
 
-      onExport: function () {},
+      onExport: function () { },
     });
   }
 );
@@ -252,6 +270,19 @@ function replaceIds(tree) {
 
 function update() {
   model.xml = JSONtoXML(customJSONtoJSON(model.data));
-  
+  view.byId("undoButton").setVisible(dataQueueIndex > 0);
+
   jsonModel.updateBindings(true);
+}
+
+function onModify() {
+  let currentData = JSON.stringify(model.data);
+  let previousData = JSON.stringify(dataQueue[dataQueueIndex - 1]);
+  if (currentData != previousData) {
+    dataQueue.slice(dataQueueIndex++, dataQueue.length);
+    let dataCopy = JSON.parse(currentData);;
+    dataQueue.push(dataCopy);
+    console.log(dataQueue);
+  }
+  update();
 }
