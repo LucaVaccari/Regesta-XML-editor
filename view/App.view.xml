@@ -20,7 +20,6 @@
 						</CustomTreeItem>
 					</items>
 				</Tree>
-		<Text renderWhitespace="true" text="{/xml}" id="xmlText" class="test" />
 				<Panel visible="false" id="xmlView" class="sapUiResponsiveMargin">
 					<VBox>
 						<HBox>

@@ -65,7 +65,7 @@ sap.ui.define(
 
       onAdd: function (event) {
         let recordElement = getRecordElement(event);
-        recordElement.mAggregations.content[3].setVisible(false);
+        // recordElement.mAggregations.content[3].setVisible(false);
         let id = getCustomIdFromRecord(recordElement);
         let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
