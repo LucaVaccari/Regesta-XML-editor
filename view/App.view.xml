@@ -28,7 +28,7 @@
 						<Button text="Cancel" press="onCancel" />
 					</contentLeft>
 					<contentMiddle>
-						<Button text="Undo" press="onUndo" />
+						<Button text="Undo" press="onUndo" id="undoButton"/>
 						<Button text="Reset" press="onReset" />
 						<Button text="Redo" press="onRedo" />
 					</contentMiddle>
