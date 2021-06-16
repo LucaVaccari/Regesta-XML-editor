@@ -1,0 +1,38 @@
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<App>
+		<Page id="page">
+			<Tree showNoData="false" items="{path: '/', templateShareable: false}" id="tree">
+				<items>
+					<CustomTreeItem cd:id="{id}">
+						<!-- <Input value="{id}" visible="false" /> -->
+						<Input value="{key}" visible="false" submit="onKeySubmit" />
+						<Button text="{key}" visible="true" press="onKeyEdit" />
+						<Input value="{value}" visible="false" submit="onValueSubmit" />
+						<Button text="{value}" visible="true" press="onValueEdit" />
+						<Button text="+" press="onAdd" />
+						<Button text="-" press="onRemove" />
+						<Button text="Duplicate" press="onDuplicate" />
+						<Button text="MoveUp" press="onMoveUp"/>
+						<Button text="MoveDown" press="onMoveDown"/>
+					</CustomTreeItem>
+				</items>
+			</Tree>
+			<footer>
+				<Bar>
+					<contentLeft>
+						<Button text="Cancel" press="onCancel" />
+					</contentLeft>
+					<contentMiddle>
+						<Button text="Undo" press="onUndo" />
+						<Button text="Reset" press="onReset" />
+						<Button text="Redo" press="onRedo" />
+					</contentMiddle>
+					<contentRight>
+						<Button text="Show XML" press="onShowXML" />
+						<Button text="Export" press="onExport" />
+					</contentRight>
+				</Bar>
+			</footer>
+		</Page>
+	</App>
+</mvc:View>
