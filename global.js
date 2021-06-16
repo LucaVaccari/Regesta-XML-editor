@@ -144,8 +144,7 @@ function XMLFormatter1(json, indentLevel = 0) {
 function XMLFormatter2(json, indentLevel = 0) {
   let xml = "";
 
-  if (typeof json != "object")
-    return json;
+  if (typeof json != "object") return json;
   for (let key of Object.keys(json)) {
     if (Array.isArray(json[key])) {
       for (let el of json[key]) {
@@ -163,7 +162,7 @@ function XMLFormatter2(json, indentLevel = 0) {
       let isBranch = innerText.startsWith("\t");
       xml += isBranch ? `<${key}>\n` : `<${key}>`;
       xml += innerText;
-      --indentLevel
+      --indentLevel;
       xml += isBranch ? multiplyChar("\t", indentLevel) : "";
       xml += `</${key}>\n`;
     }

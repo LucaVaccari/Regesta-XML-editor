@@ -3,14 +3,10 @@ const KEY_INPUT_INDEX = 0,
   VALUE_INPUT_INDEX = 2,
   VALUE_BUTTON_INDEX = 3;
 
-let jsonModel;
-let view;
+let jsonModel, view, tree;
 
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel",
-  ],
+  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
   (Controller, JSONModel) => {
     "use strict";
 
@@ -19,7 +15,10 @@ sap.ui.define(
         jsonModel = new JSONModel(model);
         view = this.getView();
         view.setModel(jsonModel);
-				view.byId("tree").expandToLevel(10000);
+
+        tree = view.byId("tree");
+        tree.expandToLevel(10000);
+
         update();
       },
 
@@ -36,8 +35,6 @@ sap.ui.define(
         getRecordElement(event)
           .getContent()
           [KEY_BUTTON_INDEX].setVisible(false);
-
-        update();
       },
 
       onValueSubmit: function (event) {
@@ -59,18 +56,15 @@ sap.ui.define(
         getRecordElement(event)
           .getContent()
           [VALUE_BUTTON_INDEX].setVisible(false);
-
-        update();
       },
 
       onAdd: function (event) {
         let recordElement = getRecordElement(event);
-        // recordElement.mAggregations.content[3].setVisible(false);
         let id = getCustomIdFromRecord(recordElement);
         let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
           key: "key",
-          value: [],
+          value: "value",
           id: lastId++,
         };
         if (Array.isArray(subTree.value)) subTree.value.push(subTreeValue);
@@ -84,11 +78,17 @@ sap.ui.define(
       },
 
       onRemove: function (event) {
-        let id = getCustomIdFromRecord(getRecordElement(event));
+        let recordElement = getRecordElement(event);
+        let id = getCustomIdFromRecord(recordElement);
+        let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
+        if (parent.value.length <= 1) {
+          parent.value = subTree.value;
+        }
+
         if (id == model.data[0].id) {
-          console.log("Cannot remove root node");
+          console.warn("Cannot remove root node");
           return;
         }
 
@@ -109,7 +109,7 @@ sap.ui.define(
         let subTree = findSubTreeById(model.data[0], id);
 
         if (id == model.data[0].id) {
-          console.log("Cannot duplicate root node");
+          console.warn("Cannot duplicate root node");
           return;
         }
 
@@ -134,7 +134,7 @@ sap.ui.define(
         let subTree = findSubTreeById(model.data[0], id);
 
         if (id == model.data[0].id) {
-          console.log("Cannot move root node");
+          console.warn("Cannot move root node");
           return;
         }
 
@@ -155,7 +155,7 @@ sap.ui.define(
         let subTree = findSubTreeById(model.data[0], id);
 
         if (id == model.data[0].id) {
-          console.log("Cannot move root node");
+          console.warn("Cannot move root node");
           return;
         }
 
@@ -184,7 +184,6 @@ sap.ui.define(
 
       onRedo: function () {
         if (dataQueueIndex < dataQueue.length - 1) {
-          //console.log(dataQueueIndex);
           model.data = JSON.parse(JSON.stringify(dataQueue[++dataQueueIndex]));
         }
         update();
@@ -205,17 +204,17 @@ sap.ui.define(
         update();
       },
 
-      onXMLSwitch1: function() {
+      onXMLSwitch1: function () {
         formatter = XMLFormatter1;
         update();
       },
 
-      onXMLSwitch2: function() {
+      onXMLSwitch2: function () {
         formatter = XMLFormatter2;
         update();
       },
 
-      onExport: function () { },
+      onExport: function () {},
     });
   }
 );
@@ -277,9 +276,9 @@ function clearTree(tree) {
       arr = [];
       for (let el of tree[k]) {
         if (
-          el !== undefined &&
-          el !== null &&
-          el !== {} &&
+          el != undefined &&
+          el != null &&
+          el != {} &&
           Object.keys(el).length != 0
         )
           arr.push(el);
@@ -316,6 +315,8 @@ function replaceIds(tree) {
 }
 
 function update() {
+  clearTree(model.data);
+
   model.xml = JSONtoXML(customJSONtoJSON(model.data));
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
@@ -325,13 +326,20 @@ function update() {
   view.byId("resetButton").setEnabled(currentData != originalData);
 
   jsonModel.updateBindings(true);
+  for (let node of tree.getItems()) {
+    let id = getCustomIdFromRecord(node);
+    let subTree = findSubTreeById(model.data, id);
+    if (subTree != undefined)
+      node.getContent()[3].setVisible(!Array.isArray(subTree.value));
+  }
+
+  jsonModel.updateBindings(true);
 }
 
 function onModify() {
   let currentData = JSON.stringify(model.data);
   let previousData = JSON.stringify(dataQueue[dataQueueIndex]);
   if (currentData != previousData) {
-    console.log("SUS");
     dataQueue = dataQueue.slice(0, ++dataQueueIndex);
     let dataCopy = JSON.parse(currentData);
     dataQueue.push(dataCopy);

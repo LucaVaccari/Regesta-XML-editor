@@ -30,8 +30,8 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    !- add
    !- remove
    !- duplicate
-   - move up
-   - move down
+   !- move up
+   !- move down
    - cancel
    !- undo
    !- redo
@@ -39,11 +39,10 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    !- show XML
    - export
  - funzionalità:
-   - divisione schermo
-   - nascondere il pulsante value quando ci sono figli
+   !- divisione schermo
+   !- nascondere il pulsante value quando ci sono figli
    !- impedire duplicazione o rimozione della root
    - mostrare i pulsanti solo sull'elemento selezionato
-   - pulsanti per spostare gli elementi
    - pagina iniziale
  - cose poco utili:
    - colori diversi per livelli diversi
