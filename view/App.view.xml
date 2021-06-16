@@ -1,7 +1,7 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<App>
 		<Page id="page">
-			<FlexBox>
+			<FlexBox class="sapUiResponsiveMargin" width="auto">
 				<Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree">
 					<items>
 						<CustomTreeItem cd:id="{id}">
@@ -17,19 +17,19 @@
 						</CustomTreeItem>
 					</items>
 				</Tree>
-				<Panel visible="false" id="xmlView">
-					<Text renderWhitespace="true" text="{/xml}" id="xmlText" />
+				<Panel visible="false" id="xmlView" class="sapUiResponsiveMargin">
+					<Text renderWhitespace="true" text="{/xml}" id="xmlText" class="test" />
 				</Panel>
 			</FlexBox>
 			<footer>
 				<Bar>
 					<contentLeft>
-						<Button text="Cancel" press="onCancel" />
+						<Button text="Cancel" press="onCancel" class="test" />
 					</contentLeft>
 					<contentMiddle>
-						<Button text="Undo" press="onUndo" id="undoButton"/>
-						<Button text="Reset" press="onReset" id="resetButton"/>
-						<Button text="Redo" press="onRedo" id="redoButton"/>
+						<Button text="Undo" press="onUndo" id="undoButton" />
+						<Button text="Reset" press="onReset" id="resetButton" />
+						<Button text="Redo" press="onRedo" id="redoButton" />
 					</contentMiddle>
 					<contentRight>
 						<Button text="Show XML" press="onToggleXML" id="xmlButton" />

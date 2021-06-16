@@ -10,8 +10,6 @@ sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
-    "sap/m/Dialog",
-    "sap/m/Text",
   ],
   (Controller, JSONModel) => {
     "use strict";
@@ -21,11 +19,10 @@ sap.ui.define(
         jsonModel = new JSONModel(model);
         view = this.getView();
         view.setModel(jsonModel);
-
+				view.byId("tree").expandToLevel(10000);
         update();
       },
 
-      // TODO: input checks
       onKeySubmit: function (event) {
         getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(false);
         getRecordElement(event).getContent()[KEY_BUTTON_INDEX].setVisible(true);
@@ -38,19 +35,18 @@ sap.ui.define(
         getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(true);
         getRecordElement(event)
           .getContent()
-        [KEY_BUTTON_INDEX].setVisible(false);
+          [KEY_BUTTON_INDEX].setVisible(false);
 
         update();
       },
 
-      // TODO: input checks
       onValueSubmit: function (event) {
         getRecordElement(event)
           .getContent()
-        [VALUE_INPUT_INDEX].setVisible(false);
+          [VALUE_INPUT_INDEX].setVisible(false);
         getRecordElement(event)
           .getContent()
-        [VALUE_BUTTON_INDEX].setVisible(true);
+          [VALUE_BUTTON_INDEX].setVisible(true);
 
         onModify();
         update();
@@ -59,16 +55,18 @@ sap.ui.define(
       onValueEdit: function (event) {
         getRecordElement(event)
           .getContent()
-        [VALUE_INPUT_INDEX].setVisible(true);
+          [VALUE_INPUT_INDEX].setVisible(true);
         getRecordElement(event)
           .getContent()
-        [VALUE_BUTTON_INDEX].setVisible(false);
+          [VALUE_BUTTON_INDEX].setVisible(false);
 
         update();
       },
 
       onAdd: function (event) {
-        let id = getCustomIdFromRecord(getRecordElement(event));
+        let recordElement = getRecordElement(event);
+        recordElement.mAggregations.content[3].setVisible(false);
+        let id = getCustomIdFromRecord(recordElement);
         let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
           key: "key",
@@ -93,8 +91,6 @@ sap.ui.define(
           console.log("Cannot remove root node");
           return;
         }
-
-        // TODO: confirm dialog
 
         delete subTree.key;
         delete subTree.value;
@@ -207,7 +203,7 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () { },
+      onExport: function () {},
     });
   }
 );
@@ -284,7 +280,6 @@ function clearTree(tree) {
 }
 
 function replaceIds(tree) {
-  console.log(typeof tree);
   let obj = [];
 
   if (typeof tree.value != "object" && tree.value) {
