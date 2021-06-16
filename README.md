@@ -33,9 +33,9 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - move up
    - move down
    - cancel
-   - undo
-   - redo
-   - reset
+   !- undo
+   !- redo
+   !- reset
    !- show XML
    - export
  - funzionalità:
@@ -43,7 +43,6 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - nascondere il pulsante value quando ci sono figli
    !- impedire duplicazione o rimozione della root
    - mostrare i pulsanti solo sull'elemento selezionato
-   - pulsanti per spostare gli elementi
    - pagina iniziale
  - cose poco utili:
    - colori diversi per livelli diversi
