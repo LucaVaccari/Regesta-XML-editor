@@ -1,4 +1,7 @@
-<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<App>
 		<Page id="page">
 			<FlexBox class="sapUiResponsiveMargin" width="auto">
@@ -17,8 +20,15 @@
 						</CustomTreeItem>
 					</items>
 				</Tree>
+		<Text renderWhitespace="true" text="{/xml}" id="xmlText" class="test" />
 				<Panel visible="false" id="xmlView" class="sapUiResponsiveMargin">
-					<Text renderWhitespace="true" text="{/xml}" id="xmlText" class="test" />
+					<VBox>
+						<HBox>
+							<Button text="formattazione 1" press ="onXMLSwitch1"/>
+							<Button text="formattazione 2" press ="onXMLSwitch2"/>
+						</HBox>
+						<Text renderWhitespace="true" text="{/xml}" id="xmlText"/>
+					</VBox>
 				</Panel>
 			</FlexBox>
 			<footer>

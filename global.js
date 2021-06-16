@@ -3,6 +3,7 @@ let model = {}; // the mvc model
 let lastId = 0; // id used to generate ids
 let dataQueue = []; // used to store model.data changes
 let dataQueueIndex = 0; //used in undo / redo
+var formatter = XMLFormatter1;
 
 model.xml =
   "<shiporder><orderperson>John Smith</orderperson><shipto><name>Ola Nordmann</name><address>Langgt 23</address><city>4000 Stavanger</city><country>Norway</country></shipto><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></shiporder>";
@@ -53,32 +54,8 @@ function _XMLDocToObject(node, obj = {}) {
 }
 
 // convert a JS object into an XML string
-function JSONtoXML(json, indentLevel = 0) {
-  let xml = "";
-
-  if (typeof json != "object")
-    return multiplyChar("\t", indentLevel) + json + "\n";
-  for (let key of Object.keys(json)) {
-    if (Array.isArray(json[key])) {
-      for (let el of json[key]) {
-        xml += multiplyChar("\t", indentLevel);
-        xml += `<${key}>\n`;
-        indentLevel++;
-        xml += JSONtoXML(el, indentLevel);
-        xml += multiplyChar("\t", --indentLevel);
-        xml += `</${key}>\n`;
-      }
-    } else {
-      xml += multiplyChar("\t", indentLevel);
-      xml += `<${key}>\n`;
-      indentLevel++;
-      xml += JSONtoXML(json[key], indentLevel);
-      xml += multiplyChar("\t", --indentLevel);
-      xml += `</${key}>\n`;
-    }
-  }
-
-  return xml;
+function JSONtoXML(json) {
+  return formatter(json);
 }
 
 // if an element is not a leaf, it's incapsulated into an array
@@ -134,4 +111,63 @@ function multiplyChar(char, times) {
   for (let i = 0; i < times; i++) result += char;
 
   return result;
+}
+
+function XMLFormatter1(json, indentLevel = 0) {
+  let xml = "";
+
+  if (typeof json != "object")
+    return multiplyChar("\t", indentLevel) + json + "\n";
+  for (let key of Object.keys(json)) {
+    if (Array.isArray(json[key])) {
+      for (let el of json[key]) {
+        xml += multiplyChar("\t", indentLevel);
+        xml += `<${key}>\n`;
+        indentLevel++;
+        xml += XMLFormatter1(el, indentLevel);
+        xml += multiplyChar("\t", --indentLevel);
+        xml += `</${key}>\n`;
+      }
+    } else {
+      xml += multiplyChar("\t", indentLevel);
+      xml += `<${key}>\n`;
+      indentLevel++;
+      xml += XMLFormatter1(json[key], indentLevel);
+      xml += multiplyChar("\t", --indentLevel);
+      xml += `</${key}>\n`;
+    }
+  }
+
+  return xml;
+}
+
+function XMLFormatter2(json, indentLevel = 0) {
+  let xml = "";
+
+  if (typeof json != "object")
+    return json;
+  for (let key of Object.keys(json)) {
+    if (Array.isArray(json[key])) {
+      for (let el of json[key]) {
+        xml += multiplyChar("\t", indentLevel);
+        let innerText = XMLFormatter2(el, ++indentLevel);
+        let isBranch = innerText.startsWith("\t");
+        xml += isBranch ? `<${key}>\n` : `<${key}>`;
+        xml += innerText;
+        xml += isBranch ? multiplyChar("\t", --indentLevel) : "";
+        xml += `</${key}>\n`;
+      }
+    } else {
+      xml += multiplyChar("\t", indentLevel);
+      let innerText = XMLFormatter2(json[key], ++indentLevel);
+      let isBranch = innerText.startsWith("\t");
+      xml += isBranch ? `<${key}>\n` : `<${key}>`;
+      xml += innerText;
+      --indentLevel
+      xml += isBranch ? multiplyChar("\t", indentLevel) : "";
+      xml += `</${key}>\n`;
+    }
+  }
+
+  return xml;
 }
