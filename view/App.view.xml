@@ -27,9 +27,9 @@
 						<Button text="Cancel" press="onCancel" />
 					</contentLeft>
 					<contentMiddle>
-						<Button text="Undo" press="onUndo" id="undoButton" />
-						<Button text="Reset" press="onReset" />
-						<Button text="Redo" press="onRedo" />
+						<Button text="Undo" press="onUndo" id="undoButton"/>
+						<Button text="Reset" press="onReset" id="resetButton"/>
+						<Button text="Redo" press="onRedo" id="redoButton"/>
 					</contentMiddle>
 					<contentRight>
 						<Button text="Show XML" press="onToggleXML" id="xmlButton" />
