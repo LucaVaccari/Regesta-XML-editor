@@ -3,6 +3,8 @@ const KEY_INPUT_INDEX = 0,
   VALUE_INPUT_INDEX = 2,
   VALUE_BUTTON_INDEX = 3;
 
+let jsonModel;
+
 sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
@@ -13,13 +15,13 @@ sap.ui.define(
   (Controller, JSONModel) => {
     "use strict";
 
-    let model;
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
       onInit: function () {
-        model = new JSONModel(data);
-        this.getView().setModel(model);
+        jsonModel = new JSONModel(model);
+        this.getView().setModel(jsonModel);
         
+        update();
       },
       
       // TODO: input checks
@@ -27,6 +29,8 @@ sap.ui.define(
         getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(false);
         getRecordElement(event).getContent()[KEY_BUTTON_INDEX].setVisible(true);
         console.log(this.getView().byId("__item0-__xmlview0--tree-0"));
+
+        update();
       },
 
       onKeyEdit: function (event) {
@@ -35,7 +39,7 @@ sap.ui.define(
           .getContent()
           [KEY_BUTTON_INDEX].setVisible(false);
 
-        console.log(getRecordElement(event).getId());
+        update();
       },
 
       // TODO: input checks
@@ -46,6 +50,8 @@ sap.ui.define(
         getRecordElement(event)
           .getContent()
           [VALUE_BUTTON_INDEX].setVisible(true);
+
+          update();
       },
 
       onValueEdit: function (event) {
@@ -55,11 +61,13 @@ sap.ui.define(
         getRecordElement(event)
           .getContent()
           [VALUE_BUTTON_INDEX].setVisible(false);
+
+          update();
       },
 
       onAdd: function (event) {
         let id = getCustomIdFromRecord(getRecordElement(event));
-        let subTree = findSubTreeById(data, id);
+        let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
           key: "key",
           value: [],
@@ -71,14 +79,14 @@ sap.ui.define(
           subTree.value = [subTreeValue];
         }
 
-        model.updateBindings(true);
+        update();
       },
 
       onRemove: function (event) {
         let id = getCustomIdFromRecord(getRecordElement(event));
-        let subTree = findSubTreeById(data[0], id);
+        let subTree = findSubTreeById(model.data[0], id);
 
-        if (id == data[0].id) {
+        if (id == model.data[0].id) {
           console.log("Cannot remove root node");
           return;
         }
@@ -89,17 +97,17 @@ sap.ui.define(
         delete subTree.value;
         delete subTree.id;
 
-        clearTree(data);
+        clearTree(model.data);
 
-        model.updateBindings(true);
+        update();
       },
 
       onDuplicate: function (event) {
         let id = getCustomIdFromRecord(getRecordElement(event));
-        let parent = findParentFromId(data[0], id);
-        let subTree = findSubTreeById(data[0], id);
+        let parent = findParentFromId(model.data[0], id);
+        let subTree = findSubTreeById(model.data[0], id);
 
-        if (id == data[0].id) {
+        if (id == model.data[0].id) {
           console.log("Cannot duplicate root node");
           return;
         }
@@ -115,7 +123,7 @@ sap.ui.define(
           parent.value = [subTreeValue];
         }
 
-        model.updateBindings(true);
+        update();
       },
 
       onMoveUp: function (event) {},
@@ -132,7 +140,14 @@ sap.ui.define(
 
       onReset: function () {},
 
-      onShowXML: function () {},
+      onToggleXML: function () {
+        let panel = this.getView().byId("xmlView");
+        let visible = !panel.getVisible();
+        panel.setVisible(visible);
+        this.getView().byId("xmlButton").setText(visible ? "Hide XML" : "Show XML");
+
+        update();
+      },
 
       onExport: function () {},
     });
@@ -235,6 +250,8 @@ function replaceIds(tree) {
   return obj;
 }
 
-function getRootElement() {}
-
-getRootElement();
+function update() {
+  model.xml = JSONtoXML(customJSONtoJSON(model.data));
+  
+  jsonModel.updateBindings(true);
+}
