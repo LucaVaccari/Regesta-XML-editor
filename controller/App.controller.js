@@ -2,12 +2,13 @@ const KEY_INPUT_INDEX = 0,
   KEY_BUTTON_INDEX = 1,
   VALUE_INPUT_INDEX = 2,
   VALUE_BUTTON_INDEX = 3;
-  REMOVE_BUTTON_INDEX = 5;
-  DUPLICATE_BUTTON_INDEX = 6;
-  MOVE_UP_BUTTON_INDEX = 7;
-  MOVE_DOWN_BUTTON_INDEX = 8;
+REMOVE_BUTTON_INDEX = 5;
+DUPLICATE_BUTTON_INDEX = 6;
+MOVE_UP_BUTTON_INDEX = 7;
+MOVE_DOWN_BUTTON_INDEX = 8;
 
 let jsonModel, view, tree;
+let lastEditButton, lastInput;
 
 sap.ui.define(
   ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
@@ -23,9 +24,15 @@ sap.ui.define(
         tree = view.byId("tree");
         tree.getItems()[0].getContent()[VALUE_BUTTON_INDEX].setVisible(false);
         tree.getItems()[0].getContent()[REMOVE_BUTTON_INDEX].setVisible(false);
-        tree.getItems()[0].getContent()[DUPLICATE_BUTTON_INDEX].setVisible(false);
+        tree
+          .getItems()[0]
+          .getContent()
+          [DUPLICATE_BUTTON_INDEX].setVisible(false);
         tree.getItems()[0].getContent()[MOVE_UP_BUTTON_INDEX].setVisible(false);
-        tree.getItems()[0].getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
+        tree
+          .getItems()[0]
+          .getContent()
+          [MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         view.byId("page").getScrollDelegate().setVertical(false);
 
@@ -41,10 +48,13 @@ sap.ui.define(
       },
 
       onKeyEdit: function (event) {
-        getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(true);
-        getRecordElement(event)
-          .getContent()
-          [KEY_BUTTON_INDEX].setVisible(false);
+        lastEditButton?.setVisible(true);
+        lastInput?.setVisible(false);
+
+        lastInput = getRecordElement(event).getContent()[KEY_INPUT_INDEX];
+        lastInput.setVisible(true);
+        lastEditButton = getRecordElement(event).getContent()[KEY_BUTTON_INDEX];
+        lastEditButton.setVisible(false);
       },
 
       onValueSubmit: function (event) {
@@ -60,12 +70,14 @@ sap.ui.define(
       },
 
       onValueEdit: function (event) {
-        getRecordElement(event)
-          .getContent()
-          [VALUE_INPUT_INDEX].setVisible(true);
-        getRecordElement(event)
-          .getContent()
-          [VALUE_BUTTON_INDEX].setVisible(false);
+        lastEditButton?.setVisible(true);
+        lastInput?.setVisible(false);
+
+        lastInput = getRecordElement(event).getContent()[VALUE_INPUT_INDEX];
+        lastInput.setVisible(true);
+        lastEditButton =
+          getRecordElement(event).getContent()[VALUE_BUTTON_INDEX];
+        lastEditButton.setVisible(false);
       },
 
       onAdd: function (event) {
@@ -83,7 +95,7 @@ sap.ui.define(
           subTreeValue.value = subTree.value;
           subTree.value = [subTreeValue];
         }
-        
+
         onModify();
         update();
 
@@ -214,7 +226,9 @@ sap.ui.define(
         let panel = view.byId("preview");
         let visible = !panel.getVisible();
         panel.setVisible(visible);
-        view.byId("previewButton").setText(visible ? "Hide preview" : "Show preview");
+        view
+          .byId("previewButton")
+          .setText(visible ? "Hide preview" : "Show preview");
 
         update();
       },
@@ -229,7 +243,7 @@ sap.ui.define(
         update();
       },
 
-      onJSONSwitch: function() {
+      onJSONSwitch: function () {
         formatter = JSONFormatter;
         update();
       },
@@ -348,7 +362,9 @@ function update() {
     let id = getCustomIdFromRecord(node);
     let subTree = findSubTreeById(model.data, id);
     if (subTree != undefined)
-      node.getContent()[VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
+      node
+        .getContent()
+        [VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
   }
 
   jsonModel.updateBindings(true);

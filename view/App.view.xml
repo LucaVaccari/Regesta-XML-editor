@@ -12,7 +12,7 @@
 				<l:ResponsiveSplitter>
 					<l:PaneContainer>
 						<l:SplitPane>
-							<m:Panel>
+							<m:Panel height="100%">
 								<m:Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState">
 									<m:items>
 										<m:CustomTreeItem cd:id="{id}">
@@ -31,7 +31,7 @@
 							</m:Panel>
 						</l:SplitPane>
 						<l:SplitPane>
-							<m:Panel visible="false" id="preview" class="sapUiResponsiveMargin">
+							<m:Panel visible="false" id="preview" class="sapUiResponsiveMargin" height="100%" width="100%">
 								<m:HBox>
 									<m:Button text="XML" press="onXMLSwitch" />
 									<m:Button text="Compact XML" press="onCompactXMLSwitch" />
