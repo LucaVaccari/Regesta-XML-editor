@@ -25,10 +25,11 @@
 							</CustomTreeItem>
 						</items>
 					</Tree>
-					<VBox visible="false" id="xmlView" class="sapUiResponsiveMargin">
+					<VBox visible="false" id="preview" class="sapUiResponsiveMargin">
 						<HBox>
-							<Button text="Formatting 1" press="onXMLSwitch1" />
-							<Button text="Formatting 2" press="onXMLSwitch2" />
+							<Button text="XML" press="onXMLSwitch" />
+							<Button text="Compact XML" press="onCompactXMLSwitch" />
+							<Button text="JSON" press="onJSONSwitch" />
 						</HBox>
 						<Text renderWhitespace="true" text="{/xml}" id="xmlText" />
 					</VBox>
@@ -45,7 +46,7 @@
 						<Button text="Redo" press="onRedo" id="redoButton" />
 					</contentMiddle>
 					<contentRight>
-						<Button text="Show XML" press="onToggleXML" id="xmlButton" />
+						<Button text="Show preview" press="onTogglePreview" id="previewButton" />
 						<Button type="Accept" text="Export" press="onExport" enabled="false" />
 					</contentRight>
 				</Bar>

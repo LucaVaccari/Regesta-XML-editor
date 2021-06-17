@@ -208,22 +208,27 @@ sap.ui.define(
         update();
       },
 
-      onToggleXML: function () {
-        let panel = view.byId("xmlView");
+      onTogglePreview: function () {
+        let panel = view.byId("preview");
         let visible = !panel.getVisible();
         panel.setVisible(visible);
-        view.byId("xmlButton").setText(visible ? "Hide XML" : "Show XML");
+        view.byId("previewButton").setText(visible ? "Hide preview" : "Show preview");
 
         update();
       },
 
-      onXMLSwitch1: function () {
-        formatter = XMLFormatter1;
+      onXMLSwitch: function () {
+        formatter = XMLFormatter;
         update();
       },
 
-      onXMLSwitch2: function () {
-        formatter = XMLFormatter2;
+      onCompactXMLSwitch: function () {
+        formatter = compactXMLFormatter;
+        update();
+      },
+
+      onJSONSwitch: function() {
+        formatter = JSONFormatter;
         update();
       },
 
@@ -328,7 +333,7 @@ function replaceIds(tree) {
 function update() {
   clearTree(model.data);
 
-  model.xml = JSONtoXML(customJSONtoJSON(model.data));
+  model.xml = JSONtoXML(customJSONtoJSON(model.data)) + "\n\n\n\n\n";
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
