@@ -13,18 +13,23 @@
 					<l:PaneContainer>
 						<l:SplitPane>
 							<m:Panel height="100%">
-								<m:Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState">
+								<m:Toolbar>
+									<m:content>
+										<m:ToolbarSpacer />
+										<m:Image src="resources/images/plus.png" press="onAdd" tooltip="Add child" width="4%" />
+										<m:Image src="resources/images/minus.png" press="onRemove" tooltip="Remove this element and all of his children" width="4%" />
+										<m:Image src="resources/images/duplicate.png" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" width="4%" />
+									</m:content>
+								</m:Toolbar>
+								<m:Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelect">
 									<m:items>
 										<m:CustomTreeItem cd:id="{id}">
 											<m:Input value="{key}" visible="false" submit="onKeySubmit" />
 											<m:Button text="{key}" visible="true" press="onKeyEdit" tooltip="Edit key" />
 											<m:Input value="{value}" visible="false" submit="onValueSubmit" />
 											<m:Button text="{value}" visible="true" press="onValueEdit" tooltip="Edit value" />
-											<m:Button text="+" press="onAdd" tooltip="Add child" />
-											<m:Button text="-" press="onRemove" tooltip="Remove this element and all of his children" />
-											<m:Button text="Duplicate" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" />
-											<m:Button text="MoveUp" press="onMoveUp" tooltip="Move this element up" />
-											<m:Button text="MoveDown" press="onMoveDown" tooltip="Move this element down" />
+											<m:Image src="resources/images/up_arrow.png" press="onMoveUp" tooltip="Move this element up" width="4%" />
+											<m:Image src="resources/images/down_arrow.png" press="onMoveDown" tooltip="Move this element down" width="5.5%" />
 										</m:CustomTreeItem>
 									</m:items>
 								</m:Tree>
@@ -49,9 +54,9 @@
 						<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
 					</m:contentLeft>
 					<m:contentMiddle>
-						<m:Button text="Undo" press="onUndo" id="undoButton" tooltip="Undo the last action" />
+						<m:Image src="resources/images/undo.png" press="onUndo" id="undoButton" tooltip="Undo the last action" width="5%" />
 						<m:Button text="Reset" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
-						<m:Button text="Redo" press="onRedo" id="redoButton" tooltip="Redo the last undone action" />
+						<m:Image src="resources/images/redo.png" press="onRedo" id="redoButton" tooltip="Redo the last undone action" width="5%" />
 					</m:contentMiddle>
 					<m:contentRight>
 						<m:Button text="Show preview" press="onTogglePreview" id="previewButton" tooltip="Toggle a preview of the final result" />

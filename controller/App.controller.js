@@ -1,11 +1,9 @@
 const KEY_INPUT_INDEX = 0,
   KEY_BUTTON_INDEX = 1,
   VALUE_INPUT_INDEX = 2,
-  VALUE_BUTTON_INDEX = 3;
-REMOVE_BUTTON_INDEX = 5;
-DUPLICATE_BUTTON_INDEX = 6;
-MOVE_UP_BUTTON_INDEX = 7;
-MOVE_DOWN_BUTTON_INDEX = 8;
+  VALUE_BUTTON_INDEX = 3,
+  MOVE_BUTTONS_INDEX = 4,
+  MOVE_DOWN_BUTTON_INDEX = 5;
 
 let jsonModel, view, tree;
 let lastEditButton, lastInput;
@@ -23,12 +21,7 @@ sap.ui.define(
 
         tree = view.byId("tree");
         tree.getItems()[0].getContent()[VALUE_BUTTON_INDEX].setVisible(false);
-        tree.getItems()[0].getContent()[REMOVE_BUTTON_INDEX].setVisible(false);
-        tree
-          .getItems()[0]
-          .getContent()
-          [DUPLICATE_BUTTON_INDEX].setVisible(false);
-        tree.getItems()[0].getContent()[MOVE_UP_BUTTON_INDEX].setVisible(false);
+        tree.getItems()[0].getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
         tree
           .getItems()[0]
           .getContent()
@@ -80,10 +73,11 @@ sap.ui.define(
         lastEditButton.setVisible(false);
       },
 
-      onAdd: function (event) {
-        let recordElement = getRecordElement(event);
-        let id = getCustomIdFromRecord(recordElement);
+      onAdd: function () {
+        let selected = tree.getSelectedItems()[0];
+        if (selected == undefined) return;
 
+        let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
           key: "key",
@@ -99,14 +93,16 @@ sap.ui.define(
         onModify();
         update();
 
-        tree.expand(tree.indexOfItem(recordElement));
+        tree.expand(tree.indexOfItem(selected));
 
         update();
       },
 
-      onRemove: function (event) {
-        let recordElement = getRecordElement(event);
-        let id = getCustomIdFromRecord(recordElement);
+      onRemove: function () {
+        let selected = tree.getSelectedItems()[0];
+        if (selected == undefined) return;
+
+        let id = getCustomIdFromRecord(selected);
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
@@ -129,9 +125,11 @@ sap.ui.define(
         update();
       },
 
-      //TODO: fix
-      onDuplicate: function (event) {
-        let id = getCustomIdFromRecord(getRecordElement(event));
+      onDuplicate: function () {
+        let selected = tree.getSelectedItems()[0];
+        if (selected == undefined) return;
+
+        let id = getCustomIdFromRecord(selected);
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
@@ -350,8 +348,8 @@ function update() {
   clearTree(model.data);
 
   model.preview = JSONtoXML(customJSONtoJSON(model.data)) + "\n\n\n\n\n";
-  view.byId("undoButton").setEnabled(dataQueueIndex > 0);
-  view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
+  view.byId("undoButton").setVisible(dataQueueIndex > 0);
+  view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
 
   let currentData = JSON.stringify(model.data);
   let originalData = JSON.stringify(dataQueue[0]);

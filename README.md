@@ -42,10 +42,14 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [x] divisione schermo
    - [x] nascondere il pulsante value quando ci sono figli
    - [x] impedire duplicazione o rimozione della root
-   - [ ] mostrare i pulsanti solo sull'elemento selezionato
    - [ ] pagina iniziale
- - cose poco utili:
+ - grafica:
    - [x] tooltip
-   - [ ] colori diversi per livelli diversi
+   - [ ] colori
    - [ ] rendere i pulsanti di dimensione fissa
    - [ ] pulsante con matita al posto del pulsante
+   - [ ] spostare toggle preview
+   - [ ] spostare undo, redo, reset
+   - [ ] immagini al posto delle parole
+   - [ ] mostrare nome del file
+   - [x] toolbar per aggiungere, rimuovere, duplicare
