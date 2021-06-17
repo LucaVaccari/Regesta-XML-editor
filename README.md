@@ -24,7 +24,7 @@ function getById(id): ritorna il sottoalbero con l'id fornito
  - conversioni:
    - [x] XMLtoJSON
    - [x] JSONtoOurJSON
-   - [x] OurJSONtoJSON
+   - [x] OurJSONto
    - [x] JSONtoXML
  - callback:
    - [x] add

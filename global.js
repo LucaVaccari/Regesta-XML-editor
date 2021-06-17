@@ -153,7 +153,8 @@ function XMLFormatter2(json, indentLevel = 0) {
         let isBranch = innerText.startsWith("\t");
         xml += isBranch ? `<${key}>\n` : `<${key}>`;
         xml += innerText;
-        xml += isBranch ? multiplyChar("\t", --indentLevel) : "";
+        --indentLevel;
+        xml += isBranch ? multiplyChar("\t", indentLevel) : "";
         xml += `</${key}>\n`;
       }
     } else {
