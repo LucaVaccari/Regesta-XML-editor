@@ -27,8 +27,8 @@
 					</Tree>
 					<VBox visible="false" id="xmlView" class="sapUiResponsiveMargin">
 						<HBox>
-							<Button text="formattazione 1" press="onXMLSwitch1" />
-							<Button text="formattazione 2" press="onXMLSwitch2" />
+							<Button text="Formatting 1" press="onXMLSwitch1" />
+							<Button text="Formatting 2" press="onXMLSwitch2" />
 						</HBox>
 						<Text renderWhitespace="true" text="{/xml}" id="xmlText" />
 					</VBox>

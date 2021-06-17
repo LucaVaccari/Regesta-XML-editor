@@ -312,11 +312,7 @@ function replaceIds(tree) {
     for (let el of tree) {
       obj.push(replaceIds(el));
     }
-  } else {
-    console.error(
-      "You shouldn't reach this point. If you see this message, there's an error in your code."
-    );
-  }
+  } else return tree;
 
   return obj;
 }
