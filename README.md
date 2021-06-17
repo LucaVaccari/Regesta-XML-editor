@@ -46,7 +46,7 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [x] tooltip
    - [ ] colori
    - [ ] rendere i pulsanti di dimensione fissa
-   - [ ] pulsante con matita al posto del pulsante
+   - [x] pulsante con matita al posto del pulsante
    - [x] spostare undo, redo, reset
    - [x] immagini al posto delle parole
    - [ ] mostrare nome del file
