@@ -20,7 +20,7 @@ footer con tasti CANCEL, EXPORT
 function getById(id): ritorna il sottoalbero con l'id fornito
 
  - bug:
-   - [ ] duplicate function
+   - [x] duplicate function
  - conversioni:
    - [x] XMLtoJSON
    - [x] JSONtoOurJSON
