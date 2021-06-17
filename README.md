@@ -20,7 +20,6 @@ footer con tasti CANCEL, EXPORT
 function getById(id): ritorna il sottoalbero con l'id fornito
 
  - bug:
-   - [x] duplicate function
  - conversioni:
    - [x] XMLtoJSON
    - [x] JSONtoOurJSON
@@ -48,8 +47,7 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [ ] colori
    - [ ] rendere i pulsanti di dimensione fissa
    - [ ] pulsante con matita al posto del pulsante
-   - [ ] spostare toggle preview
-   - [ ] spostare undo, redo, reset
+   - [x] spostare undo, redo, reset
    - [x] immagini al posto delle parole
    - [ ] mostrare nome del file
    - [x] toolbar per aggiungere, rimuovere, duplicare

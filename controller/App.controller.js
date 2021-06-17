@@ -1,12 +1,14 @@
-const KEY_INPUT_INDEX = 0,
-  KEY_BUTTON_INDEX = 1,
-  VALUE_INPUT_INDEX = 2,
-  VALUE_BUTTON_INDEX = 3,
-  MOVE_BUTTONS_INDEX = 4,
-  MOVE_DOWN_BUTTON_INDEX = 5;
+const KEY_INPUT_INDEX = 1,
+  KEY_BUTTON_INDEX = 2,
+  KEY_LABEL_INDEX = 0,
+  VALUE_INPUT_INDEX = 4,
+  VALUE_BUTTON_INDEX = 5,
+  VALUE_LABEL_INDEX = 3,
+  MOVE_BUTTONS_INDEX = 6,
+  MOVE_DOWN_BUTTON_INDEX = 7;
 
 let jsonModel, view, tree;
-let lastEditButton, lastInput;
+let lastEditButton, lastInput, lastLabel;
 
 sap.ui.define(
   ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
@@ -35,6 +37,7 @@ sap.ui.define(
       onKeySubmit: function (event) {
         getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(false);
         getRecordElement(event).getContent()[KEY_BUTTON_INDEX].setVisible(true);
+        getRecordElement(event).getContent()[KEY_LABEL_INDEX].setVisible(true);
 
         onModify();
         update();
@@ -42,12 +45,15 @@ sap.ui.define(
 
       onKeyEdit: function (event) {
         lastEditButton?.setVisible(true);
+        lastLabel?.setVisible(true);
         lastInput?.setVisible(false);
 
         lastInput = getRecordElement(event).getContent()[KEY_INPUT_INDEX];
         lastInput.setVisible(true);
         lastEditButton = getRecordElement(event).getContent()[KEY_BUTTON_INDEX];
         lastEditButton.setVisible(false);
+        lastLabel = getRecordElement(event).getContent()[KEY_LABEL_INDEX];
+        lastLabel.setVisible(false);
       },
 
       onValueSubmit: function (event) {
@@ -57,6 +63,9 @@ sap.ui.define(
         getRecordElement(event)
           .getContent()
           [VALUE_BUTTON_INDEX].setVisible(true);
+        getRecordElement(event)
+          .getContent()
+          [VALUE_LABEL_INDEX].setVisible(true);
 
         onModify();
         update();
@@ -64,6 +73,7 @@ sap.ui.define(
 
       onValueEdit: function (event) {
         lastEditButton?.setVisible(true);
+        lastLabel?.setVisible(true);
         lastInput?.setVisible(false);
 
         lastInput = getRecordElement(event).getContent()[VALUE_INPUT_INDEX];
@@ -71,6 +81,8 @@ sap.ui.define(
         lastEditButton =
           getRecordElement(event).getContent()[VALUE_BUTTON_INDEX];
         lastEditButton.setVisible(false);
+        lastLabel = getRecordElement(event).getContent()[VALUE_LABEL_INDEX];
+        lastLabel.setVisible(false);
       },
 
       onAdd: function () {
@@ -220,17 +232,6 @@ sap.ui.define(
         update();
       },
 
-      onTogglePreview: function () {
-        let panel = view.byId("preview");
-        let visible = !panel.getVisible();
-        panel.setVisible(visible);
-        view
-          .byId("previewButton")
-          .setText(visible ? "Hide preview" : "Show preview");
-
-        update();
-      },
-
       onXMLSwitch: function () {
         formatter = XMLFormatter;
         update();
@@ -363,6 +364,9 @@ function update() {
       node
         .getContent()
         [VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
+    node
+      .getContent()
+      [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
   }
 
   jsonModel.updateBindings(true);
