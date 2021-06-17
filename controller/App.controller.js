@@ -2,6 +2,10 @@ const KEY_INPUT_INDEX = 0,
   KEY_BUTTON_INDEX = 1,
   VALUE_INPUT_INDEX = 2,
   VALUE_BUTTON_INDEX = 3;
+  REMOVE_BUTTON_INDEX = 5;
+  DUPLICATE_BUTTON_INDEX = 6;
+  MOVE_UP_BUTTON_INDEX = 7;
+  MOVE_DOWN_BUTTON_INDEX = 8;
 
 let jsonModel, view, tree;
 
@@ -17,12 +21,11 @@ sap.ui.define(
         view.setModel(jsonModel);
 
         tree = view.byId("tree");
-        tree.expandToLevel(10000);
-        tree.getItems()[0].getContent()[3].setVisible(false);
-        tree.getItems()[0].getContent()[5].setVisible(false);
-        tree.getItems()[0].getContent()[6].setVisible(false);
-        tree.getItems()[0].getContent()[7].setVisible(false);
-        tree.getItems()[0].getContent()[8].setVisible(false);
+        tree.getItems()[0].getContent()[VALUE_BUTTON_INDEX].setVisible(false);
+        tree.getItems()[0].getContent()[REMOVE_BUTTON_INDEX].setVisible(false);
+        tree.getItems()[0].getContent()[DUPLICATE_BUTTON_INDEX].setVisible(false);
+        tree.getItems()[0].getContent()[MOVE_UP_BUTTON_INDEX].setVisible(false);
+        tree.getItems()[0].getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         update();
       },
@@ -66,6 +69,7 @@ sap.ui.define(
       onAdd: function (event) {
         let recordElement = getRecordElement(event);
         let id = getCustomIdFromRecord(recordElement);
+
         let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
           key: "key",
@@ -77,8 +81,12 @@ sap.ui.define(
           subTreeValue.value = subTree.value;
           subTree.value = [subTreeValue];
         }
-
+        
         onModify();
+        update();
+
+        tree.expand(tree.indexOfItem(recordElement));
+
         update();
       },
 
@@ -333,7 +341,7 @@ function update() {
     let id = getCustomIdFromRecord(node);
     let subTree = findSubTreeById(model.data, id);
     if (subTree != undefined)
-      node.getContent()[3].setVisible(!Array.isArray(subTree.value));
+      node.getContent()[VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
   }
 
   jsonModel.updateBindings(true);
