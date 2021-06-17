@@ -20,31 +20,31 @@ footer con tasti CANCEL, EXPORT
 function getById(id): ritorna il sottoalbero con l'id fornito
 
  - bug:
-   - [] duplicate function
+   - [ ] duplicate function
  - conversioni:
-   - [*] XMLtoJSON
-   - [*] JSONtoOurJSON
-   - [*] OurJSONtoJSON
-   - [*] JSONtoXML
+   - [x] XMLtoJSON
+   - [x] JSONtoOurJSON
+   - [x] OurJSONtoJSON
+   - [x] JSONtoXML
  - callback:
-   - [*] add
-   - [*] remove
-   - [*] duplicate
-   - [*] move up
-   - [*] move down
+   - [x] add
+   - [x] remove
+   - [x] duplicate
+   - [x] move up
+   - [x] move down
    - cancel
-   - [*] undo
-   - [*] redo
-   - [*] reset
-   - [*] show XML
+   - [x] undo
+   - [x] redo
+   - [x] reset
+   - [x] show XML
    - export
  - funzionalità:
-   - [*] divisione schermo
-   - [*] nascondere il pulsante value quando ci sono figli
-   - [*] impedire duplicazione o rimozione della root
-   - [] mostrare i pulsanti solo sull'elemento selezionato
-   - [] pagina iniziale
+   - [x] divisione schermo
+   - [x] nascondere il pulsante value quando ci sono figli
+   - [x] impedire duplicazione o rimozione della root
+   - [ ] mostrare i pulsanti solo sull'elemento selezionato
+   - [ ] pagina iniziale
  - cose poco utili:
-   - [] colori diversi per livelli diversi
-   - [] rendere i pulsanti di dimensione fissa
-   - [] pulsante con matita al posto del pulsante
+   - [ ] colori diversi per livelli diversi
+   - [ ] rendere i pulsanti di dimensione fissa
+   - [ ] pulsante con matita al posto del pulsante
