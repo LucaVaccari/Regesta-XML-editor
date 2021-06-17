@@ -50,6 +50,6 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [ ] pulsante con matita al posto del pulsante
    - [ ] spostare toggle preview
    - [ ] spostare undo, redo, reset
-   - [ ] immagini al posto delle parole
+   - [x] immagini al posto delle parole
    - [ ] mostrare nome del file
    - [x] toolbar per aggiungere, rimuovere, duplicare

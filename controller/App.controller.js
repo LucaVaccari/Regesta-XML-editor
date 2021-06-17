@@ -348,8 +348,8 @@ function update() {
   clearTree(model.data);
 
   model.preview = JSONtoXML(customJSONtoJSON(model.data)) + "\n\n\n\n\n";
-  view.byId("undoButton").setVisible(dataQueueIndex > 0);
-  view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
+  // view.byId("undoButton").setVisible(dataQueueIndex > 0);
+  // view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
 
   let currentData = JSON.stringify(model.data);
   let originalData = JSON.stringify(dataQueue[0]);

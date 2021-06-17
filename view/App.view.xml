@@ -54,9 +54,9 @@
 						<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
 					</m:contentLeft>
 					<m:contentMiddle>
-						<m:Image src="resources/images/undo.png" press="onUndo" id="undoButton" tooltip="Undo the last action" width="5%" />
+						<m:Image src="resources/images/undo.png" press="onUndo" id="undoButton" tooltip="Undo the last action" width="3%" />
 						<m:Button text="Reset" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
-						<m:Image src="resources/images/redo.png" press="onRedo" id="redoButton" tooltip="Redo the last undone action" width="5%" />
+						<m:Image src="resources/images/redo.png" press="onRedo" id="redoButton" tooltip="Redo the last undone action" width="4%" />
 					</m:contentMiddle>
 					<m:contentRight>
 						<m:Button text="Show preview" press="onTogglePreview" id="previewButton" tooltip="Toggle a preview of the final result" />
