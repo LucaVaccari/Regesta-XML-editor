@@ -27,6 +27,8 @@ sap.ui.define(
         tree.getItems()[0].getContent()[MOVE_UP_BUTTON_INDEX].setVisible(false);
         tree.getItems()[0].getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
+        view.byId("page").getScrollDelegate().setVertical(false);
+
         update();
       },
 
@@ -333,7 +335,7 @@ function replaceIds(tree) {
 function update() {
   clearTree(model.data);
 
-  model.xml = JSONtoXML(customJSONtoJSON(model.data)) + "\n\n\n\n\n";
+  model.preview = JSONtoXML(customJSONtoJSON(model.data)) + "\n\n\n\n\n";
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 

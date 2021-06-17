@@ -45,6 +45,7 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [ ] mostrare i pulsanti solo sull'elemento selezionato
    - [ ] pagina iniziale
  - cose poco utili:
+   - [ ] tooltip
    - [ ] colori diversi per livelli diversi
    - [ ] rendere i pulsanti di dimensione fissa
    - [ ] pulsante con matita al posto del pulsante

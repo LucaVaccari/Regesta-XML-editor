@@ -1,56 +1,64 @@
-<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns="sap.m" xmlns:f="sap.f" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" height="100%" width="100%">
-	<App>
-		<f:DynamicPage id="page" showFooter="true">
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" height="100%" width="100%" displayBlock="true">
+	<m:App height="100%" width="100%">
+		<f:DynamicPage id="page" showFooter="true" fitContent="true">
 			<f:title>
 				<f:DynamicPageTitle>
 					<f:heading>
-						<Title text="XML Visual Editor" />
+						<m:Title text="XML Visual Editor" />
 					</f:heading>
 				</f:DynamicPageTitle>
 			</f:title>
 			<f:content>
-				<HBox class="sapUiResponsiveMargin" width="100%" height="100%" fitContainer="true" alignContent="Stretch">
-					<Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState">
-						<items>
-							<CustomTreeItem cd:id="{id}">
-								<Input value="{key}" visible="false" submit="onKeySubmit" />
-								<Button text="{key}" visible="true" press="onKeyEdit" />
-								<Input value="{value}" visible="false" submit="onValueSubmit" />
-								<Button text="{value}" visible="true" press="onValueEdit" />
-								<Button text="+" press="onAdd" />
-								<Button text="-" press="onRemove" />
-								<Button text="Duplicate" press="onDuplicate" />
-								<Button text="MoveUp" press="onMoveUp" />
-								<Button text="MoveDown" press="onMoveDown" />
-							</CustomTreeItem>
-						</items>
-					</Tree>
-					<VBox visible="false" id="preview" class="sapUiResponsiveMargin">
-						<HBox>
-							<Button text="XML" press="onXMLSwitch" />
-							<Button text="Compact XML" press="onCompactXMLSwitch" />
-							<Button text="JSON" press="onJSONSwitch" />
-						</HBox>
-						<Text renderWhitespace="true" text="{/xml}" id="xmlText" />
-					</VBox>
-				</HBox>
+				<l:ResponsiveSplitter>
+					<l:PaneContainer>
+						<l:SplitPane>
+							<m:Panel>
+								<m:Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState">
+									<m:items>
+										<m:CustomTreeItem cd:id="{id}">
+											<m:Input value="{key}" visible="false" submit="onKeySubmit" />
+											<m:Button text="{key}" visible="true" press="onKeyEdit" tooltip="Edit key" />
+											<m:Input value="{value}" visible="false" submit="onValueSubmit" />
+											<m:Button text="{value}" visible="true" press="onValueEdit" tooltip="Edit value" />
+											<m:Button text="+" press="onAdd" tooltip="Add child" />
+											<m:Button text="-" press="onRemove" tooltip="Remove this element and all of his children" />
+											<m:Button text="Duplicate" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" />
+											<m:Button text="MoveUp" press="onMoveUp" tooltip="Move this element up" />
+											<m:Button text="MoveDown" press="onMoveDown" tooltip="Move this element down" />
+										</m:CustomTreeItem>
+									</m:items>
+								</m:Tree>
+							</m:Panel>
+						</l:SplitPane>
+						<l:SplitPane>
+							<m:Panel visible="false" id="preview" class="sapUiResponsiveMargin">
+								<m:HBox>
+									<m:Button text="XML" press="onXMLSwitch" />
+									<m:Button text="Compact XML" press="onCompactXMLSwitch" />
+									<m:Button text="JSON" press="onJSONSwitch" />
+								</m:HBox>
+								<m:Text renderWhitespace="true" text="{/preview}" class="test" />
+							</m:Panel>
+						</l:SplitPane>
+					</l:PaneContainer>
+				</l:ResponsiveSplitter>
 			</f:content>
 			<f:footer>
-				<Bar>
-					<contentLeft>
-						<Button type="Reject" text="Cancel" press="onCancel" class="test" />
-					</contentLeft>
-					<contentMiddle>
-						<Button text="Undo" press="onUndo" id="undoButton" />
-						<Button text="Reset" press="onReset" id="resetButton" />
-						<Button text="Redo" press="onRedo" id="redoButton" />
-					</contentMiddle>
-					<contentRight>
-						<Button text="Show preview" press="onTogglePreview" id="previewButton" />
-						<Button type="Accept" text="Export" press="onExport" enabled="false" />
-					</contentRight>
-				</Bar>
+				<m:Bar>
+					<m:contentLeft>
+						<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
+					</m:contentLeft>
+					<m:contentMiddle>
+						<m:Button text="Undo" press="onUndo" id="undoButton" tooltip="Undo the last action" />
+						<m:Button text="Reset" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
+						<m:Button text="Redo" press="onRedo" id="redoButton" tooltip="Redo the last undone action" />
+					</m:contentMiddle>
+					<m:contentRight>
+						<m:Button text="Show preview" press="onTogglePreview" id="previewButton" tooltip="Toggle a preview of the final result" />
+						<m:Button type="Accept" text="Export" press="onExport" enabled="false" tooltip="Save the changes and export the file" />
+					</m:contentRight>
+				</m:Bar>
 			</f:footer>
 		</f:DynamicPage>
-	</App>
+	</m:App>
 </mvc:View>
