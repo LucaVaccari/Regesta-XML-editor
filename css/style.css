@@ -1,3 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Carme&display=swap");
+
+* {
+  font-family: "Carme", sans-serif;
+  color: #fff;
+}
+
+body {
+  background-image: url("../resources/images/bg-image.png");
+}
+
+section {
+  margin-top: 15%;
+}
+
+div {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3.5em;
+  opacity: 0;
+  animation: slide_left 0.5s linear forwards;
+  animation-delay: 0.5s;
+}
+
+h3 {
+  font-size: 1.5em;
+  opacity: 0;
+  animation: slide_right 0.5s linear forwards;
+  animation-delay: 1s;
+}
+
+a {
+  background-color: rgb(248, 164, 37);
+  display: inline-block;
+  margin-top: 20px;
+  padding: 15px 30px;
+  color: #fff;
+  font-size: 1.2em;
+  border-radius: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  user-select: none;
+  opacity: 0;
+  transition: transform 0.5s ease;
+  animation: fade_in 0.5s linear forwards;
+  animation-delay: 1.5s;
+}
+
+a:hover {
+  background-color: rgb(121, 97, 255);
+  transform: scale(1.2);
+}
+
+@keyframes slide_right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes slide_left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes fade_in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .test {
   font-size: xx-large !important;
 }
