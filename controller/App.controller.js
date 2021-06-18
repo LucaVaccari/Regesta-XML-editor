@@ -27,7 +27,7 @@ sap.ui.define(
         tree
           .getItems()[0]
           .getContent()
-          [MOVE_DOWN_BUTTON_INDEX].setVisible(false);
+        [MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         view.byId("page").getScrollDelegate().setVertical(false);
 
@@ -59,13 +59,13 @@ sap.ui.define(
       onValueSubmit: function (event) {
         getRecordElement(event)
           .getContent()
-          [VALUE_INPUT_INDEX].setVisible(false);
+        [VALUE_INPUT_INDEX].setVisible(false);
         getRecordElement(event)
           .getContent()
-          [VALUE_BUTTON_INDEX].setVisible(true);
+        [VALUE_BUTTON_INDEX].setVisible(true);
         getRecordElement(event)
           .getContent()
-          [VALUE_LABEL_INDEX].setVisible(true);
+        [VALUE_LABEL_INDEX].setVisible(true);
 
         onModify();
         update();
@@ -115,16 +115,17 @@ sap.ui.define(
         if (selected == undefined) return;
 
         let id = getCustomIdFromRecord(selected);
+
+        if (id == model.data[0].id) {
+          console.warn("Cannot remove root node");
+          return;
+        }
+
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
         if (parent.value.length <= 1) {
           parent.value = subTree.value;
-        }
-
-        if (id == model.data[0].id) {
-          console.warn("Cannot remove root node");
-          return;
         }
 
         delete subTree.key;
@@ -247,7 +248,7 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () {},
+      onExport: function () { },
 
       onToggleOpenState: update,
     });
@@ -363,10 +364,10 @@ function update() {
     if (subTree != undefined)
       node
         .getContent()
-        [VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
+      [VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
     node
       .getContent()
-      [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+    [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
   }
 
   jsonModel.updateBindings(true);
