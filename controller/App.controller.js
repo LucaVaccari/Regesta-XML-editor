@@ -249,6 +249,8 @@ sap.ui.define(
       onExport: function () { },
 
       onToggleOpenState: update,
+
+      onSliderChange: update,
     });
   }
 );
@@ -347,7 +349,8 @@ function replaceIds(tree) {
 function update() {
   clearTree(model.data);
 
-  model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)));
+  let fontSize = view.byId("fontSizeSlider").getValue();
+  model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)), fontSize);
   // view.byId("undoButton").setVisible(dataQueueIndex > 0);
   // view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
 
