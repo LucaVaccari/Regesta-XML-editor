@@ -348,7 +348,7 @@ function replaceIds(tree) {
 function update() {
   clearTree(model.data);
 
-  model.preview = JSONtoXML(customJSONtoJSON(model.data)) + "\n\n\n\n\n";
+  model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)));
   // view.byId("undoButton").setVisible(dataQueueIndex > 0);
   // view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
 
@@ -380,4 +380,12 @@ function onModify() {
     let dataCopy = JSON.parse(currentData);
     dataQueue.push(dataCopy);
   }
+}
+
+function XMLtoHTML(xml) {
+  let html = xml.replaceAll(/</g, "&lt;").replaceAll(/>/g, "&gt;").replaceAll(/\n/g, "<br/>").replaceAll(/\t/g, "    ");
+  let openAngularBracket ="<code style=\"color:red;\">&lt;</code><code  style=\"color:blue;\">";
+  let closedAngularBracket ="</code><code  style=\"color:red;\">&gt;</code>";
+  html = html.replaceAll(/&lt;/g, openAngularBracket).replaceAll(/&gt;/g, closedAngularBracket);
+  return `<pre>${html}</pre>`;
 }

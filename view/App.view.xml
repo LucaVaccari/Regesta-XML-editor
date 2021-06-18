@@ -54,8 +54,7 @@
 										<m:Button text="JSON" press="onJSONSwitch" />
 									</m:content>
 								</m:Toolbar>
-								<m:Text renderWhitespace="true" text="{/preview}" class="test" />
-								<m:FormattedText htmlText="{/highlightedXML}" class="test" />
+								<m:FormattedText htmlText="{/preview}" class="test" />
 							</m:Panel>
 						</l:SplitPane>
 					</l:PaneContainer>
