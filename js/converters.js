@@ -198,16 +198,16 @@ function JSONFormatter(obj) {
   return JSON.stringify(obj, null, 4);
 }
 
-function XMLtoHTML(xml) {
-  let openAngularBracket = "<code style=\"color:red;\">&lt;</code><code  style=\"color:blue;\">";
-  let closedAngularBracket = "</code><code  style=\"color:red;\">&gt;</code>";
+function XMLtoHTML(xml, fontSize) {
+  let openAngularBracket = "<code style=\"color:#73C2E1;\">&lt;</code><code  style=\"color:#1960DB;\">";
+  let closedAngularBracket = "</code><code  style=\"color:#73C2E1;\">&gt;</code>";
   let html = xml
     .replaceAll(/</g, "&lt;")
     .replaceAll(/>/g, "&gt;")
     .replaceAll(/\t/g, "    ")
     .replaceAll(/&lt;/g, openAngularBracket)
     .replaceAll(/&gt;/g, closedAngularBracket)
-    .replaceAll(openAngularBracket + "/", "<code style=\"color:red;\">&lt;/</code><code  style=\"color:blue;\">")
+    .replaceAll(openAngularBracket + "/", "<code style=\"color:#73C2E1;\">&lt;/</code><code  style=\"color:#1960DB;\">")
     .replaceAll(/\n\s*\n\s*/g, "");
-  return `<pre>${html}</pre>`;
+  return `<pre style="font-size:${fontSize}px;">${html}</pre>`;
 }
