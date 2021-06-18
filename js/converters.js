@@ -9,11 +9,12 @@ function XMLtoJSON(xml) {
 }
 
 // recursive function. DO NOT CALL, internal use only
-function _XMLDocToObject(node, obj = {}) {
+function _XMLDocToObject(node) {
+  let obj = {};
   for (let child of node.childNodes) {
     if (child.hasChildNodes()) {
       // is the subnode not a leaf?
-      if (child.childNodes[0].nodeValue == null) {
+      if (child.firstChild.nodeValue == null) {
         let childObj = _XMLDocToObject(child); // explore the children
         if (child.nodeName in obj) {
           // if the key already exists
@@ -29,9 +30,13 @@ function _XMLDocToObject(node, obj = {}) {
           if (!Array.isArray(obj[child.nodeName])) {
             obj[child.nodeName] = [obj[child.nodeName]]; // convert to array
           }
-          obj[child.nodeName].push(child.childNodes[0].nodeValue);
-        } else obj[child.nodeName] = child.childNodes[0].nodeValue;
+          obj[child.nodeName].push(child.firstChild.nodeValue);
+        } else {
+          obj[child.nodeName] = child.firstChild.nodeValue;
+        }
       }
+    } else {
+      obj[child.nodeName] = "";
     }
   }
   return obj;

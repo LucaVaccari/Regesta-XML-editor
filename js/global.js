@@ -6,7 +6,7 @@ let dataQueueIndex = 0; //used in undo / redo
 var formatter = XMLFormatter;
 
 model.preview =
-  "<shiporder name='sus' surname='sas'><orderperson>John Smith</orderperson><shipto><name>Ola Nordmann</name><address>Langgt 23</address><city>4000 Stavanger</city><country>Norway</country></shipto><item><title>Empire Burlesque</title><note>Special Edition</note><quantity>1</quantity><price>10.90</price></item><item><title>Hide your heart</title><quantity>1</quantity><price>9.90</price></item></shiporder>";
+  '<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns=""><AccessPoint/><ReconnectTimeOut>0</ReconnectTimeOut><DefaultFormID>-2147483648</DefaultFormID><BarcodePluginAssembly/><BarcodePluginClassname/><CameraPluginAssembly/><CameraPluginClassname/><SapLogicalSystem/><SapLogicalPort/><Client/><BasicType/><MessageType/><PartnerNumber/><PartnerType/><Port>MESUS20</Port><LogicalSystem>MESUS20</LogicalSystem><Function/><WarehouseNumber>U02</WarehouseNumber><Plant>US20</Plant><AllowedWarehouse><string>0500</string><string>0200</string><string>0400</string><string>0110</string></AllowedWarehouse><StockTakeHUKey>h4ndl1n6</StockTakeHUKey><StockTakeMMKey>m473r141</StockTakeMMKey><StockTakeCCKey>c0c3n73r</StockTakeCCKey></Configuration>';
 
 let json = XMLtoJSON(model.preview);
 model.data = JSONtoCustomJSON(json);

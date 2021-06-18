@@ -42,6 +42,7 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [x] nascondere il pulsante value quando ci sono figli
    - [x] impedire duplicazione o rimozione della root
    - [ ] pagina iniziale
+   - [ ] modifica degli attributi
  - grafica:
    - [x] tooltip
    - [ ] colori

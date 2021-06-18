@@ -30,14 +30,10 @@
 									<m:items>
 										<m:CustomTreeItem cd:id="{id}">
 											<!-- Key input -->
-											<!-- <m:Input value="{key}" visible="false" submit="onKeySubmit" />
-											<m:Button text="{key}" visible="true" press="onKeyEdit" tooltip="Edit key" /> -->
 											<m:Label text="{key}" visible="true" />
 											<m:Input value="{key}" visible="false" submit="onKeySubmit" width="25%" />
 											<m:Image src="resources/images/pencil.png" visible="true" press="onKeyEdit" tooltip="Edit key" width="4%" />
 											<!-- Value input -->
-											<!-- <m:Input value="{value}" visible="false" submit="onValueSubmit" />
-											<m:Button text="{value}" visible="true" press="onValueEdit" tooltip="Edit value" /> -->
 											<m:Label text="{value}" visible="true" />
 											<m:Input value="{value}" visible="false" submit="onValueSubmit" width="25%" />
 											<m:Image src="resources/images/pencil.png" visible="true" press="onValueEdit" tooltip="Edit value" width="4%" />
