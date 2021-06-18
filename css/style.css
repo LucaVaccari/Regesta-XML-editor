@@ -93,3 +93,7 @@ a:hover {
 .test {
   font-size: xx-large !important;
 }
+
+body {
+  color: #1960db !important;
+}

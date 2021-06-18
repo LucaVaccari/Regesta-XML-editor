@@ -52,9 +52,10 @@
 										<m:Button text="XML" press="onXMLSwitch" />
 										<m:Button text="Compact XML" press="onCompactXMLSwitch" />
 										<m:Button text="JSON" press="onJSONSwitch" />
+										<m:Slider value="30" width="50%" class="sapUiSmallMarginBottom" id="fontSizeSlider" min="15" max="50" liveChange="onSliderChange"/>
 									</m:content>
 								</m:Toolbar>
-								<m:Text renderWhitespace="true" text="{/preview}" class="test" />
+								<m:FormattedText htmlText="{/preview}" class="test" />
 							</m:Panel>
 						</l:SplitPane>
 					</l:PaneContainer>
