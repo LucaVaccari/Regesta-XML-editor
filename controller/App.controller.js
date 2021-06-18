@@ -22,12 +22,10 @@ sap.ui.define(
         view.setModel(jsonModel);
 
         tree = view.byId("tree");
-        tree.getItems()[0].getContent()[VALUE_BUTTON_INDEX].setVisible(false);
-        tree.getItems()[0].getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
-        tree
-          .getItems()[0]
-          .getContent()
-          [MOVE_DOWN_BUTTON_INDEX].setVisible(false);
+        let root = tree.getItems()[0].getContent();
+        root[VALUE_BUTTON_INDEX].setVisible(false);
+        root[MOVE_BUTTONS_INDEX].setVisible(false);
+        root[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         view.byId("page").getScrollDelegate().setVertical(false);
 
@@ -35,53 +33,53 @@ sap.ui.define(
       },
 
       onKeySubmit: function (event) {
-        getRecordElement(event).getContent()[KEY_INPUT_INDEX].setVisible(false);
-        getRecordElement(event).getContent()[KEY_BUTTON_INDEX].setVisible(true);
-        getRecordElement(event).getContent()[KEY_LABEL_INDEX].setVisible(true);
+        let buttons = getRecordElement(event).getContent();
+        buttons[KEY_INPUT_INDEX].setVisible(false);
+        buttons[KEY_BUTTON_INDEX].setVisible(true);
+        buttons[KEY_LABEL_INDEX].setVisible(true);
 
         onModify();
         update();
       },
 
       onKeyEdit: function (event) {
+        let buttons = getRecordElement(event).getContent();
+
         lastEditButton?.setVisible(true);
         lastLabel?.setVisible(true);
         lastInput?.setVisible(false);
 
-        lastInput = getRecordElement(event).getContent()[KEY_INPUT_INDEX];
+        lastInput = buttons[KEY_INPUT_INDEX];
         lastInput.setVisible(true);
-        lastEditButton = getRecordElement(event).getContent()[KEY_BUTTON_INDEX];
+        lastEditButton = buttons[KEY_BUTTON_INDEX];
         lastEditButton.setVisible(false);
-        lastLabel = getRecordElement(event).getContent()[KEY_LABEL_INDEX];
+        lastLabel = buttons[KEY_LABEL_INDEX];
         lastLabel.setVisible(false);
       },
 
       onValueSubmit: function (event) {
-        getRecordElement(event)
-          .getContent()
-          [VALUE_INPUT_INDEX].setVisible(false);
-        getRecordElement(event)
-          .getContent()
-          [VALUE_BUTTON_INDEX].setVisible(true);
-        getRecordElement(event)
-          .getContent()
-          [VALUE_LABEL_INDEX].setVisible(true);
+        let buttons = getRecordElement(event).getContent();
+
+        buttons[VALUE_INPUT_INDEX].setVisible(false);
+        buttons[VALUE_BUTTON_INDEX].setVisible(true);
+        buttons[VALUE_LABEL_INDEX].setVisible(true);
 
         onModify();
         update();
       },
 
       onValueEdit: function (event) {
+        let buttons = getRecordElement(event).getContent();
+        
         lastEditButton?.setVisible(true);
         lastLabel?.setVisible(true);
         lastInput?.setVisible(false);
 
-        lastInput = getRecordElement(event).getContent()[VALUE_INPUT_INDEX];
+        lastInput = buttons[VALUE_INPUT_INDEX];
         lastInput.setVisible(true);
-        lastEditButton =
-          getRecordElement(event).getContent()[VALUE_BUTTON_INDEX];
+        lastEditButton = buttons[VALUE_BUTTON_INDEX];
         lastEditButton.setVisible(false);
-        lastLabel = getRecordElement(event).getContent()[VALUE_LABEL_INDEX];
+        lastLabel = buttons[VALUE_LABEL_INDEX];
         lastLabel.setVisible(false);
       },
 
@@ -381,5 +379,3 @@ function onModify() {
     dataQueue.push(dataCopy);
   }
 }
-
-
