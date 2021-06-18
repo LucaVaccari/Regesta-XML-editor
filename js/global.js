@@ -10,8 +10,8 @@ model.preview =
 
 let json = XMLtoJSON(model.preview);
 model.data = JSONtoCustomJSON(json);
-let temp = model.preview.replaceAll(/</g, "&lt;").replaceAll(/>/, "&gt;");
-model.highlightedXML =`<p  style=\"color:green; font-weight:600;\">${temp}</p>`;
+
+
 
 json = customJSONtoJSON(model);
 dataQueue[0] = JSON.parse(JSON.stringify(model.data));
