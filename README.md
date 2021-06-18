@@ -42,14 +42,16 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [x] nascondere il pulsante value quando ci sono figli
    - [x] impedire duplicazione o rimozione della root
    - [ ] pagina iniziale
-   - [ ] modifica degli attributi
  - grafica:
    - [x] tooltip
-   - [ ] colori
    - [ ] rendere i pulsanti di dimensione fissa
-   - [ ] syntax highlighting
    - [x] pulsante con matita al posto del pulsante
    - [x] spostare undo, redo, reset
    - [x] immagini al posto delle parole
    - [ ] mostrare nome del file
    - [x] toolbar per aggiungere, rimuovere, duplicare
+ - nice to have:
+   - [ ] modifica degli attributi
+   - [ ] attributi autoconclusivi
+   - [ ] colori
+   - [x] syntax highlighting
