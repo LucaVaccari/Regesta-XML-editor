@@ -113,16 +113,17 @@ sap.ui.define(
         if (selected == undefined) return;
 
         let id = getCustomIdFromRecord(selected);
+
+        if (id == model.data[0].id) {
+          console.warn("Cannot remove root node");
+          return;
+        }
+
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
         if (parent.value.length <= 1) {
           parent.value = subTree.value;
-        }
-
-        if (id == model.data[0].id) {
-          console.warn("Cannot remove root node");
-          return;
         }
 
         delete subTree.key;
@@ -245,7 +246,7 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () {},
+      onExport: function () { },
 
       onToggleOpenState: update,
     });
@@ -361,10 +362,10 @@ function update() {
     if (subTree != undefined)
       node
         .getContent()
-        [VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
+      [VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
     node
       .getContent()
-      [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+    [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
   }
 
   jsonModel.updateBindings(true);
