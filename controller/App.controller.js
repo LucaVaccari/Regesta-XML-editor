@@ -349,6 +349,7 @@ function replaceIds(tree) {
 function update() {
   clearTree(model.data);
 
+  console.log(model.data);
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)), fontSize);
   // view.byId("undoButton").setVisible(dataQueueIndex > 0);

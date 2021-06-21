@@ -7,6 +7,7 @@
 
 body {
   background-image: url("../resources/images/bg-image.png");
+  color: #1960db !important;
 }
 
 section {
@@ -94,6 +95,3 @@ a:hover {
   font-size: xx-large !important;
 }
 
-body {
-  color: #1960db !important;
-}
