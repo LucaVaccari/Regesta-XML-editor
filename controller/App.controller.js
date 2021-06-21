@@ -5,7 +5,7 @@ const KEY_LABEL_INDEX = 0,
   MOVE_BUTTONS_INDEX = 5,
   MOVE_DOWN_BUTTON_INDEX = 6;
 
-let jsonModel, view, tree;
+let jsonModel, view, tree, root;
 let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
 
 sap.ui.define(
@@ -20,11 +20,23 @@ sap.ui.define(
         view.setModel(jsonModel);
 
         tree = view.byId("tree");
-        let root = tree.getItems()[0].getContent();
-        root[MOVE_BUTTONS_INDEX].setVisible(false);
-        root[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
+        root = tree.getItems()[0];
+        root.getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
+        root.getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         update();
+      },
+
+      onSelect: function () {
+        let selected = tree.getSelectedItems()[0];
+        if (selected == undefined) return;
+        let id = getCustomIdFromRecord(selected);
+        let isRoot = id == getCustomIdFromRecord(root);
+
+        view.byId("removeButton").setEnabled(!isRoot);
+        view.byId("duplicateButton").setEnabled(!isRoot);
+        view.byId("addButton").setEnabled(true);
+        view.byId("editButton").setEnabled(true);
       },
 
       onEdit: function () {
@@ -41,21 +53,33 @@ sap.ui.define(
         lastKeyLabel = buttons[KEY_LABEL_INDEX];
         lastKeyLabel.setVisible(false);
 
-        lastValueLabel?.setVisible(true);
+        //lastValueLabel?.setVisible(true);
         lastValueInput?.setVisible(false);
 
         lastValueInput = buttons[VALUE_INPUT_INDEX];
-        lastValueInput.setVisible(true);
+        let id = getCustomIdFromRecord(selected);
+        let subTree = findSubTreeById(model.data, id);
+        if (subTree != undefined)
+          lastValueInput.setVisible(!Array.isArray(subTree.value));
+        else
+          console.error("You shouldn't reach this point (onEdit)");
         lastValueLabel = buttons[VALUE_LABEL_INDEX];
         lastValueLabel.setVisible(false);
       },
 
       onSubmit: function (event) {
-        let buttons = getRecordElement(event).getContent();
+        let selected = getRecordElement(event);
+        let buttons = selected.getContent();
         buttons[KEY_INPUT_INDEX].setVisible(false);
         buttons[KEY_LABEL_INDEX].setVisible(true);
         buttons[VALUE_INPUT_INDEX].setVisible(false);
-        buttons[VALUE_LABEL_INDEX].setVisible(true);
+
+        let id = getCustomIdFromRecord(selected);
+        let subTree = findSubTreeById(model.data, id);
+        if (subTree != undefined)
+          buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+        else
+          console.error("You shouldn't reach this point (onEdit)");
 
         onModify();
         update();
@@ -224,7 +248,7 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () {},
+      onExport: function () { },
 
       onToggleOpenState: update,
 
@@ -329,8 +353,8 @@ function update() {
 
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)), fontSize);
-  // view.byId("undoButton").setVisible(dataQueueIndex > 0);
-  // view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
+  view.byId("undoButton").setEnabled(dataQueueIndex > 0);
+  view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
   let currentData = JSON.stringify(model.data);
   let originalData = JSON.stringify(dataQueue[0]);
@@ -343,7 +367,7 @@ function update() {
     if (subTree != undefined)
       node
         .getContent()
-        [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+      [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
 
     let keyLabel = node.getContent()[KEY_LABEL_INDEX];
     keyLabel.setWidth(keyLabel.getText().length + 6 + "em");

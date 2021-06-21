@@ -2,7 +2,7 @@
 	<m:App>
 		<m:Page id="page" showFooter="true" title="XML visual editor">
 			<m:content>
-				<m:HBox width="auto" height="80%">
+				<m:HBox width="auto" height="90%">
 					<m:VBox height="auto" width="50%">
 						<m:OverflowToolbar>
 							<m:ToolbarSpacer />
@@ -10,16 +10,16 @@
 							<m:Button text="Reset" icon="sap-icon://reset" iconFirst="true" width="auto" iconDensityAware="false" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
 							<m:Button text="Redo" icon="sap-icon://arrow-right" iconFirst="false" width="auto" iconDensityAware="false" press="onRedo" id="redoButton" tooltip="Redo the last undone action" />
 							<m:ToolbarSpacer />
-							<m:Button text="Add" icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="Add child" />
-							<m:Button text="Remove" icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="Remove this element and all of his children" />
-							<m:Button text="Duplicate" icon="sap-icon://duplicate" iconFirst="true" width="auto" iconDensityAware="false" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" />
-							<m:Button text="Edit" icon="sap-icon://edit" visible="true" press="onEdit" tooltip="Edit the key and the value of the selected item" />
+							<m:Button text="Add" icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="Add child" id="addButton" enabled="false"/>
+							<m:Button text="Remove" icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="Remove this element and all of his children" id="removeButton" enabled="false"/>
+							<m:Button text="Duplicate" icon="sap-icon://duplicate" iconFirst="true" width="auto" iconDensityAware="false" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" id="duplicateButton" enabled="false"/>
+							<m:Button text="Edit" icon="sap-icon://edit" visible="true" press="onEdit" tooltip="Edit the key and the value of the selected item" id="editButton" enabled="false"/>
 							<m:ToolbarSpacer />
 						</m:OverflowToolbar>
 						<m:ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
-							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelect">
+							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
 								<m:items>
-									<m:CustomTreeItem cd:id="{id}">
+									<m:CustomTreeItem cd:id="{id}" >
 										<!-- Key input -->
 										<m:Label text="{key}" visible="true" />
 										<m:Input value="{key}" visible="false" submit="onSubmit" />

@@ -199,7 +199,7 @@ function JSONFormatter(obj) {
 }
 
 function XMLtoHTML(xml, fontSize) {
-  let openAngularBracket = "<code style=\"color:#73C2E1;\">&lt;</code><code  style=\"color:#1960DB;\">";
+  let openAngularBracket = "<code style=\"color:#73C2E1;\">&lt;</code><code  style=\"color:#346187;\">";
   let closedAngularBracket = "</code><code  style=\"color:#73C2E1;\">&gt;</code>";
   let html = xml
     .replaceAll(/</g, "&lt;")
@@ -207,7 +207,7 @@ function XMLtoHTML(xml, fontSize) {
     .replaceAll(/\t/g, "    ")
     .replaceAll(/&lt;/g, openAngularBracket)
     .replaceAll(/&gt;/g, closedAngularBracket)
-    .replaceAll(openAngularBracket + "/", "<code style=\"color:#73C2E1;\">&lt;/</code><code  style=\"color:#1960DB;\">")
+    .replaceAll(openAngularBracket + "/", "<code style=\"color:#73C2E1;\">&lt;/</code><code  style=\"color:#346187;\">")
     .replaceAll(/\n\s*\n\s*/g, "");
   return `<pre style="font-size:${fontSize}px;">${html}</pre>`;
 }
