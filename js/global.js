@@ -10,9 +10,6 @@ model.preview =
 
 let json = XMLtoJSON(model.preview);
 model.data = JSONtoCustomJSON(json);
-
-
-
 json = customJSONtoJSON(model);
 dataQueue[0] = JSON.parse(JSON.stringify(model.data));
 dataQueueIndex = 0;
