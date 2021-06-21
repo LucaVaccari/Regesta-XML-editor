@@ -95,3 +95,8 @@ a:hover {
   font-size: xx-large !important;
 }
 
+.padding-side {
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+}
+
