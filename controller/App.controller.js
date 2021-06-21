@@ -352,6 +352,7 @@ function update() {
   console.log(model.data);
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)), fontSize);
+  
   // view.byId("undoButton").setVisible(dataQueueIndex > 0);
   // view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
 

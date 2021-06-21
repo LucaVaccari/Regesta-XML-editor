@@ -2,32 +2,32 @@
 
 * {
   font-family: "Carme", sans-serif;
-  color: #fff;
+  /* color: #fff; */
 }
 
 body {
   background-image: url("../resources/images/bg-image.png");
-  color: #1960db !important;
+  /* color: #1960db !important; */
 }
 
-section {
+.margin {
   margin-top: 15%;
 }
 
-div {
+.center {
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-h1 {
+.header1 {
   font-size: 3.5em;
   opacity: 0;
   animation: slide_left 0.5s linear forwards;
   animation-delay: 0.5s;
 }
 
-h3 {
+.header3 {
   font-size: 1.5em;
   opacity: 0;
   animation: slide_right 0.5s linear forwards;

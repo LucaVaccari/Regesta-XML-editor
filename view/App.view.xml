@@ -1,4 +1,9 @@
-<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App"
+	xmlns:m="sap.m"
+	xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
 	<m:App>
 		<f:DynamicPage id="page" showFooter="true" fitContent="true">
 			<f:title>
@@ -9,57 +14,53 @@
 				</f:DynamicPageTitle>
 			</f:title>
 			<f:content>
-				<l:ResponsiveSplitter>
-					<l:PaneContainer>
-						<l:SplitPane>
-							<m:Panel>
-								<m:Toolbar>
-									<m:content>
-										<m:ToolbarSpacer />
-										<m:Image src="resources/images/undo.png" press="onUndo" id="undoButton" tooltip="Undo the last action" width="3%" />
-										<m:Button text="Reset" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
-										<m:Image src="resources/images/redo.png" press="onRedo" id="redoButton" tooltip="Redo the last undone action" width="6%" />
-										<m:ToolbarSpacer />
-										<m:Image src="resources/images/plus.png" press="onAdd" tooltip="Add child" width="4%" />
-										<m:Image src="resources/images/minus.png" press="onRemove" tooltip="Remove this element and all of his children" width="4%" />
-										<m:Image src="resources/images/duplicate.png" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" width="4%" />
-										<m:ToolbarSpacer />
-									</m:content>
-								</m:Toolbar>
-								<m:Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelect">
-									<m:items>
-										<m:CustomTreeItem cd:id="{id}">
-											<!-- Key input -->
-											<m:Label text="{key}" visible="true" />
-											<m:Input value="{key}" visible="false" submit="onKeySubmit" width="25%" />
-											<m:Image src="resources/images/pencil.png" visible="true" press="onKeyEdit" tooltip="Edit key" width="4%" />
-											<!-- Value input -->
-											<m:Label text="{value}" visible="true" />
-											<m:Input value="{value}" visible="false" submit="onValueSubmit" width="25%" />
-											<m:Image src="resources/images/pencil.png" visible="true" press="onValueEdit" tooltip="Edit value" width="4%" />
-											<!-- Move buttons -->
-											<m:Image src="resources/images/up_arrow.png" press="onMoveUp" tooltip="Move this element up" width="4%" />
-											<m:Image src="resources/images/down_arrow.png" press="onMoveDown" tooltip="Move this element down" width="5.5%" />
-										</m:CustomTreeItem>
-									</m:items>
-								</m:Tree>
-							</m:Panel>
-						</l:SplitPane>
-						<l:SplitPane>
-							<m:Panel class="sapUiResponsiveMargin">
-								<m:Toolbar>
-									<m:content>
-										<m:Button text="XML" press="onXMLSwitch" />
-										<m:Button text="Compact XML" press="onCompactXMLSwitch" />
-										<m:Button text="JSON" press="onJSONSwitch" />
-										<m:Slider value="30" width="50%" class="sapUiSmallMarginBottom" id="fontSizeSlider" min="15" max="50" liveChange="onSliderChange"/>
-									</m:content>
-								</m:Toolbar>
-								<m:FormattedText htmlText="{/preview}" class="test" />
-							</m:Panel>
-						</l:SplitPane>
-					</l:PaneContainer>
-				</l:ResponsiveSplitter>
+
+				<m:HBox >
+					<m:VBox>
+						<m:Toolbar>
+							<m:content>
+								<m:ToolbarSpacer />
+								<m:Image src="resources/images/undo.png" press="onUndo" id="undoButton" tooltip="Undo the last action" width="3%" />
+								<m:Button text="Reset" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
+								<m:Image src="resources/images/redo.png" press="onRedo" id="redoButton" tooltip="Redo the last undone action" width="6%" />
+								<m:ToolbarSpacer />
+								<m:Image src="resources/images/plus.png" press="onAdd" tooltip="Add child" width="4%" />
+								<m:Image src="resources/images/minus.png" press="onRemove" tooltip="Remove this element and all of his children" width="4%" />
+								<m:Image src="resources/images/duplicate.png" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" width="4%" />
+								<m:ToolbarSpacer />
+							</m:content>
+						</m:Toolbar>
+						<m:Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelect">
+							<m:items>
+								<m:CustomTreeItem cd:id="{id}">
+									<!-- Key input -->
+									<m:Label text="{key}" visible="true" />
+									<m:Input value="{key}" visible="false" submit="onKeySubmit" width="25%" />
+									<m:Image src="resources/images/pencil.png" visible="true" press="onKeyEdit" tooltip="Edit key" width="4%" />
+									<!-- Value input -->
+									<m:Label text="{value}" visible="true" />
+									<m:Input value="{value}" visible="false" submit="onValueSubmit" width="25%" />
+									<m:Image src="resources/images/pencil.png" visible="true" press="onValueEdit" tooltip="Edit value" width="4%" />
+									<!-- Move buttons -->
+									<m:Image src="resources/images/up_arrow.png" press="onMoveUp" tooltip="Move this element up" width="4%" />
+									<m:Image src="resources/images/down_arrow.png" press="onMoveDown" tooltip="Move this element down" width="5.5%" />
+								</m:CustomTreeItem>
+							</m:items>
+						</m:Tree>
+					</m:VBox>
+				
+				<m:VBox class="sapUiResponsiveMargin">
+					<m:Toolbar>
+						<m:content>
+							<m:Button text="XML" press="onXMLSwitch" />
+							<m:Button text="Compact XML" press="onCompactXMLSwitch" />
+							<m:Button text="JSON" press="onJSONSwitch" />
+							<m:Slider value="30" width="50%" class="sapUiSmallMarginBottom" id="fontSizeSlider" min="15" max="50" liveChange="onSliderChange"/>
+						</m:content>
+					</m:Toolbar>
+					<m:FormattedText htmlText="{/preview}" class="test" />
+				</m:VBox>
+				</m:HBox>
 			</f:content>
 			<f:footer>
 				<m:Bar>
