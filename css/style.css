@@ -1,12 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Carme&display=swap");
 
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Carme", sans-serif;
   /* color: #fff; */
 }
 
 body {
-  background-image: url("../resources/images/bg-image.png");
+  background-image: url("../resources/images/bg-image.png"); /*PROVVISORIO*/
   /* color: #1960db !important; */
 }
 
@@ -21,6 +24,7 @@ body {
 }
 
 .header1 {
+  color: #fff;
   font-size: 3.5em;
   opacity: 0;
   animation: slide_left 0.5s linear forwards;
@@ -28,6 +32,7 @@ body {
 }
 
 .header3 {
+  color: #fff;
   font-size: 1.5em;
   opacity: 0;
   animation: slide_right 0.5s linear forwards;
@@ -100,3 +105,8 @@ a:hover {
   padding-right: 5% !important;
 }
 
+@media (max-width: 700px) {
+  body {
+    background-image: url("../resources/images/bg-image-mobile.png"); /*PROVVISORIO*/
+  }
+}
