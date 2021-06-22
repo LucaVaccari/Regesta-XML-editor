@@ -40,7 +40,7 @@ body {
 }
 
 a {
-  background-color: rgb(248, 164, 37);
+  background-color: #346187;
   display: inline-block;
   margin-top: 20px;
   padding: 15px 30px;
@@ -58,7 +58,7 @@ a {
 }
 
 a:hover {
-  background-color: rgb(121, 97, 255);
+  background-color: #73c2e1;
   transform: scale(1.2);
 }
 
