@@ -21,6 +21,7 @@ body {
 }
 
 .header1 {
+  color: #fff;
   font-size: 3.5em;
   opacity: 0;
   animation: slide_left 0.5s linear forwards;
@@ -28,6 +29,7 @@ body {
 }
 
 .header3 {
+  color: #fff;
   font-size: 1.5em;
   opacity: 0;
   animation: slide_right 0.5s linear forwards;
@@ -99,4 +101,3 @@ a:hover {
   padding-left: 5% !important;
   padding-right: 5% !important;
 }
-
