@@ -41,7 +41,6 @@ function XMLtoJSON(xml) {
   }
 }
 
-
 function XMLSchematoJSONSchema(xml) {
   let doc = new DOMParser().parseFromString(
     xml.replaceAll(/\n|\t/g, ""),
@@ -51,7 +50,7 @@ function XMLSchematoJSONSchema(xml) {
   return _XMLDocToObjectSchema(doc.getRootNode().childNodes[0]);
 }
 
-function _XMLDocToObjectSchema(node,) {
+function _XMLDocToObjectSchema(node) {
   let obj = {};
   obj.tag = node.nodeName;
   obj.attributes = {};
@@ -77,8 +76,35 @@ function _XMLDocToObjectSchema(node,) {
 }
 
 // convert a JS object into an XML string
-function JSONtoXML(json) {
-  return formatter(json);
+function JSONtoXML(json, attributes) {
+  return formatter(json, attributes);
+}
+
+function formatXML(cj, attributes, formatter) {
+  let xml = "";
+
+  if (typeof cj != "object") return cj;
+  if (Array.isArray(cj)) {
+    for (let el of cj) {
+      xml += formatter.beforeOpenKey + el.key;
+      // ATTRIBUTES START
+      for (let attribute of attributes.filter((a) => a.parentId == el.id)) {
+        xml += formatter.surroundAttribute(
+          attribute.attributeKey,
+          attribute.attributeValue
+        );
+      }
+      // ATTRIBUTES END
+      xml += formatter.afterOpenKey;
+      xml += formatter.surroundContent(
+        formatXML(el.value, attributes, formatter)
+      );
+      xml += formatter.surroundCloseKey(el.key);
+    }
+  } else {
+    console.log("JS goes BRRRR")
+  }
+  return xml;
 }
 
 // if an element is not a leaf, it's incapsulated into an array
@@ -129,14 +155,7 @@ function customJSONtoJSON(customJson) {
   return json;
 }
 
-function multiplyChar(char, times) {
-  let result = "";
-  for (let i = 0; i < times; i++) result += char;
-
-  return result;
-}
-
-function XMLFormatter(json, indentLevel = 0) {
+function XMLFormatter_(json, attributes, indentLevel = 0) {
   let xml = "";
 
   if (typeof json != "object")
@@ -147,7 +166,7 @@ function XMLFormatter(json, indentLevel = 0) {
         xml += multiplyChar("\t", indentLevel);
         xml += `<${key}>\n`;
         indentLevel++;
-        xml += XMLFormatter(el, indentLevel);
+        xml += XMLFormatter_(el, attributes, indentLevel);
         xml += multiplyChar("\t", --indentLevel);
         xml += `</${key}>\n`;
       }
@@ -155,7 +174,7 @@ function XMLFormatter(json, indentLevel = 0) {
       xml += multiplyChar("\t", indentLevel);
       xml += `<${key}>\n`;
       indentLevel++;
-      xml += XMLFormatter(json[key], indentLevel);
+      xml += XMLFormatter_(json[key], attributes, indentLevel);
       xml += multiplyChar("\t", --indentLevel);
       xml += `</${key}>\n`;
     }
@@ -164,7 +183,7 @@ function XMLFormatter(json, indentLevel = 0) {
   return xml;
 }
 
-function compactXMLFormatter(json, indentLevel = 0) {
+function compactXMLFormatter(json, atributes, indentLevel = 0) {
   let xml = "";
 
   if (typeof json != "object") return json;
@@ -172,7 +191,7 @@ function compactXMLFormatter(json, indentLevel = 0) {
     if (Array.isArray(json[key])) {
       for (let el of json[key]) {
         xml += multiplyChar("\t", indentLevel);
-        let innerText = compactXMLFormatter(el, ++indentLevel);
+        let innerText = compactXMLFormatter(el, attributes, ++indentLevel);
         let isBranch = innerText.startsWith("\t");
         xml += isBranch ? `<${key}>\n` : `<${key}>`;
         xml += innerText;
@@ -182,7 +201,7 @@ function compactXMLFormatter(json, indentLevel = 0) {
       }
     } else {
       xml += multiplyChar("\t", indentLevel);
-      let innerText = compactXMLFormatter(json[key], ++indentLevel);
+      let innerText = compactXMLFormatter(json[key], attributes, ++indentLevel);
       let isBranch = innerText.startsWith("\t");
       xml += isBranch ? `<${key}>\n` : `<${key}>`;
       xml += innerText;
@@ -195,21 +214,56 @@ function compactXMLFormatter(json, indentLevel = 0) {
   return xml;
 }
 
+// TODODODODODOO
+function customJSONtoXML(cj, attributes, indentLevel = 0) {
+  let xml = "";
+
+  if (typeof cj != "object") return multiplyChar("\t", indentLevel) + cj + "\n";
+  if (Array.isArray(cj)) {
+    for (let el of cj) {
+      xml += multiplyChar("\t", indentLevel);
+      xml += `<${el.key}`;
+      // ATTRIBUTES START
+      for (let attribute of attributes.filter((a) => a.parentId == el.id)) {
+        xml += ` ${attribute.attributeKey}="${attribute.attributeValue}"`;
+      }
+      // ATTRIBUTES END
+      xml += `>\n`;
+      indentLevel++;
+      xml += customJSONtoXML(el.value, attributes, indentLevel);
+      xml += multiplyChar("\t", --indentLevel);
+      xml += `</${el.key}>\n`;
+    }
+  } else {
+    xml += multiplyChar("\t", indentLevel);
+    xml += `<${cj.key}>\n`;
+    indentLevel++;
+    xml += customJSONtoXML(cj.value, attributes, indentLevel);
+    xml += multiplyChar("\t", --indentLevel);
+    xml += `</${cj.key}>\n`;
+  }
+
+  return xml;
+}
+
 function JSONFormatter(obj) {
   return JSON.stringify(obj, null, 4);
 }
 
 function XMLtoHTML(xml, fontSize) {
-  let openAngularBracket = "<code style=\"color:#73C2E1;\">&lt;</code><code  style=\"color:#346187;\">";
-  let closedAngularBracket = "</code><code  style=\"color:#73C2E1;\">&gt;</code>";
+  let openAngularBracket =
+    '<code style="color:#73C2E1;">&lt;</code><code  style="color:#346187;">';
+  let closedAngularBracket = '</code><code  style="color:#73C2E1;">&gt;</code>';
   let html = xml
     .replaceAll(/</g, "&lt;")
     .replaceAll(/>/g, "&gt;")
     .replaceAll(/\t/g, "    ")
     .replaceAll(/&lt;/g, openAngularBracket)
     .replaceAll(/&gt;/g, closedAngularBracket)
-    .replaceAll(openAngularBracket + "/", "<code style=\"color:#73C2E1;\">&lt;/</code><code  style=\"color:#346187;\">")
+    .replaceAll(
+      openAngularBracket + "/",
+      '<code style="color:#73C2E1;">&lt;/</code><code  style="color:#346187;">'
+    )
     .replaceAll(/\n\s*\n\s*/g, "");
   return `<pre style="font-size:${fontSize}px;">${html}</pre>`;
 }
-

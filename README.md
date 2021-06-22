@@ -52,8 +52,9 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [x] toolbar per aggiungere, rimuovere, duplicare
  - nice to have:
    - [ ] modifica degli attributi
-   - [ ] attributi autoconclusivi
+   - [ ] tag autoconclusivi
    - [ ] colori
    - [x] syntax highlighting XML
    - [ ] syntax highlighting JSON
-   - [xx] font size slider
+   - [x] font size slider
+   - [ ] formatter
