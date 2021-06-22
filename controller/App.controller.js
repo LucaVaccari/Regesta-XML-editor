@@ -253,16 +253,18 @@ sap.ui.define(
         view.byId("editButton").setEnabled(true);
         view.byId("editAttributesButton").setEnabled(true);
 
-        model.attributes = attributes.filter(a => a.parentId == id);
+        model.selectedAttributes = model.allAttributes.filter(a => a.parentId == id);
+
+        jsonModel.updateBindings(true);
       },
 
       onXMLSwitch: function () {
-        formatter = XMLFormatter;
+        formatter.compact = false;
         update();
       },
 
       onCompactXMLSwitch: function () {
-        formatter = compactXMLFormatter;
+        formatter.compact = true;
         update();
       },
 
@@ -375,7 +377,8 @@ function update() {
   clearTree(model.data);
 
   let fontSize = view.byId("fontSizeSlider").getValue();
-  model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)), fontSize);
+  // model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data), model.allAttributes), fontSize);
+  model.preview = XMLtoHTML(formatXML(model.data, model.allAttributes, formatter), fontSize);
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
