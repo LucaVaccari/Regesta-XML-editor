@@ -259,12 +259,12 @@ sap.ui.define(
       },
 
       onXMLSwitch: function () {
-        formatter = XMLFormatter_;
+        formatter.compact = false;
         update();
       },
 
       onCompactXMLSwitch: function () {
-        formatter = compactXMLFormatter;
+        formatter.compact = true;
         update();
       },
 
@@ -377,7 +377,8 @@ function update() {
   clearTree(model.data);
 
   let fontSize = view.byId("fontSizeSlider").getValue();
-  model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data), model.allAttributes), fontSize);
+  // model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data), model.allAttributes), fontSize);
+  model.preview = XMLtoHTML(formatXML(model.data, model.allAttributes, formatter), fontSize);
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 

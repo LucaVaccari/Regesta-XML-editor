@@ -33,7 +33,6 @@ class XMLFormatter {
   }
 
   surroundAttribute(attrName, attrValue) {
-    return "";
     return (
       this._surround(attrName, this._bAttributeName, this._aAttributeName) +
       "=" +
@@ -51,17 +50,28 @@ class XMLFormatter {
 
   surroundContent(content) {
     if (content == "") return "";
-    if (content.startsWith(this._bOpenKey) || !this.compact) {
+    if (this.compact) {
+      if (content.startsWith(this._bOpenKey)) {
+        let returnValue =
+          "\n" +
+          this._surround(
+            content.replaceAll(/\n/g, "\n" + this.indent),
+            this._bContent + this.indent,
+            this._aContent
+          );
+        return returnValue.slice(0, returnValue.length - 1);
+      } else {
+        return this._surround(content, this._bContent, this._aContent);
+      }
+    } else {
       let returnValue =
-        "\n" +
+        // "\n" +
         this._surround(
           content.replaceAll(/\n/g, "\n" + this.indent),
           this._bContent + this.indent,
           this._aContent
-        );
-      return returnValue.slice(0, returnValue.length - 1);
-    } else {
-      return this._surround(content, this._bContent, this._aContent);
+        ) + "\n";
+      return returnValue//.slice(0, returnValue.length - 1);
     }
   }
 
