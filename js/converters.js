@@ -128,3 +128,7 @@ function XMLtoHTML(xml, fontSize) {
     .replaceAll(/\n\s*\n\s*/g, "");
   return `<pre style="font-size:${fontSize}px;">${html}</pre>`;
 }
+
+function HTMLtoFormatted(html, fontSize) {
+  return `<pre style="font-size:${fontSize}px;">${html}</pre>`;
+}

@@ -73,7 +73,6 @@ sap.ui.define(
           popover.openBy(tree.getSelectedItems()[0]);
           popoverView = popover;
         });
-
       },
 
       onSubmit: function (event) {
@@ -253,7 +252,9 @@ sap.ui.define(
         view.byId("editButton").setEnabled(true);
         view.byId("editAttributesButton").setEnabled(true);
 
-        model.selectedAttributes = model.allAttributes.filter(a => a.parentId == id);
+        model.selectedAttributes = model.allAttributes.filter(
+          (a) => a.parentId == id
+        );
 
         jsonModel.updateBindings(true);
       },
@@ -377,8 +378,10 @@ function update() {
   clearTree(model.data);
 
   let fontSize = view.byId("fontSizeSlider").getValue();
-  // model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data), model.allAttributes), fontSize);
-  model.preview = XMLtoHTML(formatXML(model.data, model.allAttributes, formatter), fontSize);
+  model.preview = HTMLtoFormatted(
+    formatXML(model.data, model.allAttributes, formatter),
+    fontSize
+  );
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
