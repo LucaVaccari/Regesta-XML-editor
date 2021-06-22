@@ -222,6 +222,7 @@ footer.home .icons {
   color: white;
   padding: 16px 20px;
   border: none;
+  border-radius: 30px;
   cursor: pointer;
   opacity: 0.8;
   position: fixed;
@@ -236,13 +237,16 @@ footer.home .icons {
   top: 0;
   right: 15px;
   border: 3px solid #3d3d3d;
+  border-radius: 20px;
   z-index: 9;
 }
 
 .form-container {
   max-width: 300px;
   padding: 10px;
-  background-color: white;
+  color: white;
+  background-color: #242424;
+  border-radius: 20px;
 }
 
 .form-container input[type="text"],
@@ -251,7 +255,8 @@ footer.home .icons {
   padding: 15px;
   margin: 5px 0 22px 0;
   border: none;
-  background: #f1f1f1;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.226);
 }
 
 .form-container input[type="text"]:focus,
@@ -261,10 +266,11 @@ footer.home .icons {
 }
 
 .form-container .btn {
-  background-color: #04aa6d;
+  background-color: #73c2e1;
   color: white;
   padding: 16px 20px;
   border: none;
+  border-radius: 30px;
   cursor: pointer;
   width: 100%;
   margin-bottom: 10px;
@@ -272,7 +278,7 @@ footer.home .icons {
 }
 
 .form-container .cancel {
-  background-color: red;
+  background-color: #346187;
 }
 
 .form-container .btn:hover,
