@@ -61,8 +61,7 @@ sap.ui.define(
         let subTree = findSubTreeById(model.data, id);
         if (subTree != undefined)
           lastValueInput.setVisible(!Array.isArray(subTree.value));
-        else
-          console.error("You shouldn't reach this point (onEdit)");
+        else console.error("You shouldn't reach this point (onEdit)");
         lastValueLabel = buttons[VALUE_LABEL_INDEX];
         lastValueLabel.setVisible(false);
       },
@@ -78,8 +77,7 @@ sap.ui.define(
         let subTree = findSubTreeById(model.data, id);
         if (subTree != undefined)
           buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
-        else
-          console.error("You shouldn't reach this point (onEdit)");
+        else console.error("You shouldn't reach this point (onEdit)");
 
         onModify();
         update();
@@ -248,7 +246,7 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () { },
+      onExport: function () {},
 
       onToggleOpenState: update,
 
@@ -367,7 +365,11 @@ function update() {
     if (subTree != undefined)
       node
         .getContent()
-      [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+        [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+    else
+      console.error(
+        "You shouldn't reach this point. subtree.value is undefined"
+      );
 
     let keyLabel = node.getContent()[KEY_LABEL_INDEX];
     keyLabel.setWidth(keyLabel.getText().length + 6 + "em");

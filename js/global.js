@@ -14,5 +14,3 @@ model.data = [customJson];
 json = customJSONtoJSON(model);
 dataQueue[0] = JSON.parse(JSON.stringify(model.data));
 dataQueueIndex = 0;
-
-console.log(customJson);

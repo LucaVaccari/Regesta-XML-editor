@@ -19,7 +19,7 @@ function XMLtoCustomJSON(xml) {
     switch (node.nodeType) {
       case Node.TEXT_NODE: {
         // a leaf of the document tree
-        const CJ = node.nodeValue;
+        const CJ = node.nodeValue == undefined ? "" : node.nodeValue;
         return { CJ };
       }
       case Node.ELEMENT_NODE: // a branch of the document tree
@@ -27,13 +27,15 @@ function XMLtoCustomJSON(xml) {
         noAttributesCJ.id = CJ.id;
         CJ.key = node.nodeName;
         noAttributesCJ.key = node.nodeName;
-        CJ.value = node.childNodes.length > 1 ? [] : "";
-        noAttributesCJ.value = node.childNodes.length > 1 ? [] : "";
-        if (node.childNodes.length == 1) {
+        CJ.value = "";
+        noAttributesCJ.value = "";
+        if (node.childNodes.length == 1 && typeof node.firstChild != "object") {
           let temp = XMLDocToCustomObj(node.firstChild);
           CJ.value = temp.CJ;
           noAttributesCJ.value = temp.noAttributesCJ;
-        } else {
+        } else if (node.childNodes.length > 0) {
+          CJ.value = [];
+          noAttributesCJ.value = [];
           for (let child of node.childNodes) {
             let temp = XMLDocToCustomObj(child);
             CJ.value.push(temp.CJ);
@@ -57,7 +59,7 @@ function XMLtoCustomJSON(xml) {
       case Node.DOCUMENT_NODE: // the root of the document tree
         return XMLDocToCustomObj(node.firstChild);
       default:
-        console.log("unsupported xml node type: " + node + " " + node.nodeType);
+        console.warn("unsupported xml node type: " + node + " " + node.nodeType);
         break;
     }
 
