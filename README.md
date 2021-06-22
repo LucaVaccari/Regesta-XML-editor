@@ -56,3 +56,4 @@ function getById(id): ritorna il sottoalbero con l'id fornito
    - [ ] colori
    - [x] syntax highlighting XML
    - [ ] syntax highlighting JSON
+   - [xx] font size slider
