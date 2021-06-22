@@ -285,3 +285,9 @@ footer.home .icons {
 .open-button:hover {
   opacity: 1;
 }
+
+.form-container,
+.form-popup :focus {
+  opacity: 0;
+  animation: fade_in 0.5s linear forwards;
+}
