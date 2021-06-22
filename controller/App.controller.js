@@ -5,12 +5,16 @@ const KEY_LABEL_INDEX = 0,
   MOVE_BUTTONS_INDEX = 5,
   MOVE_DOWN_BUTTON_INDEX = 6;
 
-let jsonModel, view, tree, root;
+let jsonModel, view, tree, root, popoverView;
 let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
 
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
-  (Controller, JSONModel) => {
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment",
+  ],
+  (Controller, JSONModel, Fragment) => {
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
@@ -25,18 +29,6 @@ sap.ui.define(
         root.getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         update();
-      },
-
-      onSelect: function () {
-        let selected = tree.getSelectedItems()[0];
-        if (selected == undefined) return;
-        let id = getCustomIdFromRecord(selected);
-        let isRoot = id == getCustomIdFromRecord(root);
-
-        view.byId("removeButton").setEnabled(!isRoot);
-        view.byId("duplicateButton").setEnabled(!isRoot);
-        view.byId("addButton").setEnabled(true);
-        view.byId("editButton").setEnabled(true);
       },
 
       onEdit: function () {
@@ -64,6 +56,24 @@ sap.ui.define(
         else console.error("You shouldn't reach this point (onEdit)");
         lastValueLabel = buttons[VALUE_LABEL_INDEX];
         lastValueLabel.setVisible(false);
+      },
+
+      onEditAttributes: function () {
+        if (!this._popover) {
+          this._popover = Fragment.load({
+            id: view.getId(),
+            name: "sap.ui.demo.walkthrough.view.AttributeEditing",
+            controller: this,
+          }).then(function (popover) {
+            view.addDependent(popover);
+            return popover;
+          });
+        }
+        this._popover.then(function (popover) {
+          popover.openBy(tree.getSelectedItems()[0]);
+          popoverView = popover;
+        });
+
       },
 
       onSubmit: function (event) {
@@ -229,6 +239,21 @@ sap.ui.define(
         model.data = JSON.parse(JSON.stringify(dataQueue[0]));
         onModify();
         update();
+      },
+
+      onSelect: function () {
+        let selected = tree.getSelectedItems()[0];
+        if (selected == undefined) return;
+        let id = getCustomIdFromRecord(selected);
+        let isRoot = id == getCustomIdFromRecord(root);
+
+        view.byId("removeButton").setEnabled(!isRoot);
+        view.byId("duplicateButton").setEnabled(!isRoot);
+        view.byId("addButton").setEnabled(true);
+        view.byId("editButton").setEnabled(true);
+        view.byId("editAttributesButton").setEnabled(true);
+
+        model.attributes = attributes.filter(a => a.parentId == id);
       },
 
       onXMLSwitch: function () {

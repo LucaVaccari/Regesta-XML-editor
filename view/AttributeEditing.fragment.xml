@@ -1,0 +1,22 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ResponsivePopover id="myPopover" title="Attributes" class="sapUiContentPadding" placement="Bottom">
+		<beginButton>
+			<Button icon="sap-icon://add" press="onAddAttribute" />
+		</beginButton>
+		<endButton>
+			<Button icon="sap-icon://delete" press="onClearAttributes" />
+		</endButton>
+		<content>
+			<ScrollContainer>
+				<List noDataText="No attributes" id="attributesList" mode="Delete" delete="onRemoveAttribute" items="{path:'/attributes' , templateShareable: false}">
+					<CustomListItem>
+						<HBox>
+							<Input value="{attributeKey}"></Input>
+							<Input value="{attributeValue}"></Input>
+						</HBox>
+					</CustomListItem>
+				</List>
+			</ScrollContainer>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>

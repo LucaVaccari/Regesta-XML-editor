@@ -11,6 +11,7 @@ model.preview = test;
 let customJson = XMLtoCustomJSON(model.preview);
 //model.data = JSONtoCustomJSON(json);
 model.data = [customJson];
+model.attributes = [];
 json = customJSONtoJSON(model);
 dataQueue[0] = JSON.parse(JSON.stringify(model.data));
 dataQueueIndex = 0;
