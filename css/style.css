@@ -49,7 +49,7 @@ header.home {
   text-align: center;
 }
 
-h1 {
+h1.home {
   color: #fff;
   font-size: 3.5em;
   opacity: 0;
@@ -57,7 +57,7 @@ h1 {
   animation-delay: 0.5s;
 }
 
-h3 {
+h3.home {
   color: #fff;
   font-size: 1.5em;
   opacity: 0;
@@ -146,6 +146,7 @@ footer.home .icons {
   padding-right: 5% !important;
 }
 
+/* RESPONSIVE */
 @media (max-width: 700px) {
   body {
     background-image: url("../resources/images/bg-image-mobile.png"); /*PROVVISORIO*/
@@ -156,6 +157,7 @@ footer.home .icons {
   }
 }
 
+/* ANIMATIONS */
 @keyframes slide_right {
   0% {
     transform: translateX(100px);
@@ -212,4 +214,68 @@ footer.home .icons {
   100% {
     opacity: 1;
   }
+}
+
+/* LOGIN FORM */
+.open-button {
+  background-color: rgba(255, 255, 255, 0.144);
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 100px;
+}
+
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 15px;
+  border: 3px solid #3d3d3d;
+  z-index: 9;
+}
+
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+.form-container input[type="text"],
+.form-container input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+.form-container input[type="text"]:focus,
+.form-container input[type="password"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+.form-container .btn {
+  background-color: #04aa6d;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.form-container .cancel {
+  background-color: red;
+}
+
+.form-container .btn:hover,
+.open-button:hover {
+  opacity: 1;
 }

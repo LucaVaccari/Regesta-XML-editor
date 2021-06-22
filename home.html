@@ -14,11 +14,25 @@
             <header class="home">
                 <div>
                     <a href="#"><img src="resources/images/logo.png" height="60px" width="auto"></a>
+                    <button class="open-button" onclick="openForm()">Log in</button>
+                    <span>
+                        <div class="form-popup" id="myForm">
+                            <form action="/action_page.php" class="form-container">
+                                <h1>Login</h1>
+                                <label for="email"><b>Email</b></label>
+                                <input type="text" placeholder="Enter Email" name="email" required>
+                                <label for="psw"><b>Password</b></label>
+                                <input type="password" placeholder="Enter Password" name="psw" required>
+                                <button type="submit" class="btn">Login</button>
+                                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                            </form>
+                        </div>
+                    </span>
                 </div>
             </header>
             <div class="center">
-                <h1 >XML Visual Editor</h1>
-                <h3>Import your file and start editing it!</h3>
+                <h1 class="home">XML Visual Editor</h1>
+                <h3 class="home">Import your file and start editing it!</h3>
                 <a class="button" href="index.html">IMPORT</a>
             </div>
             <footer class="home">
@@ -35,5 +49,14 @@
                 </div>
             </footer>
         </section>
+        <script>
+            function openForm() {
+                document.getElementById("myForm").style.display = "block";
+            }
+            
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+            }
+        </script>
     </body>
 </html>
