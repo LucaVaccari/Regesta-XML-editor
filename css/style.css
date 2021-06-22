@@ -11,10 +11,15 @@
 body {
   background-image: url("../resources/images/bg-image.png"); /*PROVVISORIO*/
   /* color: #1960db !important; */
+  overflow: hidden;
 }
 
-.margin {
+section {
   margin-top: 15%;
+  /* height: 150px; */
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .center {
@@ -23,7 +28,7 @@ body {
   text-align: center;
 }
 
-.header1 {
+h1 {
   color: #fff;
   font-size: 3.5em;
   opacity: 0;
@@ -31,7 +36,7 @@ body {
   animation-delay: 0.5s;
 }
 
-.header3 {
+h3 {
   color: #fff;
   font-size: 1.5em;
   opacity: 0;
@@ -39,7 +44,7 @@ body {
   animation-delay: 1s;
 }
 
-a {
+.button {
   background-color: #346187;
   display: inline-block;
   margin-top: 20px;
@@ -57,9 +62,52 @@ a {
   animation-delay: 1.5s;
 }
 
-a:hover {
+.button:hover {
   background-color: #73c2e1;
   transform: scale(1.2);
+}
+
+footer {
+  position: fixed;
+  display: flex;
+  padding: 10px 10px 0px 10px;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  justify-content: space-between;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.6029762246695554) 0%,
+    rgba(0, 0, 0, 0.19681375968356096) 100%
+  );
+}
+
+footer a {
+  color: #fff;
+  text-decoration: none;
+  user-select: none;
+  font-size: 1.1em;
+}
+
+footer a:hover {
+  color: #73c2e1;
+}
+
+footer .texts {
+  margin-right: 10%;
+  margin-left: 5%;
+  width: 80%;
+  justify-content: space-between;
+  display: flex;
+}
+
+footer .icons {
+  margin-left: 50%;
+  margin-right: 5%;
+  width: 50%;
+  justify-content: space-between;
+  display: flex;
 }
 
 @keyframes slide_right {
