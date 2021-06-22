@@ -1,5 +1,4 @@
 let attributes = [];
-let customJSON;
 
 function XMLtoCustomJSON(xml) {
   let doc = new DOMParser().parseFromString(
@@ -8,46 +7,38 @@ function XMLtoCustomJSON(xml) {
   );
 
   let root = doc.getRootNode();
-  let { CJ, noAttributesCJ } = XMLDocToCustomObj(root);
-  customJSON = CJ;
-  return noAttributesCJ;
+  return XMLDocToCustomObj(root);
 
   function XMLDocToCustomObj(node, id = -1) {
-    let CJ = {},
-      noAttributesCJ = {};
+    let noAttributesCJ = {};
 
     switch (node.nodeType) {
       case Node.TEXT_NODE: {
         // a leaf of the document tree
-        const CJ = node.nodeValue == undefined ? "" : node.nodeValue;
-        return { CJ };
+        const leaf = node.nodeValue == undefined ? "" : node.nodeValue;
+        return leaf;
       }
       case Node.ELEMENT_NODE: // a branch of the document tree
-        CJ.id = lastId++;
-        noAttributesCJ.id = CJ.id;
-        CJ.key = node.nodeName;
+        noAttributesCJ.id = lastId++;
         noAttributesCJ.key = node.nodeName;
-        CJ.value = "";
-        noAttributesCJ.value = "";
-        if (node.childNodes.length == 1 && typeof node.firstChild != "object") {
-          let temp = XMLDocToCustomObj(node.firstChild);
-          CJ.value = temp.CJ;
-          noAttributesCJ.value = temp.noAttributesCJ;
-        } else if (node.childNodes.length > 0) {
-          CJ.value = [];
-          noAttributesCJ.value = [];
-          for (let child of node.childNodes) {
-            let temp = XMLDocToCustomObj(child);
-            CJ.value.push(temp.CJ);
-            noAttributesCJ.value.push(temp.noAttributesCJ);
-          }
+        noAttributesCJ.value = [];
+
+        for (let child of node.childNodes) {
+          let temp = XMLDocToCustomObj(child);
+          noAttributesCJ.value.push(temp);
         }
-        CJ.attributes = [];
+
+        if (noAttributesCJ.value.length == 0)
+          noAttributesCJ.value = "";
+
+        if (typeof noAttributesCJ.value[0] == "string")
+          noAttributesCJ.value = noAttributesCJ.value[0];
+
         for (let attr of node.attributes) {
-          let temp = XMLDocToCustomObj(attr, CJ.id);
-          CJ.attributes.push(temp);
+          let temp = XMLDocToCustomObj(attr, noAttributesCJ.id);
           attributes.push(temp);
         }
+
         break;
       case Node.ATTRIBUTE_NODE: // an attribute
         return {
@@ -59,10 +50,12 @@ function XMLtoCustomJSON(xml) {
       case Node.DOCUMENT_NODE: // the root of the document tree
         return XMLDocToCustomObj(node.firstChild);
       default:
-        console.warn("unsupported xml node type: " + node + " " + node.nodeType);
+        console.warn(
+          "unsupported xml node type: " + node + " " + node.nodeType
+        );
         break;
     }
 
-    return { CJ, noAttributesCJ };
+    return noAttributesCJ;
   }
 }
