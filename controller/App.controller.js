@@ -1,14 +1,12 @@
-const KEY_INPUT_INDEX = 1,
-  KEY_BUTTON_INDEX = 2,
-  KEY_LABEL_INDEX = 0,
-  VALUE_INPUT_INDEX = 4,
-  VALUE_BUTTON_INDEX = 5,
-  VALUE_LABEL_INDEX = 3,
-  MOVE_BUTTONS_INDEX = 6,
-  MOVE_DOWN_BUTTON_INDEX = 7;
+const KEY_LABEL_INDEX = 0,
+  KEY_INPUT_INDEX = 1,
+  VALUE_LABEL_INDEX = 2,
+  VALUE_INPUT_INDEX = 3,
+  MOVE_BUTTONS_INDEX = 5,
+  MOVE_DOWN_BUTTON_INDEX = 6;
 
-let jsonModel, view, tree;
-let lastEditButton, lastInput, lastLabel;
+let jsonModel, view, tree, root;
+let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
 
 sap.ui.define(
   ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
@@ -22,65 +20,69 @@ sap.ui.define(
         view.setModel(jsonModel);
 
         tree = view.byId("tree");
-        let root = tree.getItems()[0].getContent();
-        root[VALUE_BUTTON_INDEX].setVisible(false);
-        root[MOVE_BUTTONS_INDEX].setVisible(false);
-        root[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
-
-        view.byId("page").getScrollDelegate().setVertical(false);
+        root = tree.getItems()[0];
+        root.getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
+        root.getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         update();
       },
 
-      onKeySubmit: function (event) {
-        let buttons = getRecordElement(event).getContent();
+      onSelect: function () {
+        let selected = tree.getSelectedItems()[0];
+        if (selected == undefined) return;
+        let id = getCustomIdFromRecord(selected);
+        let isRoot = id == getCustomIdFromRecord(root);
+
+        view.byId("removeButton").setEnabled(!isRoot);
+        view.byId("duplicateButton").setEnabled(!isRoot);
+        view.byId("addButton").setEnabled(true);
+        view.byId("editButton").setEnabled(true);
+      },
+
+      onEdit: function () {
+        let selected = tree.getSelectedItems()[0];
+        if (selected == undefined) return;
+
+        let buttons = selected.getContent();
+
+        lastKeyLabel?.setVisible(true);
+        lastKeyInput?.setVisible(false);
+
+        lastKeyInput = buttons[KEY_INPUT_INDEX];
+        lastKeyInput.setVisible(true);
+        lastKeyLabel = buttons[KEY_LABEL_INDEX];
+        lastKeyLabel.setVisible(false);
+
+        //lastValueLabel?.setVisible(true);
+        lastValueInput?.setVisible(false);
+
+        lastValueInput = buttons[VALUE_INPUT_INDEX];
+        let id = getCustomIdFromRecord(selected);
+        let subTree = findSubTreeById(model.data, id);
+        if (subTree != undefined)
+          lastValueInput.setVisible(!Array.isArray(subTree.value));
+        else
+          console.error("You shouldn't reach this point (onEdit)");
+        lastValueLabel = buttons[VALUE_LABEL_INDEX];
+        lastValueLabel.setVisible(false);
+      },
+
+      onSubmit: function (event) {
+        let selected = getRecordElement(event);
+        let buttons = selected.getContent();
         buttons[KEY_INPUT_INDEX].setVisible(false);
-        buttons[KEY_BUTTON_INDEX].setVisible(true);
         buttons[KEY_LABEL_INDEX].setVisible(true);
-
-        onModify();
-        update();
-      },
-
-      onKeyEdit: function (event) {
-        let buttons = getRecordElement(event).getContent();
-
-        lastEditButton?.setVisible(true);
-        lastLabel?.setVisible(true);
-        lastInput?.setVisible(false);
-
-        lastInput = buttons[KEY_INPUT_INDEX];
-        lastInput.setVisible(true);
-        lastEditButton = buttons[KEY_BUTTON_INDEX];
-        lastEditButton.setVisible(false);
-        lastLabel = buttons[KEY_LABEL_INDEX];
-        lastLabel.setVisible(false);
-      },
-
-      onValueSubmit: function (event) {
-        let buttons = getRecordElement(event).getContent();
-
         buttons[VALUE_INPUT_INDEX].setVisible(false);
-        buttons[VALUE_BUTTON_INDEX].setVisible(true);
-        buttons[VALUE_LABEL_INDEX].setVisible(true);
+
+        let id = getCustomIdFromRecord(selected);
+        let subTree = findSubTreeById(model.data, id);
+        if (subTree != undefined)
+          buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+        else
+          console.error("You shouldn't reach this point (onEdit)");
 
         onModify();
         update();
-      },
-
-      onValueEdit: function (event) {
-        let buttons = getRecordElement(event).getContent();
-        
-        lastEditButton?.setVisible(true);
-        lastLabel?.setVisible(true);
-        lastInput?.setVisible(false);
-
-        lastInput = buttons[VALUE_INPUT_INDEX];
-        lastInput.setVisible(true);
-        lastEditButton = buttons[VALUE_BUTTON_INDEX];
-        lastEditButton.setVisible(false);
-        lastLabel = buttons[VALUE_LABEL_INDEX];
-        lastLabel.setVisible(false);
       },
 
       onAdd: function () {
@@ -351,8 +353,8 @@ function update() {
 
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = XMLtoHTML(JSONtoXML(customJSONtoJSON(model.data)), fontSize);
-  // view.byId("undoButton").setVisible(dataQueueIndex > 0);
-  // view.byId("redoButton").setVisible(dataQueueIndex < dataQueue.length - 1);
+  view.byId("undoButton").setEnabled(dataQueueIndex > 0);
+  view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
   let currentData = JSON.stringify(model.data);
   let originalData = JSON.stringify(dataQueue[0]);
@@ -365,10 +367,13 @@ function update() {
     if (subTree != undefined)
       node
         .getContent()
-      [VALUE_BUTTON_INDEX].setVisible(!Array.isArray(subTree.value));
-    node
-      .getContent()
-    [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+      [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+
+    let keyLabel = node.getContent()[KEY_LABEL_INDEX];
+    keyLabel.setWidth(keyLabel.getText().length + 6 + "em");
+
+    let valueLabel = node.getContent()[VALUE_LABEL_INDEX];
+    valueLabel.setWidth(valueLabel.getText().length + 6 + "em");
   }
 
   jsonModel.updateBindings(true);

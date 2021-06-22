@@ -6,41 +6,41 @@ function XMLtoJSON(xml) {
   );
 
   return _XMLDocToObject(doc.getRootNode());
+
+  function _XMLDocToObject(node) {
+    let obj = {};
+    for (let child of node.childNodes) {
+      if (child.hasChildNodes()) {
+        // is the subnode not a leaf?
+        if (child.firstChild.nodeValue == null) {
+          let childObj = _XMLDocToObject(child); // explore the children
+          if (child.nodeName in obj) {
+            // if the key already exists
+            if (!Array.isArray(obj[child.nodeName])) {
+              obj[child.nodeName] = [obj[child.nodeName]]; // convert to array
+            }
+            obj[child.nodeName].push(childObj);
+          } else obj[child.nodeName] = [childObj];
+        } else {
+          // the subnode is a leaf
+          if (child.nodeName in obj) {
+            // if the key already exists
+            if (!Array.isArray(obj[child.nodeName])) {
+              obj[child.nodeName] = [obj[child.nodeName]]; // convert to array
+            }
+            obj[child.nodeName].push(child.firstChild.nodeValue);
+          } else {
+            obj[child.nodeName] = child.firstChild.nodeValue;
+          }
+        }
+      } else {
+        obj[child.nodeName] = "";
+      }
+    }
+    return obj;
+  }
 }
 
-// recursive function. DO NOT CALL, internal use only
-function _XMLDocToObject(node) {
-  let obj = {};
-  for (let child of node.childNodes) {
-    if (child.hasChildNodes()) {
-      // is the subnode not a leaf?
-      if (child.firstChild.nodeValue == null) {
-        let childObj = _XMLDocToObject(child); // explore the children
-        if (child.nodeName in obj) {
-          // if the key already exists
-          if (!Array.isArray(obj[child.nodeName])) {
-            obj[child.nodeName] = [obj[child.nodeName]]; // convert to array
-          }
-          obj[child.nodeName].push(childObj);
-        } else obj[child.nodeName] = [childObj];
-      } else {
-        // the subnode is a leaf
-        if (child.nodeName in obj) {
-          // if the key already exists
-          if (!Array.isArray(obj[child.nodeName])) {
-            obj[child.nodeName] = [obj[child.nodeName]]; // convert to array
-          }
-          obj[child.nodeName].push(child.firstChild.nodeValue);
-        } else {
-          obj[child.nodeName] = child.firstChild.nodeValue;
-        }
-      }
-    } else {
-      obj[child.nodeName] = "";
-    }
-  }
-  return obj;
-}
 
 function XMLSchematoJSONSchema(xml) {
   let doc = new DOMParser().parseFromString(
@@ -51,7 +51,8 @@ function XMLSchematoJSONSchema(xml) {
   return _XMLDocToObjectSchema(doc.getRootNode().childNodes[0]);
 }
 
-function _XMLDocToObjectSchema(node, obj = {}) {
+function _XMLDocToObjectSchema(node,) {
+  let obj = {};
   obj.tag = node.nodeName;
   obj.attributes = {};
   obj.content = [];
@@ -199,7 +200,7 @@ function JSONFormatter(obj) {
 }
 
 function XMLtoHTML(xml, fontSize) {
-  let openAngularBracket = "<code style=\"color:#73C2E1;\">&lt;</code><code  style=\"color:#1960DB;\">";
+  let openAngularBracket = "<code style=\"color:#73C2E1;\">&lt;</code><code  style=\"color:#346187;\">";
   let closedAngularBracket = "</code><code  style=\"color:#73C2E1;\">&gt;</code>";
   let html = xml
     .replaceAll(/</g, "&lt;")
@@ -207,7 +208,8 @@ function XMLtoHTML(xml, fontSize) {
     .replaceAll(/\t/g, "    ")
     .replaceAll(/&lt;/g, openAngularBracket)
     .replaceAll(/&gt;/g, closedAngularBracket)
-    .replaceAll(openAngularBracket + "/", "<code style=\"color:#73C2E1;\">&lt;/</code><code  style=\"color:#1960DB;\">")
+    .replaceAll(openAngularBracket + "/", "<code style=\"color:#73C2E1;\">&lt;/</code><code  style=\"color:#346187;\">")
     .replaceAll(/\n\s*\n\s*/g, "");
   return `<pre style="font-size:${fontSize}px;">${html}</pre>`;
 }
+

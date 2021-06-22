@@ -1,77 +1,61 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
 	<m:App>
-		<f:DynamicPage id="page" showFooter="true" fitContent="true">
-			<f:title>
-				<f:DynamicPageTitle>
-					<f:heading>
-						<m:Title text="XML Visual Editor" />
-					</f:heading>
-				</f:DynamicPageTitle>
-			</f:title>
-			<f:content>
-				<l:ResponsiveSplitter>
-					<l:PaneContainer>
-						<l:SplitPane>
-							<m:Panel>
-								<m:Toolbar>
-									<m:content>
-										<m:ToolbarSpacer />
-										<m:Image src="resources/images/undo.png" press="onUndo" id="undoButton" tooltip="Undo the last action" width="3%" />
-										<m:Button text="Reset" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
-										<m:Image src="resources/images/redo.png" press="onRedo" id="redoButton" tooltip="Redo the last undone action" width="6%" />
-										<m:ToolbarSpacer />
-										<m:Image src="resources/images/plus.png" press="onAdd" tooltip="Add child" width="4%" />
-										<m:Image src="resources/images/minus.png" press="onRemove" tooltip="Remove this element and all of his children" width="4%" />
-										<m:Image src="resources/images/duplicate.png" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" width="4%" />
-										<m:ToolbarSpacer />
-									</m:content>
-								</m:Toolbar>
-								<m:Tree showNoData="false" items="{path: '/data', templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelect">
-									<m:items>
-										<m:CustomTreeItem cd:id="{id}">
-											<!-- Key input -->
-											<m:Label text="{key}" visible="true" />
-											<m:Input value="{key}" visible="false" submit="onKeySubmit" width="25%" />
-											<m:Image src="resources/images/pencil.png" visible="true" press="onKeyEdit" tooltip="Edit key" width="4%" />
-											<!-- Value input -->
-											<m:Label text="{value}" visible="true" />
-											<m:Input value="{value}" visible="false" submit="onValueSubmit" width="25%" />
-											<m:Image src="resources/images/pencil.png" visible="true" press="onValueEdit" tooltip="Edit value" width="4%" />
-											<!-- Move buttons -->
-											<m:Image src="resources/images/up_arrow.png" press="onMoveUp" tooltip="Move this element up" width="4%" />
-											<m:Image src="resources/images/down_arrow.png" press="onMoveDown" tooltip="Move this element down" width="5.5%" />
-										</m:CustomTreeItem>
-									</m:items>
-								</m:Tree>
-							</m:Panel>
-						</l:SplitPane>
-						<l:SplitPane>
-							<m:Panel class="sapUiResponsiveMargin">
-								<m:Toolbar>
-									<m:content>
-										<m:Button text="XML" press="onXMLSwitch" />
-										<m:Button text="Compact XML" press="onCompactXMLSwitch" />
-										<m:Button text="JSON" press="onJSONSwitch" />
-										<m:Slider value="30" width="50%" class="sapUiSmallMarginBottom" id="fontSizeSlider" min="15" max="50" liveChange="onSliderChange"/>
-									</m:content>
-								</m:Toolbar>
-								<m:FormattedText htmlText="{/preview}" class="test" />
-							</m:Panel>
-						</l:SplitPane>
-					</l:PaneContainer>
-				</l:ResponsiveSplitter>
-			</f:content>
-			<f:footer>
-				<m:Bar>
-					<m:contentLeft>
-						<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
-					</m:contentLeft>
-					<m:contentMiddle></m:contentMiddle>
-					<m:contentRight>
-						<m:Button type="Accept" text="Export" press="onExport" enabled="false" tooltip="Save the changes and export the file" />
-					</m:contentRight>
-				</m:Bar>
-			</f:footer>
-		</f:DynamicPage>
+		<m:Page id="page" showFooter="true" title="XML visual editor">
+			<m:content>
+				<m:HBox width="auto" height="90%">
+					<m:VBox height="auto" width="50%">
+						<m:OverflowToolbar>
+							<m:ToolbarSpacer />
+							<m:Button text="Undo" icon="sap-icon://arrow-left" iconFirst="true" width="auto" press="onUndo" id="undoButton" tooltip="Undo the last action" />
+							<m:Button text="Reset" icon="sap-icon://reset" iconFirst="true" width="auto" iconDensityAware="false" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
+							<m:Button text="Redo" icon="sap-icon://arrow-right" iconFirst="false" width="auto" iconDensityAware="false" press="onRedo" id="redoButton" tooltip="Redo the last undone action" />
+							<m:ToolbarSpacer />
+							<m:Button text="Add" icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="Add child" id="addButton" enabled="false"/>
+							<m:Button text="Remove" icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="Remove this element and all of his children" id="removeButton" enabled="false"/>
+							<m:Button text="Duplicate" icon="sap-icon://duplicate" iconFirst="true" width="auto" iconDensityAware="false" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" id="duplicateButton" enabled="false"/>
+							<m:Button text="Edit" icon="sap-icon://edit" visible="true" press="onEdit" tooltip="Edit the key and the value of the selected item" id="editButton" enabled="false"/>
+							<m:ToolbarSpacer />
+						</m:OverflowToolbar>
+						<m:ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
+							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
+								<m:items>
+									<m:CustomTreeItem cd:id="{id}" >
+										<!-- Key input -->
+										<m:Label text="{key}" visible="true" />
+										<m:Input value="{key}" visible="false" submit="onSubmit" />
+										<!-- Value input -->
+										<m:Label text="{value}" visible="true" class="padding-side" />
+										<m:Input value="{value}" visible="false" submit="onSubmit" />
+										<m:Label width="80%" />
+										<!-- Move buttons -->
+										<m:Button icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" />
+										<m:Button icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="Move this element down" />
+									</m:CustomTreeItem>
+								</m:items>
+							</m:Tree>
+						</m:ScrollContainer>
+					</m:VBox>
+
+					<m:VBox height="auto" width="50%" class="sapUiResponsiveMargin">
+						<m:OverflowToolbar>
+							<m:Button text="XML" press="onXMLSwitch" />
+							<m:Button text="Compact XML" press="onCompactXMLSwitch" />
+							<m:Button text="JSON" press="onJSONSwitch" />
+						</m:OverflowToolbar>
+						<m:ScrollContainer horizontal="false" vertical="true" width="100%" height="100%">
+							<m:FormattedText htmlText="{/preview}" class="test" height="100%" />
+						</m:ScrollContainer>
+						<m:Slider value="20" width="100%" id="fontSizeSlider" min="10" max="40" liveChange="onSliderChange" />
+					</m:VBox>
+				</m:HBox>
+			</m:content>
+			<m:footer>
+				<m:OverflowToolbar>
+					<m:ToolbarSpacer />
+					<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
+					<m:Button type="Accept" text="Export" press="onExport" enabled="false" tooltip="Save the changes and export the file" />
+				</m:OverflowToolbar>
+			</m:footer>
+		</m:Page>
 	</m:App>
 </mvc:View>
