@@ -81,34 +81,34 @@ Ogni attributo è rappresentato nel modo seguente:
 
 Tutti gli attributi sono salvati in un Array.
 
-### 3. Conversioni
+## 3. Conversioni
 
 All'interno del file js/converters.js sono presenti tutte le funzioni di conversione.
 
-#### 3.1 XMLtoCustomJSON
+### 3.1 XMLtoCustomJSON
 
-##### Parametri:
+#### Parametri:
 - xml: *string* - il file XML sotto forma di stringa.
 
-##### Ritorno:
+#### Ritorno:
 Un oggetto contenente la struttura ad albero dei tag e l'Array di attributi.
 
-##### Funzionamento:
+#### Funzionamento:
 
 La prima operazione effettuata è la rimozione di caratteri inutili all'interpretazione dei dati ("\n", "\t" e spaziature fra i tag).
 
 Successivamente la stringa è passata ad un oggetto DOMParser che la converte in un [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document?retiredLocale=it) . La radice di quest'ultimo è attraversata ricorsivamente dalla funzione interna XMLDocToCustomJSON, che costruisce le due strutture per tag e attributi.
 
-##### 3.1.1 XMLDocToCustomJSON
+#### 3.1.1 XMLDocToCustomJSON
 
-###### Parametri:
+##### Parametri:
 - node: *[Node](https://developer.mozilla.org/en-US/docs/Web/API/Node)* - il nodo da processare
 - id: *number* - opzionale - è passato quando si analizzano gli attributi per avere l'id del tag al quale l'attributo appartiene
 
-###### Ritorno:
+##### Ritorno:
 Il CustomJSON contenente i tag (non gli attributi, salvati con una closure).
 
-###### Funzionamento:
+##### Funzionamento:
 
 Si distinguono quattro [tipologie di nodo](https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType):
 - TEXT_NODE: rappresente il contenuto finale di un tag; il valore del nodo viene ritornato direttamente.
@@ -116,15 +116,19 @@ Si distinguono quattro [tipologie di nodo](https://developer.mozilla.org/en-US/d
 - ATTRIBUTE_NODE: rappresenta un attributo XML; viene ritornato un oggetto CustomJSON attributo.
 - DOCUMENT_NODE: rappresenta il genitore della radice del Document; viene ritornata l'elaborazione del figlio (il nodo radice).
 
-#### 3.2 CustomJSONToXML:
+### 3.2 CustomJSONToXML:
 
-##### Parametri:
+#### Parametri:
 - customJson: *object* - l'elemento CustomJSON da convertire
 - attributes: *object* - l'Array di attributi CustomJSON
 - formatter: *object* - l'oggetto della classe Formatter che si occupa della formattazione della stringa prodotta dalla funzione
 
-##### Ritorno:
+#### Ritorno:
 Una stringa formattata (secondo i criteri del formatter fornito come argomento) che rappresenta il CustomJSON passato, compresi gli attributi, se forniti.
 
-##### Funzionamento:
+#### Funzionamento:
 La funzione attraversa ricorsivamente il CustomJSON componendo la stringa finale utilizzando il formatter.
+
+## 4. Utilizzo OpenUI5
+
+Il framework [OpenUI5](resources/images/uganda_knuckles.png) è la versione open source di SapUI5
