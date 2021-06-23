@@ -35,7 +35,7 @@ L'applicazione sfrutta le seguenti tecnologie:
 - JavaScript
 - HTML
 - CSS
-- Framework OpenUI5
+- Framework [OpenUI5](https://openui5.org)
 
 ## 2. Custom JSON
 
@@ -129,6 +129,35 @@ Una stringa formattata (secondo i criteri del formatter fornito come argomento) 
 #### Funzionamento:
 La funzione attraversa ricorsivamente il CustomJSON componendo la stringa finale utilizzando il formatter.
 
-## 4. Utilizzo OpenUI5
+## 4. Utilizzo di OpenUI5
 
-Il framework [OpenUI5](resources/images/uganda_knuckles.png) è la versione open source di SapUI5
+Il framework openUI5 è la versione open source di [SapUI5](https://sapui5.hana.ondemand.com/), framework in JavaScript per la realizzazione di interfacce grafiche per applicazioni gestionali.
+
+### 4.1 Struttura della pagina
+
+La pagina presenta due sezioni principali:
+- a sinistra si trova l'editor grafico, contenente:
+    - una [OverflowToolbar](https://openui5.hana.ondemand.com/api/sap.m.OverflowToolbar) con i seguenti [Button](https://openui5.hana.ondemand.com/api/sap.m.Button):
+        - undo: annulla l'ultima modifica
+        - reset: ripristina i dati allo stato di importazione
+        - redo: ripristina l'ultima modifica annullata
+        - add: aggiunge un sotto elemento all'elemento selezionato
+        - remove: rimuove l'elemento selezionato e tutti i suoi sotto elementi
+        - duplicate: duplica l'elemento selezionato, mantenendo la posizione nella gerarchia
+        - edit key-value: consente di modificare chiave e valore dell'elemento selezionato
+        - edit attributes: apre un pannello che consente di visualizzare e modificare gli attributi dell'elemento selezionato
+    - un albero rappresentante i dati effettivi in cui ogni elemento è composto da:
+        - [Label](https://openui5.hana.ondemand.com/api/sap.m.Label) con nome del tag
+        - Label con valore del tag
+        - Button per spostare l'elemento in alto di una posizione
+        - Button per spostare l'elemento in basso di una posizione
+- a destra si trova un'anteprima del file XML prodotto, contenente:
+    - una OverflowToolbar con i seguenti Button che permettono di selezionare il tipo di formattazione:
+        - XML: formattazione XML classica
+        - Compact XML: formattazione XML in cui i contenuti foglia si trovano sulla stessa riga del tag
+    - un [FormattedText](https://openui5.hana.ondemand.com/api/sap.m.FormattedText) per visualizzare l'anteprima consentendo l'evidenziazione della sintassi
+    - uno [Slider](https://openui5.hana.ondemand.com/api/sap.m.Slider) per cambiare la dimensione dei caratteri dell'anteprima
+Al termine della pagina si trova un footer con i seguenti Button:
+    - Cancel: ignora tutte le modifiche e ritorna alla pagina iniziale
+    - Export: salva tutte le modifiche e ritorna alla pagina iniziale
+ 
