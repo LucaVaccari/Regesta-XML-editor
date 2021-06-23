@@ -17,4 +17,4 @@ model.allAttributes = attributes;
 json = customJSONtoJSON(model);
 dataQueueIndex = 0;
 
-const formatter = new HTMLFormatter("000000", "346187", "FF6600", "FFAA00", "73C2E1", true);
+const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "#FFAA00", "#73C2E1", true);
