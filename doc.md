@@ -160,4 +160,35 @@ La pagina presenta due sezioni principali:
 Al termine della pagina si trova un footer con i seguenti Button:
     - Cancel: ignora tutte le modifiche e ritorna alla pagina iniziale
     - Export: salva tutte le modifiche e ritorna alla pagina iniziale
- 
+
+### 4.2 MVC
+Dato che OpenUI5 implementa il pattern model-view-controller, ogni aggiornamento del modello si riflette nell'interfaccia, così come ogni cambiamento dell'intefaccia si riflette nel modello.
+
+### 4.3 Controller
+
+#### 4.3.1 Funzioni del controller
+
+##### 4.3.1.1 getRecordElement
+
+###### Parametri:
+- event: *object* - l'evento dal quale si vuole ottenere l'elemento grafico dell'albero
+
+###### Ritorno:
+L'elemento grafico dell'albero.
+
+###### Funzionamento:
+
+Ottiene dall'id dell'origine dell'evento l'elemento da ritornare.
+
+##### 4.3.1.2 getCustomIdFromRecord
+
+###### Parametri:
+- record: *object* - l'elemento grafico dell'alber dal quale si vuole ottenere l'id personalizzato
+
+###### Ritorno:
+L'id personalizzato dell'elemento grafico fornito come argomento.
+
+###### Funzionamento:
+
+Ottiene l'id personalizzato e lo ritorna.
+
