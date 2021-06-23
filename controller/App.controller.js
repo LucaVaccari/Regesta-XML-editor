@@ -28,6 +28,8 @@ sap.ui.define(
         root.getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
         root.getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
+        clearTree(model.data);
+        dataQueue[0] = JSON.parse(JSON.stringify(model.data));
         update();
       },
 
@@ -274,7 +276,7 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () {},
+      onExport: function () { },
 
       onToggleOpenState: update,
 
@@ -326,6 +328,8 @@ function findParentFromId(tree, id) {
 }
 
 function clearTree(tree) {
+  if (typeof tree == "string") return;
+
   for (let k in tree) {
     if (!tree[k] || typeof tree[k] !== "object") {
       continue; // If null or not an object, skip to the next iteration
@@ -347,7 +351,7 @@ function clearTree(tree) {
         )
           arr.push(el);
       }
-      tree[k] = arr;
+      tree[k] = (typeof arr[0] != "object")? arr[0] : arr;
     }
 
     clearTree(tree[k]);
@@ -379,7 +383,7 @@ function update() {
 
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = HTMLtoFormatted(
-    formatXML(model.data, model.allAttributes, formatter),
+    CustomJSONToXML(model.data, model.allAttributes, formatter),
     fontSize
   );
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
@@ -396,7 +400,7 @@ function update() {
     if (subTree != undefined)
       node
         .getContent()
-        [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+      [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
     else
       console.error(
         "You shouldn't reach this point. subtree.value is undefined"

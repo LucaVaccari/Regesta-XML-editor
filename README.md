@@ -21,6 +21,7 @@ function getById(id): ritorna il sottoalbero con l'id fornito
 
 - [ ] documentazione
 - bug:
+  - [ ] formattazione
 - conversioni:
   - [x] XMLtoJSON
   - [x] JSONtoOurJSON
@@ -67,4 +68,3 @@ function getById(id): ritorna il sottoalbero con l'id fornito
   - [x] font size slider
   - [x] formatter
   - [ ] database con file salvati e utenti registrati
-  

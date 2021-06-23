@@ -31,12 +31,12 @@ function _XMLDocToObjectSchema(node) {
   return obj;
 }
 
-function formatXML(cj, attributes, formatter) {
+function CustomJSONToXML(customJson, attributes, formatter) {
   let xml = "";
 
-  if (typeof cj != "object") return cj;
-  if (Array.isArray(cj)) {
-    for (let el of cj) {
+  if (typeof customJson != "object") return customJson;
+  if (Array.isArray(customJson)) {
+    for (let el of customJson) {
       xml += formatter.beforeOpenKey + el.key;
       // ATTRIBUTES START
       for (let attribute of attributes.filter((a) => a.parentId == el.id)) {
@@ -48,12 +48,12 @@ function formatXML(cj, attributes, formatter) {
       // ATTRIBUTES END
       xml += formatter.afterOpenKey;
       xml += formatter.surroundContent(
-        formatXML(el.value, attributes, formatter)
+        CustomJSONToXML(el.value, attributes, formatter)
       );
       xml += formatter.surroundCloseKey(el.key);
     }
   } else {
-    console.warn("JS goes BRRRR");
+    console.warn("You shouldn't reach this point");
   }
   return xml.replaceAll(/\n\s*\n/g, "\n");
 }

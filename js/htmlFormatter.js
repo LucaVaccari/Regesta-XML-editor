@@ -1,4 +1,4 @@
-class HTMLFormatter extends XMLFormatter {
+class HTMLFormatter extends Formatter {
   constructor(
     baseColor,
     tagColor,

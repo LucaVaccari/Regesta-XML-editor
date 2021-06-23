@@ -1,5 +1,5 @@
 // b = before, a = after
-class XMLFormatter {
+class Formatter {
   constructor(
     indent = "\t",
     compact = true,
