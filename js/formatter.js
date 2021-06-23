@@ -3,29 +3,33 @@ class Formatter {
   constructor(
     indent = "\t",
     compact = true,
-    bOpenKey = "<",
+    bKey = "<",
+    aKey = ">",
     bAttributeName = " ",
     aAttributeName = "",
     bAttributeValue = '"',
     aAttributeValue = '"',
-    aOpenKey = ">",
     bContent = "",
     aContent = "",
-    bCloseKey = "</",
-    aCloseKey = ">\n"
+    bCloseTag = "/"
   ) {
-    this.indent = indent;
+    this._indent = indent;
     this.compact = compact;
-    this._bOpenKey = bOpenKey;
+    this._bKey = bKey;
+    this._aKey = aKey;
     this._bAttributeName = bAttributeName;
     this._aAttributeName = aAttributeName;
     this._bAttributeValue = bAttributeValue;
     this._aAttributeValue = aAttributeValue;
-    this._aOpenKey = aOpenKey;
     this._bContent = bContent;
     this._aContent = aContent;
-    this._aCloseKey = aCloseKey;
-    this._bCloseKey = bCloseKey;
+    this._bCloseTag = bCloseTag;
+
+    // TEST START
+    let testString = `sosis`;
+
+    console.log(this.surround("giorgio", testString, ["nomeAttributo"], ["valoreAttributo"]));
+    // TEST END
   }
 
   get beforeOpenKey() {
@@ -51,27 +55,32 @@ class Formatter {
   surroundContent(content) {
     if (content == "") return "";
     if (this.compact) {
-      if (content.startsWith(this._bOpenKey)) {
+      if (content.trimLeft().startsWith(this.bOpenKey)) {
+        //if (new RegExp("^\s+" + this.bOpenKey).test(content)) {
+
+        let indentedContent = content.replaceAll(/\n/g, "\n" + this.indent);
         let returnValue =
           "\n" +
           this._surround(
-            content.replaceAll(/\n/g, "\n" + this.indent),
+            indentedContent,//.slice(0, indentedContent.length - this.indent.length),
             this._bContent + this.indent,
             this._aContent
           );
-        return returnValue.slice(0, returnValue.length - 1);
+        return returnValue;
       } else {
+
         return this._surround(content, this._bContent, this._aContent);
       }
     } else {
+      let indentedContent = content.replaceAll(/\n/g, "\n" + this.indent);
       let returnValue =
-        // "\n" +
+        "\n" +
         this._surround(
-          content.replaceAll(/\n/g, "\n" + this.indent),
+          indentedContent.slice(0, indentedContent.length - this.indent.length) + "\n",
           this._bContent + this.indent,
           this._aContent
-        ) + "\n";
-      return returnValue//.slice(0, returnValue.length - 1);
+        );
+      return returnValue;
     }
   }
 
@@ -81,6 +90,45 @@ class Formatter {
 
   _surround(inner, lx, rx) {
     return "" + lx + inner + rx;
+  }
+
+  surround(key, content, attributeNames, attributeValues, isLast = true) {
+    let returnValue = "";
+    //if (isFirst) returnValue += "\n";
+    returnValue += this._bKey + key;
+    returnValue += this._attributes(attributeNames, attributeValues);
+
+    // autofinishing tag
+    if (content == "") {
+      returnValue += " " + this._bCloseTag + this._aKey;
+      return returnValue;
+    }
+
+    // tag containing another tag
+    returnValue += this._aKey;
+
+    if (new RegExp("^\s*" + this._bKey).test(content.trimLeft())) {
+      returnValue += this._indentContent("\n" + content);
+    }
+    else {
+      returnValue += content;
+    }
+
+    returnValue += this._bKey + this._bCloseTag + key + this._aKey + "\n";
+    return returnValue;
+  }
+
+  _attributes(attributeNames, attributeValues) {
+    let returnValue = "";
+    for (let index in attributeNames) {
+      returnValue += this._bAttributeName + attributeNames[index] + this._aAttributeName + "=" + this._bAttributeValue + attributeValues[index] + this._aAttributeValue;
+    }
+    return returnValue;
+  }
+
+  _indentContent(content) {
+    //TODO: change regex to replace all occurrences except the last one
+    return content.replaceAll(/\n/g, "\n" + this._indent);
   }
 }
 

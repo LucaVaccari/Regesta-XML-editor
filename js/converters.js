@@ -37,25 +37,15 @@ function CustomJSONToXML(customJson, attributes, formatter) {
   if (typeof customJson != "object") return customJson;
   if (Array.isArray(customJson)) {
     for (let el of customJson) {
-      xml += formatter.beforeOpenKey + el.key;
-      // ATTRIBUTES START
-      for (let attribute of attributes.filter((a) => a.parentId == el.id)) {
-        xml += formatter.surroundAttribute(
-          attribute.attributeKey,
-          attribute.attributeValue
-        );
-      }
-      // ATTRIBUTES END
-      xml += formatter.afterOpenKey;
-      xml += formatter.surroundContent(
-        CustomJSONToXML(el.value, attributes, formatter)
-      );
-      xml += formatter.surroundCloseKey(el.key);
+      let isLast = customJson.indexOf(el) == customJson.length - 1;
+      console.log(isLast);
+      let filteredAttributes = attributes.filter(a => a.parentId == el.id)
+      xml += formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast);
     }
   } else {
-    console.warn("You shouldn't reach this point");
+    console.warn("You shouldn't reach this point CustomJSONToXML");
   }
-  return xml.replaceAll(/\n\s*\n/g, "\n");
+  return xml;//.replaceAll(/\n\s*\n/g, "\n");
 }
 
 // if an element is not a leaf, it's incapsulated into an array

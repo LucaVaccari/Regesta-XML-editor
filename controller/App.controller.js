@@ -380,12 +380,14 @@ function replaceIds(tree) {
 
 function update() {
   clearTree(model.data);
-
+  console.log(CustomJSONToXML(model.data, model.allAttributes, formatter));
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = HTMLtoFormatted(
     CustomJSONToXML(model.data, model.allAttributes, formatter),
     fontSize
   );
+
+  //console.log(model.preview);
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
