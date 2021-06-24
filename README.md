@@ -16,6 +16,8 @@
   - [ ] rimuovere gli attriubuti quando si rimuove un elemento
   - [ ] disabilitare pulsanti di movimento quando serve
   - [ ] tooltip mancanti in giro
+  - [ ] pulsanti move fuori dalla toolbar
+  - disattivare i pulsanti quando nulla è selezionato
 - nice to have:
   - [ ] responsive, mobile first
   - [ ] translatable text

@@ -566,12 +566,6 @@ function closeKeyValueInputs() {
   lastKeyInput?.setVisible(false);
   lastValueInput?.setVisible(false);
   lastKeyLabel?.setVisible(true);
-  //lastValueLabel?.setVisible(false);
 
-  if (lastKeyInput != undefined) {
-    let id = getCustomIdFromRecord(lastKeyInput.oParent.oParent);
-    let subTree = findSubTreeById(model.data, id);
-    lastValueLabel.setVisible(!Array.isArray(subTree.value));
-  }
-
+  update();
 }

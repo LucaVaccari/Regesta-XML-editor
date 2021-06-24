@@ -10,8 +10,8 @@
 							<m:Button icon="sap-icon://reset" iconFirst="true" width="auto" iconDensityAware="false" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
 							<m:Button icon="sap-icon://redo" iconFirst="false" width="auto" iconDensityAware="false" press="onRedo" id="redoButton" tooltip="Redo the last undone action" />
 							<m:ToolbarSpacer />
-							<m:Button icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="Remove this element (and all of his children)" id="removeButton" enabled="false" />
 							<m:Button icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="Add child" id="addButton" enabled="false" />
+							<m:Button icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="Remove this element (and all of his children)" id="removeButton" enabled="false" />
 							<m:Button icon="sap-icon://duplicate" iconFirst="true" width="auto" iconDensityAware="false" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" id="duplicateButton" enabled="false" />
 							<m:ToolbarSpacer />
 							<m:Button text="Key-value" icon="sap-icon://edit" visible="true" press="onEdit" tooltip="Edit the key and the value of the selected item" id="editButton" enabled="false" />
