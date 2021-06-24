@@ -11,8 +11,8 @@
 				<List noDataText="No attributes" id="attributesList" mode="Delete" delete="onRemoveAttribute" items="{path:'/selectedAttributes', templateShareable: false}">
 					<CustomListItem cd:id="{id}">
 						<HBox>
-							<Input value="{attributeKey}" change="onAttributeEdit"></Input>
-							<Input value="{attributeValue}" change="onAttributeEdit"></Input>
+							<Input value="{attributeKey}" change="onAttributesModify"></Input>
+							<Input value="{attributeValue}" change="onAttributesModify"></Input>
 						</HBox>
 					</CustomListItem>
 				</List>

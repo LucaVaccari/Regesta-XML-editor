@@ -240,7 +240,6 @@ sap.ui.define(
           let previousData = JSON.parse(JSON.stringify(dataQueue[++dataQueueIndex]));
           model.data = previousData.noAttributes;
           model.allAttributes = previousData.attributes;
-          console.log(previousData);
         }
         update();
       },
@@ -289,10 +288,41 @@ sap.ui.define(
 
       onExport: function () { },
 
-      
-      onAttributeEdit: function () {
+
+      onAttributesModify: function () {
         onModify();
         update();
+      },
+
+      onAddAttribute: function () {
+        let selected = tree.getSelectedItems()[0];
+        let newAttr = {
+          id: lastId++,
+          attributeKey: "name",
+          attributeValue: "value",
+          parentId: getCustomIdFromRecord(selected),
+        }
+
+        model.selectedAttributes.push(newAttr);
+        model.allAttributes.push(newAttr);
+        this.onAttributesModify();
+      },
+
+      onRemoveAttribute: function(event) {
+        let item = event.getParameter("listItem");
+        let id = item.mAggregations.customData[0].mProperties.value;
+        model.selectedAttributes = model.selectedAttributes.filter(a => a.id != id);
+        model.allAttributes = model.allAttributes.filter(a => a.id != id);
+        this.onAttributesModify();
+      },
+
+      onClearAttributes: function() {
+        let selected = tree.getSelectedItems()[0];
+        let parentId = getCustomIdFromRecord(selected);
+
+        model.allAttributes = model.allAttributes.filter(a => a.parentId != parentId);
+        model.selectedAttributes = [];
+        this.onAttributesModify();
       },
 
       update: update
