@@ -2,10 +2,10 @@ const KEY_LABEL_INDEX = 0,
   KEY_INPUT_INDEX = 1,
   VALUE_LABEL_INDEX = 2,
   VALUE_INPUT_INDEX = 3,
-  MOVE_BUTTONS_INDEX = 5,
+  MOVE_UP_BUTTON_INDEX = 5,
   MOVE_DOWN_BUTTON_INDEX = 6;
 
-let jsonModel, view, tree, root, popoverView, attributesShown = true;
+let jsonModel, view, originalTree, root, popoverView, attributesShown = true;
 let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
 
 sap.ui.define(
@@ -23,9 +23,9 @@ sap.ui.define(
         view = this.getView();
         view.setModel(jsonModel);
 
-        tree = view.byId("tree");
-        root = tree.getItems()[0];
-        root.getContent()[0].getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
+        originalTree = view.byId("tree");
+        root = originalTree.getItems()[0];
+        root.getContent()[0].getContent()[MOVE_UP_BUTTON_INDEX].setVisible(false);
         root.getContent()[0].getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         clearTree(model.data);
@@ -38,7 +38,7 @@ sap.ui.define(
       },
 
       onEdit: function () {
-        let selected = tree.getSelectedItems()[0];
+        let selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
 
         let buttons = selected.getContent()[0].getContent();
@@ -76,7 +76,7 @@ sap.ui.define(
           });
         }
         this._popover.then(function (popover) {
-          popover.openBy(tree.getSelectedItems()[0]);
+          popover.openBy(originalTree.getSelectedItems()[0]);
           popoverView = popover;
         });
       },
@@ -99,7 +99,7 @@ sap.ui.define(
       },
 
       onAdd: function () {
-        let selected = tree.getSelectedItems()[0];
+        let selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
 
         let id = getCustomIdFromRecord(selected);
@@ -119,14 +119,15 @@ sap.ui.define(
         onModify();
         update();
 
-        tree.expand(tree.indexOfItem(selected));
+        originalTree.expand(originalTree.indexOfItem(selected));
 
         update();
       },
 
       onRemove: function () {
         closeKeyValueInputs();
-        let selected = tree.getSelectedItems()[0];
+
+        let selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
 
         let id = getCustomIdFromRecord(selected);
@@ -139,10 +140,22 @@ sap.ui.define(
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
+        // remove attributes
+        removeAttributesInSubTree(subTree);
+        function removeAttributesInSubTree(tree) {
+          if (Array.isArray(tree.value)) {
+            model.allAttributes = model.allAttributes.filter(a => a.parentId != tree.id);
+            for (let el of tree.value) {
+              removeAttributesInSubTree(el);
+            }
+          } else {
+            model.allAttributes = model.allAttributes.filter(a => a.parentId != tree.id);
+          }
+        }
+
         if (parent.value.length <= 1) {
           parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
         }
-
 
         delete subTree.key;
         delete subTree.value;
@@ -155,7 +168,7 @@ sap.ui.define(
       },
 
       onDuplicate: function () {
-        let selected = tree.getSelectedItems()[0];
+        let selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
 
         let id = getCustomIdFromRecord(selected);
@@ -173,14 +186,41 @@ sap.ui.define(
           id: lastId++,
         };
 
+        // add attributes
+        addAttributesInSubTree(subTree, newSubTree);
+        function addAttributesInSubTree(originalTree, newTree) {
+          let filteredAttributes = model.allAttributes.filter(a => a.parentId == originalTree.id);
+          if (Array.isArray(originalTree.value)) {
+            for (let index in originalTree.value) {
+              for (let attribute of filteredAttributes) {
+                model.allAttributes.push({
+                  id: lastId++,
+                  attributeKey: attribute.attributeKey,
+                  attributeValue: attribute.attributeValue,
+                  parentId: newTree.id,
+                })
+              }
+              addAttributesInSubTree(originalTree.value[index], newTree.value[index]);
+            }
+          } else {
+            for (let attribute of filteredAttributes) {
+              model.allAttributes.push({
+                id: lastId++,
+                attributeKey: attribute.attributeKey,
+                attributeValue: attribute.attributeValue,
+                parentId: newTree.id,
+              })
+            }
+          }
+        }
+
         if (Array.isArray(parent.value)) {
           for (let index in parent.value) {
             if (parent.value[index].id == id) {
-              parent.value.splice(index, 0, newSubTree);
+              parent.value.splice(Number(index) + 1, 0, newSubTree);
               break;
             }
           }
-          //parent.value.push(subTreeValue);
         }
         else {
           console.warn("You shouldn't reach this point onDuplicate");
@@ -265,7 +305,7 @@ sap.ui.define(
       },
 
       onSelect: function () {
-        let selected = tree.getSelectedItems()[0];
+        let selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
         let id = getCustomIdFromRecord(selected);
         let isRoot = id == getCustomIdFromRecord(root);
@@ -308,7 +348,7 @@ sap.ui.define(
       },
 
       onAddAttribute: function () {
-        let selected = tree.getSelectedItems()[0];
+        let selected = originalTree.getSelectedItems()[0];
         let newAttr = {
           id: lastId++,
           attributeKey: "name",
@@ -330,7 +370,7 @@ sap.ui.define(
       },
 
       onClearAttributes: function () {
-        let selected = tree.getSelectedItems()[0];
+        let selected = originalTree.getSelectedItems()[0];
         let parentId = getCustomIdFromRecord(selected);
 
         model.allAttributes = model.allAttributes.filter(a => a.parentId != parentId);
@@ -477,17 +517,26 @@ function update() {
   view.byId("resetButton").setEnabled(currentData != originalData);
 
   jsonModel.updateBindings(true);
-  for (let node of tree.getItems()) {
+  for (let node of originalTree.getItems()) {
     let id = getCustomIdFromRecord(node);
     let subTree = findSubTreeById(model.data, id);
-    if (subTree != undefined)
-      node
-        .getContent()[0].getContent()
+    if (subTree != undefined) {
+      node.getContent()[0].getContent()
       [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+    }
     else
       console.error(
         "You shouldn't reach this point. subtree.value is undefined"
       );
+
+    // disable move up and move down buttons
+    let parent = findParentFromId(model.data[0], id);
+    if (parent != undefined) {
+      node.getContent()[0].getContent()
+      [MOVE_UP_BUTTON_INDEX].setEnabled(parent.value[0].id != id);
+      node.getContent()[0].getContent()
+      [MOVE_DOWN_BUTTON_INDEX].setEnabled(parent.value[parent.value.length - 1].id != id);
+    }
 
     let keyLabel = node.getContent()[0].getContent()[KEY_LABEL_INDEX];
     keyLabel.setWidth(keyLabel.getText().length + 6 + "em");
