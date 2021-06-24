@@ -29,7 +29,11 @@ sap.ui.define(
         root.getContent()[0].getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         clearTree(model.data);
-        dataQueue[0] = JSON.parse(JSON.stringify(model.data));
+        let initData = {
+          noAttributes: model.data,
+          attributes: model.allAttributes,
+        }
+        dataQueue[0] = JSON.parse(JSON.stringify(initData));
         update();
       },
 
@@ -223,7 +227,9 @@ sap.ui.define(
 
       onUndo: function () {
         if (dataQueueIndex >= 1) {
-          model.data = JSON.parse(JSON.stringify(dataQueue[--dataQueueIndex]));
+          let previousData = JSON.parse(JSON.stringify(dataQueue[--dataQueueIndex]));
+          model.data = previousData.noAttributes;
+          model.allAttributes = previousData.attributes;
         }
 
         update();
@@ -231,13 +237,18 @@ sap.ui.define(
 
       onRedo: function () {
         if (dataQueueIndex < dataQueue.length - 1) {
-          model.data = JSON.parse(JSON.stringify(dataQueue[++dataQueueIndex]));
+          let previousData = JSON.parse(JSON.stringify(dataQueue[++dataQueueIndex]));
+          model.data = previousData.noAttributes;
+          model.allAttributes = previousData.attributes;
+          console.log(previousData);
         }
         update();
       },
 
       onReset: function () {
-        model.data = JSON.parse(JSON.stringify(dataQueue[0]));
+        let previousData = JSON.parse(JSON.stringify(dataQueue[0]));
+        model.data = previousData.noAttributes;
+        model.allAttributes = previousData.attributes;
         onModify();
         update();
       },
@@ -277,6 +288,12 @@ sap.ui.define(
       },
 
       onExport: function () { },
+
+      
+      onAttributeEdit: function () {
+        onModify();
+        update();
+      },
 
       update: update
     });
@@ -401,7 +418,7 @@ function update() {
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
-  let currentData = JSON.stringify(model.data);
+  let currentData = JSON.stringify({ noAttributes: model.data, attributes: model.allAttributes });
   let originalData = JSON.stringify(dataQueue[0]);
   view.byId("resetButton").setEnabled(currentData != originalData);
 
@@ -429,11 +446,15 @@ function update() {
 }
 
 function onModify() {
-  let currentData = JSON.stringify(model.data);
+  let currentData = {
+    noAttributes: model.data,
+    attributes: model.allAttributes
+  };
+  let currentDataString = JSON.stringify(currentData);
   let previousData = JSON.stringify(dataQueue[dataQueueIndex]);
-  if (currentData != previousData) {
+  if (currentDataString != previousData) {
     dataQueue = dataQueue.slice(0, ++dataQueueIndex);
-    let dataCopy = JSON.parse(currentData);
+    let dataCopy = JSON.parse(currentDataString);
     dataQueue.push(dataCopy);
   }
 }

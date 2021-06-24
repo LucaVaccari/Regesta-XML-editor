@@ -11,7 +11,6 @@
   - [ ] import del file
   - [ ] download del file
 - grafica:
-  - [ ] responsive label
   - [ ] mostrare nome del file
 - piccoli dettagli:
   - [ ] funzione surround nel formatter che prende tutti gli argomenti
@@ -23,4 +22,5 @@
   - [ ] JSON view
   - [ ] syntax highlighting JSON
   - [ ] database con file salvati e utenti registrati
+  - [ ] liveChange
 - [ ] documentazione
