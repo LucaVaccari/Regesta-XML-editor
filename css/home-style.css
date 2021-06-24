@@ -14,14 +14,14 @@ body {
   overflow: hidden;
 }
 
-section.home {
+section {
   margin-top: 15%;
   position: relative;
   width: 100%;
   min-height: 100vh;
 }
 
-header.home {
+header {
   position: fixed;
   top: 0;
   left: 0;
@@ -49,7 +49,7 @@ header.home {
   text-align: center;
 }
 
-h1.home {
+h1 {
   color: #fff;
   font-size: 3.5em;
   opacity: 0;
@@ -57,7 +57,7 @@ h1.home {
   animation-delay: 0.5s;
 }
 
-h3.home {
+h3 {
   color: #fff;
   font-size: 1.5em;
   opacity: 0;
@@ -88,7 +88,7 @@ h3.home {
   transform: scale(1.2);
 }
 
-footer.home {
+footer {
   position: fixed;
   display: flex;
   padding: 10px 10px 0px 10px;
@@ -107,7 +107,7 @@ footer.home {
   animation-delay: 2s;
 }
 
-footer.home div a {
+footer div a {
   color: #fff;
   text-decoration: none;
   user-select: none;
@@ -117,11 +117,11 @@ footer.home div a {
   animation-delay: calc(2s + 0.2s * var(--i));
 }
 
-footer.home a:hover {
+footer a:hover {
   color: #73c2e1;
 }
 
-footer.home .texts {
+footer .texts {
   margin-right: 10%;
   margin-left: 5%;
   width: 80%;
@@ -129,7 +129,7 @@ footer.home .texts {
   display: flex;
 }
 
-footer.home .icons {
+footer .icons {
   margin-left: 50%;
   margin-right: 5%;
   width: 50%;
