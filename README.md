@@ -20,7 +20,6 @@
   - [ ] responsive, mobile first
   - [ ] translatable text
   - [ ] dark theme
-  - [ ] syntax highlighting XML
   - [ ] JSON view
   - [ ] syntax highlighting JSON
   - [ ] database con file salvati e utenti registrati

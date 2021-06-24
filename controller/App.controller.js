@@ -25,8 +25,8 @@ sap.ui.define(
 
         tree = view.byId("tree");
         root = tree.getItems()[0];
-        root.getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
-        root.getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
+        root.getContent()[0].getContent()[MOVE_BUTTONS_INDEX].setVisible(false);
+        root.getContent()[0].getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         clearTree(model.data);
         dataQueue[0] = JSON.parse(JSON.stringify(model.data));
@@ -37,7 +37,7 @@ sap.ui.define(
         let selected = tree.getSelectedItems()[0];
         if (selected == undefined) return;
 
-        let buttons = selected.getContent();
+        let buttons = selected.getContent()[0].getContent();
 
         lastKeyLabel?.setVisible(true);
         lastKeyInput?.setVisible(false);
@@ -79,7 +79,7 @@ sap.ui.define(
 
       onSubmit: function (event) {
         let selected = getRecordElement(event);
-        let buttons = selected.getContent();
+        let buttons = selected.getContent()[0].getContent();
         buttons[KEY_INPUT_INDEX].setVisible(false);
         buttons[KEY_LABEL_INDEX].setVisible(true);
         buttons[VALUE_INPUT_INDEX].setVisible(false);
@@ -287,11 +287,11 @@ sap.ui.define(
 
 function getRecordElement(event) {
   let id = event.getSource().getId();
-  return sap.ui.getCore().getElementById(id).oParent;
+  return sap.ui.getCore().getElementById(id).oParent.oParent;
 }
 
 function getCustomIdFromRecord(record) {
-  return record.mAggregations.customData[0].mProperties.value;
+  return record.mAggregations.content[0].mAggregations.customData[2].mProperties.value;
 }
 
 function findSubTreeById(tree, id) {
@@ -380,14 +380,12 @@ function replaceIds(tree) {
 
 function update() {
   clearTree(model.data);
-  console.log(CustomJSONToXML(model.data, model.allAttributes, formatter));
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = HTMLtoFormatted(
     CustomJSONToXML(model.data, model.allAttributes, formatter),
     fontSize
   );
 
-  //console.log(model.preview);
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 
@@ -401,17 +399,17 @@ function update() {
     let subTree = findSubTreeById(model.data, id);
     if (subTree != undefined)
       node
-        .getContent()
+        .getContent()[0].getContent()
       [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
     else
       console.error(
         "You shouldn't reach this point. subtree.value is undefined"
       );
 
-    let keyLabel = node.getContent()[KEY_LABEL_INDEX];
+    let keyLabel = node.getContent()[0].getContent()[KEY_LABEL_INDEX];
     keyLabel.setWidth(keyLabel.getText().length + 6 + "em");
 
-    let valueLabel = node.getContent()[VALUE_LABEL_INDEX];
+    let valueLabel = node.getContent()[0].getContent()[VALUE_LABEL_INDEX];
     valueLabel.setWidth(valueLabel.getText().length + 6 + "em");
   }
 

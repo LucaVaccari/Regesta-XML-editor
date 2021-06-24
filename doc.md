@@ -149,7 +149,7 @@ La pagina presenta due sezioni principali:
     - duplicate: duplica l'elemento selezionato, mantenendo la posizione nella gerarchia
     - edit key-value: consente di modificare chiave e valore dell'elemento selezionato
     - edit attributes: apre un pannello che consente di visualizzare e modificare gli attributi dell'elemento selezionato
-  - un albero rappresentante i dati effettivi in cui ogni elemento è composto da:
+  - un albero rappresentante i dati effettivi in cui ogni elemento è composto da una OverflowToolbar contenente:
     - [Label](https://openui5.hana.ondemand.com/api/sap.m.Label) con nome del tag
     - Label con valore del tag
     - Button per spostare l'elemento in alto di una posizione

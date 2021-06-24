@@ -24,72 +24,6 @@ class Formatter {
     this._bContent = bContent;
     this._aContent = aContent;
     this._bCloseTag = bCloseTag;
-
-    // TEST START
-    let testString = `sosis`;
-
-    console.log(this.surround("giorgio", testString, ["nomeAttributo"], ["valoreAttributo"]));
-    // TEST END
-  }
-
-  get beforeOpenKey() {
-    return this._bOpenKey;
-  }
-
-  surroundAttribute(attrName, attrValue) {
-    return (
-      this._surround(attrName, this._bAttributeName, this._aAttributeName) +
-      "=" +
-      this._surround(attrValue, this._bAttributeValue, this._aAttributeValue)
-    );
-  }
-
-  get afterOpenKey() {
-    let returnValue = this._aOpenKey;
-    if (!this.isCompact) {
-      returnValue += "\n";
-    }
-    return returnValue;
-  }
-
-  surroundContent(content) {
-    if (content == "") return "";
-    if (this.isCompact) {
-      if (content.trimLeft().startsWith(this.bOpenKey)) {
-        //if (new RegExp("^\s+" + this.bOpenKey).test(content)) {
-
-        let indentedContent = content.replaceAll(/\n/g, "\n" + this.indent);
-        let returnValue =
-          "\n" +
-          this._surround(
-            indentedContent,//.slice(0, indentedContent.length - this.indent.length),
-            this._bContent + this.indent,
-            this._aContent
-          );
-        return returnValue;
-      } else {
-
-        return this._surround(content, this._bContent, this._aContent);
-      }
-    } else {
-      let indentedContent = content.replaceAll(/\n/g, "\n" + this.indent);
-      let returnValue =
-        "\n" +
-        this._surround(
-          indentedContent.slice(0, indentedContent.length - this.indent.length) + "\n",
-          this._bContent + this.indent,
-          this._aContent
-        );
-      return returnValue;
-    }
-  }
-
-  surroundCloseKey(key) {
-    return this._surround(key, this._bCloseKey, this._aCloseKey);
-  }
-
-  _surround(inner, lx, rx) {
-    return "" + lx + inner + rx;
   }
 
   surround(key, content, attributeNames, attributeValues, isLast = true) {
@@ -135,14 +69,6 @@ class Formatter {
   }
 
   _indentContent(content) {
-    //TODO: change regex to replace all occurrences except the last one
     return content.replaceAll(/\n/g, "\n" + this._indent);
   }
-}
-
-function multiplyChar(char, times) {
-  let result = "";
-  for (let i = 0; i < times; i++) result += char;
-
-  return result;
 }

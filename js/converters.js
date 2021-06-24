@@ -38,7 +38,6 @@ function CustomJSONToXML(customJson, attributes, formatter) {
   if (Array.isArray(customJson)) {
     for (let el of customJson) {
       let isLast = customJson.indexOf(el) == customJson.length - 1;
-      console.log(isLast, " el: ", el);
       let filteredAttributes = attributes.filter(a => a.parentId == el.id)
       xml += formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast);
     }

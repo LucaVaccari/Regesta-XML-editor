@@ -21,17 +21,19 @@
 						<m:ScrollContainer horizontal="true" vertical="true" width="100%" height="100%">
 							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
 								<m:items>
-									<m:CustomTreeItem cd:id="{id}">
+									<m:CustomTreeItem>
+										<m:OverflowToolbar cd:id="{id}" width="100%">
 										<!-- Key input -->
-										<m:Label text="{key}" visible="true" />
-										<m:Input value="{key}" visible="false" submit="onSubmit" />
+										<m:Label text="{key}" visible="true" width="40%" />
+										<m:Input value="{key}" visible="false" submit="onSubmit" width="40%" />
 										<!-- Value input -->
-										<m:Label text="{value}" visible="true" class="padding-side" />
-										<m:Input value="{value}" visible="false" submit="onSubmit" />
-										<m:Label width="80%" />
+										<m:Label text="{value}" visible="true" class="padding-side" width="40%" />
+										<m:Input value="{value}" visible="false" submit="onSubmit" width="40%" />
 										<!-- Move buttons -->
-										<m:Button icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" />
-										<m:Button icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="Move this element down" />
+										<m:ToolbarSpacer />
+										<m:Button icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" width="5%" />
+										<m:Button icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="Move this element down" width="5%" />
+										</m:OverflowToolbar>
 									</m:CustomTreeItem>
 								</m:items>
 							</m:Tree>
