@@ -14,7 +14,7 @@ class Formatter {
     bCloseTag = "/"
   ) {
     this._indent = indent;
-    this.compact = compact;
+    this.isCompact = compact;
     this._bKey = bKey;
     this._aKey = aKey;
     this._bAttributeName = bAttributeName;
@@ -46,7 +46,7 @@ class Formatter {
 
   get afterOpenKey() {
     let returnValue = this._aOpenKey;
-    if (!this.compact) {
+    if (!this.isCompact) {
       returnValue += "\n";
     }
     return returnValue;
@@ -54,7 +54,7 @@ class Formatter {
 
   surroundContent(content) {
     if (content == "") return "";
-    if (this.compact) {
+    if (this.isCompact) {
       if (content.trimLeft().startsWith(this.bOpenKey)) {
         //if (new RegExp("^\s+" + this.bOpenKey).test(content)) {
 
@@ -101,20 +101,28 @@ class Formatter {
     // autofinishing tag
     if (content == "") {
       returnValue += " " + this._bCloseTag + this._aKey;
+      if (!isLast) returnValue += "\n";
       return returnValue;
     }
 
-    // tag containing another tag
+    // tag containing something
     returnValue += this._aKey;
 
     if (new RegExp("^\s*" + this._bKey).test(content.trimLeft())) {
-      returnValue += this._indentContent("\n" + content);
+      // tag containing a tag
+      returnValue += this._indentContent("\n" + content) + "\n";
     }
     else {
-      returnValue += content;
+      // tag containing text
+      if (this.isCompact)
+        returnValue += content;
+      else {
+        returnValue += this._indentContent("\n" + content) + "\n";
+      }
     }
 
-    returnValue += this._bKey + this._bCloseTag + key + this._aKey + "\n";
+    returnValue += this._bKey + this._bCloseTag + key + this._aKey;
+    if (!isLast) returnValue += "\n";
     return returnValue;
   }
 

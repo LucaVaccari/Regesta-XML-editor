@@ -3,7 +3,6 @@
 ## Todo:
 
 - bug:
-  - [ ] formattazione
 - callback:
   - [ ] cancel
   - [ ] export
@@ -18,7 +17,6 @@
   - [ ] funzione surround nel formatter che prende tutti gli argomenti
 - nice to have:
   - [ ] modifica degli attributi
-  - [ ] tag autoconclusivi
   - [ ] responsive, mobile first
   - [ ] translatable text
   - [ ] dark theme

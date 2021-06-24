@@ -11,12 +11,12 @@ model.preview = test1;
 let customJson = XMLtoCustomJSON(model.preview);
 //model.data = JSONtoCustomJSON(json);
 model.data = [customJson];
-model.title = "SUS";
+model.title = "SUS"; // TODO: change in name of the file
 model.selectedAttributes = [];
 model.allAttributes = attributes;
 json = customJSONtoJSON(model);
 dataQueueIndex = 0;
 
-const formatter = new Formatter("   ", true);
+//const formatter = new Formatter("   ", true);
 
-//const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "#FFAA00", "#73C2E1", true);
+const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "#FFAA00", "#73C2E1", true);

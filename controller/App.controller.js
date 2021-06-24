@@ -262,12 +262,12 @@ sap.ui.define(
       },
 
       onXMLSwitch: function () {
-        formatter.compact = false;
+        formatter.isCompact = false;
         update();
       },
 
       onCompactXMLSwitch: function () {
-        formatter.compact = true;
+        formatter.isCompact = true;
         update();
       },
 
