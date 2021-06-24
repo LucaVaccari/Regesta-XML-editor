@@ -1,6 +1,7 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
+<!-- <?xml-stylesheet type="text/css" href="../css/application-style.css"?> -->
 	<m:App>
-		<m:Page id="page" showFooter="true" title="XML visual editor">
+		<m:Page id="page" showFooter="true" title="XML visual editor" class="body">
 			<m:content>
 				<m:HBox width="auto" height="90%">
 					<m:VBox height="auto" width="50%">
@@ -10,8 +11,8 @@
 							<m:Button icon="sap-icon://reset" iconFirst="true" width="auto" iconDensityAware="false" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
 							<m:Button icon="sap-icon://redo" iconFirst="false" width="auto" iconDensityAware="false" press="onRedo" id="redoButton" tooltip="Redo the last undone action" />
 							<m:ToolbarSpacer />
-							<m:Button icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="Add child" id="addButton" enabled="false" />
 							<m:Button icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="Remove this element (and all of his children)" id="removeButton" enabled="false" />
+							<m:Button icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="Add child" id="addButton" enabled="false" />
 							<m:Button icon="sap-icon://duplicate" iconFirst="true" width="auto" iconDensityAware="false" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" id="duplicateButton" enabled="false" />
 							<m:ToolbarSpacer />
 							<m:Button text="Key-value" icon="sap-icon://edit" visible="true" press="onEdit" tooltip="Edit the key and the value of the selected item" id="editButton" enabled="false" />
@@ -19,35 +20,47 @@
 							<m:ToolbarSpacer />
 						</m:OverflowToolbar>
 						<m:ScrollContainer horizontal="true" vertical="true" width="100%" height="100%">
-							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
+							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="update" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
 								<m:items>
-									<m:CustomTreeItem cd:id="{id}">
+									<m:CustomTreeItem>
+										<m:OverflowToolbar cd:id="{id}" width="100%">
 										<!-- Key input -->
-										<m:Label text="{key}" visible="true" />
-										<m:Input value="{key}" visible="false" submit="onSubmit" />
+										<m:Label text="{key}" visible="true" width="40%" />
+										<m:Input value="{key}" visible="false" change="onSubmit" width="40%" />
 										<!-- Value input -->
-										<m:Label text="{value}" visible="true" class="padding-side" />
-										<m:Input value="{value}" visible="false" submit="onSubmit" />
-										<m:Label width="80%" />
+										<m:Label text="{value}" visible="true" class="padding-side" width="40%" />
+										<m:Input value="{value}" visible="false" change="onSubmit" width="40%" />
 										<!-- Move buttons -->
-										<m:Button icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" />
-										<m:Button icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="Move this element down" />
+										<m:ToolbarSpacer />
+										<m:Button icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" width="5%" />
+										<m:Button icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="Move this element down" width="5%" />
+										</m:OverflowToolbar>
 									</m:CustomTreeItem>
 								</m:items>
 							</m:Tree>
 						</m:ScrollContainer>
 					</m:VBox>
-
 					<m:VBox height="auto" width="50%" class="sapUiResponsiveMargin">
 						<m:OverflowToolbar>
-							<m:Button text="XML" press="onXMLSwitch" />
-							<m:Button text="Compact XML" press="onCompactXMLSwitch" />
-							<m:Button text="JSON" press="onJSONSwitch" visible="false" />
+							<m:SegmentedButton>
+								<m:items>
+									<m:SegmentedButtonItem text="XML" press="onXMLSwitch" />
+									<m:SegmentedButtonItem text="Compact XML" press="onCompactXMLSwitch" />
+									<m:SegmentedButtonItem text="JSON" press="onJSONSwitch" visible="false" />
+								</m:items>
+							</m:SegmentedButton>
+							<m:ToolbarSpacer />
+							<m:Label text="Show attributes:" />
+							<m:Switch state="true" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="Toggle attributes visibility in the preview">
+								<m:layoutData>
+									<m:FlexItemData growFactor="1" />
+								</m:layoutData>
+							</m:Switch>
 						</m:OverflowToolbar>
 						<m:ScrollContainer horizontal="true" vertical="true" width="100%" height="100%">
 							<m:FormattedText htmlText="{/preview}" class="test" height="100%" />
 						</m:ScrollContainer>
-						<m:Slider value="20" width="100%" id="fontSizeSlider" min="10" max="40" liveChange="onSliderChange" />
+						<m:Slider value="20" width="100%" id="fontSizeSlider" min="10" max="40" liveChange="update" />
 					</m:VBox>
 				</m:HBox>
 			</m:content>
