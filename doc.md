@@ -148,7 +148,10 @@ La pagina presenta due sezioni principali:
     - remove: rimuove l'elemento selezionato e tutti i suoi sotto elementi
     - duplicate: duplica l'elemento selezionato, mantenendo la posizione nella gerarchia
     - edit key-value: consente di modificare chiave e valore dell'elemento selezionato
-    - edit attributes: apre un pannello che consente di visualizzare e modificare gli attributi dell'elemento selezionato
+    - edit attributes: apre un pannello che consente di visualizzare e modificare gli attributi dell'elemento selezionato; il pannello contiene:
+      - lista di attributi mostrati e modificabili tramite due [Input](https://openui5.hana.ondemand.com/api/sap.m.Input) e un Button per eliminare l'elemento
+      - Button per aggiungere un attributo
+      - Button per eliminare tutti gli attributi dell'elemento selezionato  
   - un albero rappresentante i dati effettivi in cui ogni elemento è composto da una OverflowToolbar contenente:
     - [Label](https://openui5.hana.ondemand.com/api/sap.m.Label) con nome del tag
     - Label con valore del tag

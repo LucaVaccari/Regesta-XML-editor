@@ -5,7 +5,7 @@ const KEY_LABEL_INDEX = 0,
   MOVE_BUTTONS_INDEX = 5,
   MOVE_DOWN_BUTTON_INDEX = 6;
 
-let jsonModel, view, tree, root, popoverView;
+let jsonModel, view, tree, root, popoverView, attributesShown = true;
 let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
 
 sap.ui.define(
@@ -308,7 +308,7 @@ sap.ui.define(
         this.onAttributesModify();
       },
 
-      onRemoveAttribute: function(event) {
+      onRemoveAttribute: function (event) {
         let item = event.getParameter("listItem");
         let id = item.mAggregations.customData[0].mProperties.value;
         model.selectedAttributes = model.selectedAttributes.filter(a => a.id != id);
@@ -316,13 +316,18 @@ sap.ui.define(
         this.onAttributesModify();
       },
 
-      onClearAttributes: function() {
+      onClearAttributes: function () {
         let selected = tree.getSelectedItems()[0];
         let parentId = getCustomIdFromRecord(selected);
 
         model.allAttributes = model.allAttributes.filter(a => a.parentId != parentId);
         model.selectedAttributes = [];
         this.onAttributesModify();
+      },
+
+      onToggleAttributesVisibility: function (event) {
+        attributesShown = event.getParameters().state;
+        update();
       },
 
       update: update
@@ -428,9 +433,11 @@ function update() {
   clearTree(model.data);
 
   // preview
+
+  let attributes = attributesShown ? model.allAttributes : [];
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = HTMLtoFormatted(
-    CustomJSONToXML(model.data, model.allAttributes, formatter),
+    CustomJSONToXML(model.data, attributes, formatter),
     fontSize
   );
 
