@@ -19,16 +19,16 @@
 							<m:ToolbarSpacer />
 						</m:OverflowToolbar>
 						<m:ScrollContainer horizontal="true" vertical="true" width="100%" height="100%">
-							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="onToggleOpenState" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
+							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="update" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
 								<m:items>
 									<m:CustomTreeItem>
 										<m:OverflowToolbar cd:id="{id}" width="100%">
 										<!-- Key input -->
 										<m:Label text="{key}" visible="true" width="40%" />
-										<m:Input value="{key}" visible="false" submit="onSubmit" width="40%" />
+										<m:Input value="{key}" visible="false" change="onSubmit" width="40%" />
 										<!-- Value input -->
 										<m:Label text="{value}" visible="true" class="padding-side" width="40%" />
-										<m:Input value="{value}" visible="false" submit="onSubmit" width="40%" />
+										<m:Input value="{value}" visible="false" change="onSubmit" width="40%" />
 										<!-- Move buttons -->
 										<m:ToolbarSpacer />
 										<m:Button icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" width="5%" />
@@ -49,7 +49,7 @@
 						<m:ScrollContainer horizontal="true" vertical="true" width="100%" height="100%">
 							<m:FormattedText htmlText="{/preview}" class="test" height="100%" />
 						</m:ScrollContainer>
-						<m:Slider value="20" width="100%" id="fontSizeSlider" min="10" max="40" liveChange="onSliderChange" />
+						<m:Slider value="20" width="100%" id="fontSizeSlider" min="10" max="40" liveChange="update" />
 					</m:VBox>
 				</m:HBox>
 			</m:content>

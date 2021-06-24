@@ -278,9 +278,7 @@ sap.ui.define(
 
       onExport: function () { },
 
-      onToggleOpenState: update,
-
-      onSliderChange: update,
+      update: update
     });
   }
 );
@@ -351,7 +349,7 @@ function clearTree(tree) {
         )
           arr.push(el);
       }
-      tree[k] = (typeof arr[0] != "object")? arr[0] : arr;
+      tree[k] = (typeof arr[0] != "object") ? arr[0] : arr;
     }
 
     clearTree(tree[k]);
@@ -379,13 +377,27 @@ function replaceIds(tree) {
 }
 
 function update() {
+  // data
   clearTree(model.data);
+
+  // preview
   let fontSize = view.byId("fontSizeSlider").getValue();
   model.preview = HTMLtoFormatted(
     CustomJSONToXML(model.data, model.allAttributes, formatter),
     fontSize
   );
 
+  //update attributes
+  model.allAttributes.forEach((originalAttribute, originalAttributeIndex) => {
+    for (let attribute of model.selectedAttributes) {
+      if (originalAttribute.id == attribute.id) {
+        this[originalAttributeIndex] = attribute;
+        break;
+      }
+    }
+  })
+
+  // graphics
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
   view.byId("redoButton").setEnabled(dataQueueIndex < dataQueue.length - 1);
 

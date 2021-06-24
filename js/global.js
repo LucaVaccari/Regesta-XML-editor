@@ -19,4 +19,4 @@ dataQueueIndex = 0;
 
 //const formatter = new Formatter("   ", true);
 
-const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "#FFAA00", "#73C2E1", true);
+const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "red", "#73C2E1", true);
