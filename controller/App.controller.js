@@ -115,6 +115,7 @@ sap.ui.define(
           subTree.value = [subTreeValue];
         }
 
+        closeKeyValueInputs();
         onModify();
         update();
 
@@ -124,6 +125,7 @@ sap.ui.define(
       },
 
       onRemove: function () {
+        closeKeyValueInputs();
         let selected = tree.getSelectedItems()[0];
         if (selected == undefined) return;
 
@@ -138,8 +140,9 @@ sap.ui.define(
         let subTree = findSubTreeById(model.data[0], id);
 
         if (parent.value.length <= 1) {
-          parent.value = subTree.value;
+          parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
         }
+
 
         delete subTree.key;
         delete subTree.value;
@@ -164,17 +167,26 @@ sap.ui.define(
           return;
         }
 
-        let subTreeValue = {
+        let newSubTree = {
           key: subTree.key,
           value: replaceIds(subTree.value),
           id: lastId++,
         };
-        if (Array.isArray(parent.value)) parent.value.push(subTreeValue);
+
+        if (Array.isArray(parent.value)) {
+          for (let index in parent.value) {
+            if (parent.value[index].id == id) {
+              parent.value.splice(index, 0, newSubTree);
+              break;
+            }
+          }
+          //parent.value.push(subTreeValue);
+        }
         else {
-          subTreeValue.value = parent.value;
-          parent.value = [subTreeValue];
+          console.warn("You shouldn't reach this point onDuplicate");
         }
 
+        closeKeyValueInputs();
         onModify();
         update();
       },
@@ -268,6 +280,7 @@ sap.ui.define(
           (a) => a.parentId == id
         );
 
+        closeKeyValueInputs();
         jsonModel.updateBindings(true);
       },
 
@@ -411,7 +424,9 @@ function clearTree(tree) {
 function replaceIds(tree) {
   let obj = [];
 
-  if (typeof tree.value != "object" && tree.value) {
+  if (typeof tree != "object") return tree;
+
+  if (typeof tree.value != "object" && tree.value != undefined) {
     return {
       key: tree.key,
       value: tree.value,
@@ -423,8 +438,10 @@ function replaceIds(tree) {
     for (let el of tree) {
       obj.push(replaceIds(el));
     }
-  } else return tree;
-
+  } else {
+    console.warn("You shouldn't reach this point replaceIds");
+    return tree;
+  }
   return obj;
 }
 
@@ -494,4 +511,18 @@ function onModify() {
     let dataCopy = JSON.parse(currentDataString);
     dataQueue.push(dataCopy);
   }
+}
+
+function closeKeyValueInputs() {
+  lastKeyInput?.setVisible(false);
+  lastValueInput?.setVisible(false);
+  lastKeyLabel?.setVisible(true);
+  //lastValueLabel?.setVisible(false);
+
+  if (lastKeyInput != undefined) {
+    let id = getCustomIdFromRecord(lastKeyInput.oParent.oParent);
+    let subTree = findSubTreeById(model.data, id);
+    lastValueLabel.setVisible(!Array.isArray(subTree.value));
+  }
+
 }

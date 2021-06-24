@@ -10,13 +10,12 @@ model.preview = test;
 // let json = XMLtoJSON(model.preview);
 let customJson = XMLtoCustomJSON(model.preview);
 //model.data = JSONtoCustomJSON(json);
-model.data = [customJson];
+model.data = [customJson.noAttributesCJ];
 model.title = "SUS"; // TODO: change in name of the file
 model.selectedAttributes = [];
-model.allAttributes = attributes;
-json = customJSONtoJSON(model);
+model.allAttributes = customJson.attributes;
 dataQueueIndex = 0;
 
 //const formatter = new Formatter("   ", true);
 
-const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "red", "#73C2E1", true);
+const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "red", "#73C2E1", false);

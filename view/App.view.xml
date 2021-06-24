@@ -39,14 +39,17 @@
 							</m:Tree>
 						</m:ScrollContainer>
 					</m:VBox>
-
 					<m:VBox height="auto" width="50%" class="sapUiResponsiveMargin">
 						<m:OverflowToolbar>
-							<m:Button text="XML" press="onXMLSwitch" />
-							<m:Button text="Compact XML" press="onCompactXMLSwitch" />
-							<m:Button text="JSON" press="onJSONSwitch" visible="false" />
+							<m:SegmentedButton>
+								<m:items>
+									<m:SegmentedButtonItem text="XML" press="onXMLSwitch" />
+									<m:SegmentedButtonItem text="Compact XML" press="onCompactXMLSwitch" />
+									<m:SegmentedButtonItem text="JSON" press="onJSONSwitch" visible="false" />
+								</m:items>
+							</m:SegmentedButton>
 							<m:ToolbarSpacer />
-							<m:Label text="Show attributes" />
+							<m:Label text="Show attributes:" />
 							<m:Switch state="true" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="Toggle attributes visibility in the preview">
 								<m:layoutData>
 									<m:FlexItemData growFactor="1" />

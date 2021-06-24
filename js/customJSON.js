@@ -1,13 +1,14 @@
-let attributes = [];
 
 function XMLtoCustomJSON(xml) {
+  let attributes = [];
   let doc = new DOMParser().parseFromString(
     xml.replaceAll(/\n|\t/g, "").replaceAll(/>\s*</g, "><"),
     "text/xml"
   );
 
   let root = doc.getRootNode();
-  return XMLDocToCustomJSON(root);
+  let noAttributesCJ = XMLDocToCustomJSON(root);
+  return { noAttributesCJ, attributes};
 
   function XMLDocToCustomJSON(node, id = -1) {
     let noAttributesCJ = {};
@@ -57,4 +58,21 @@ function XMLtoCustomJSON(xml) {
 
     return noAttributesCJ;
   }
+
+}
+
+function CustomJSONToXML(customJson, attributes, formatter) {
+  let xml = "";
+
+  if (typeof customJson != "object") return customJson;
+  if (Array.isArray(customJson)) {
+    for (let el of customJson) {
+      let isLast = customJson.indexOf(el) == customJson.length - 1;
+      let filteredAttributes = attributes.filter(a => a.parentId == el.id)
+      xml += formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast);
+    }
+  } else {
+    console.warn("You shouldn't reach this point CustomJSONToXML");
+  }
+  return xml;
 }

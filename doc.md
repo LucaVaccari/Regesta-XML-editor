@@ -149,7 +149,7 @@ La pagina presenta due sezioni principali:
     - duplicate: duplica l'elemento selezionato, mantenendo la posizione nella gerarchia
     - edit key-value: consente di modificare chiave e valore dell'elemento selezionato
     - edit attributes: apre un pannello che consente di visualizzare e modificare gli attributi dell'elemento selezionato; il pannello contiene:
-      - lista di attributi mostrati e modificabili tramite due [Input](https://openui5.hana.ondemand.com/api/sap.m.Input) e un Button per eliminare l'elemento
+      - lista di attributi mostrati e modificabili tramite due Input e un Button per eliminare l'elemento
       - Button per aggiungere un attributo
       - Button per eliminare tutti gli attributi dell'elemento selezionato  
   - un albero rappresentante i dati effettivi in cui ogni elemento è composto da una OverflowToolbar contenente:
@@ -157,8 +157,17 @@ La pagina presenta due sezioni principali:
     - Label con valore del tag
     - Button per spostare l'elemento in alto di una posizione
     - Button per spostare l'elemento in basso di una posizione
-- a destra si trova un'anteprima del file XML prodotto, contenente: - una OverflowToolbar con i seguenti Button che permettono di selezionare il tipo di formattazione: - XML: formattazione XML classica - Compact XML: formattazione XML in cui i contenuti foglia si trovano sulla stessa riga del tag - un [FormattedText](https://openui5.hana.ondemand.com/api/sap.m.FormattedText) per visualizzare l'anteprima consentendo l'evidenziazione della sintassi - uno [Slider](https://openui5.hana.ondemand.com/api/sap.m.Slider) per cambiare la dimensione dei caratteri dell'anteprima
-  Al termine della pagina si trova un footer con i seguenti Button: - Cancel: ignora tutte le modifiche e ritorna alla pagina iniziale - Export: salva tutte le modifiche e ritorna alla pagina iniziale
+- a destra si trova un'anteprima del file XML prodotto, contenente: 
+  - una OverflowToolbar con i seguenti Button che permettono di selezionare il tipo di formattazione: 
+    - XML: formattazione XML classica 
+    - Compact XML: formattazione XML in cui i contenuti foglia si trovano sulla stessa riga del tag
+  - uno [Switch](https://openui5.hana.ondemand.com/api/sap.m.Switch) per nascondere o visualizzare gli attributi nell'anteprima
+  - un [FormattedText](https://openui5.hana.ondemand.com/api/sap.m.FormattedText) per visualizzare l'anteprima consentendo l'evidenziazione della sintassi 
+  - uno [Slider](https://openui5.hana.ondemand.com/api/sap.m.Slider) per cambiare la dimensione dei caratteri dell'anteprima
+  
+Al termine della pagina si trova un footer con i seguenti Button: 
+  - Cancel: ignora tutte le modifiche e ritorna alla pagina iniziale 
+  - Export: salva tutte le modifiche e ritorna alla pagina iniziale
 
 ### 4.2 MVC
 
