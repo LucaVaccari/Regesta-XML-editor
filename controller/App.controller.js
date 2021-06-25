@@ -372,7 +372,7 @@ sap.ui.define(
 
       onAttributeModifyLive: function(event) {
         let inputParent = event.getSource().oParent;
-        let id = inputParent.mAggregations.customData[0].mProperties.value;
+        let id = inputParent.oParent.mAggregations.customData[0].mProperties.value;
         // console.log(model.allAttributes);
         for (let attr of model.allAttributes) {
           if (attr.id == id) {
