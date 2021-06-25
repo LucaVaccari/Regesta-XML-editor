@@ -36,7 +36,7 @@ sap.ui.define(
       },
 
       onEdit: function () {
-        let selected = originalTree.getSelectedItems()[0];
+        selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
 
         let buttons = selected.getContent()[0].getContent();
@@ -82,7 +82,7 @@ sap.ui.define(
       },
 
       onSubmit: function (event) {
-        let selected = getRecordElement(event);
+        selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
         
         buttons[KEY_INPUT_INDEX].setVisible(false);
@@ -100,7 +100,7 @@ sap.ui.define(
       },
       
       onKeyValueEditLive: function(event) {
-        let selected = getRecordElement(event);
+        selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
         
         let id = getCustomIdFromRecord(selected);
@@ -122,7 +122,7 @@ sap.ui.define(
       },
       
       onAdd: function () {
-        let selected = originalTree.getSelectedItems()[0];
+        selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
         
         let id = getCustomIdFromRecord(selected);
@@ -150,7 +150,7 @@ sap.ui.define(
       onRemove: function () {
         closeKeyValueInputs();
         
-        let selected = originalTree.getSelectedItems()[0];
+        selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
         
         let id = getCustomIdFromRecord(selected);
@@ -191,7 +191,7 @@ sap.ui.define(
       },
 
       onDuplicate: function () {
-        let selected = originalTree.getSelectedItems()[0];
+        selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
 
         let id = getCustomIdFromRecord(selected);
@@ -328,7 +328,7 @@ sap.ui.define(
       },
 
       onSelect: function () {
-        let selected = originalTree.getSelectedItems()[0];
+        selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
         let id = getCustomIdFromRecord(selected);
         let isRoot = id == getCustomIdFromRecord(root);
@@ -372,7 +372,7 @@ sap.ui.define(
 
       onAttributeModifyLive: function(event) {
         let inputParent = event.getSource().oParent;
-        let id = inputParent.mAggregations.customData[0].mProperties.value;
+        let id = inputParent.oParent.mAggregations.customData[0].mProperties.value;
         // console.log(model.allAttributes);
         for (let attr of model.allAttributes) {
           if (attr.id == id) {
@@ -396,7 +396,7 @@ sap.ui.define(
       },
 
       onAddAttribute: function () {
-        let selected = originalTree.getSelectedItems()[0];
+        selected = originalTree.getSelectedItems()[0];
         let newAttr = {
           id: lastId++,
           attributeKey: "name",
@@ -418,7 +418,7 @@ sap.ui.define(
       },
 
       onClearAttributes: function () {
-        let selected = originalTree.getSelectedItems()[0];
+        selected = originalTree.getSelectedItems()[0];
         let parentId = getCustomIdFromRecord(selected);
 
         model.allAttributes = model.allAttributes.filter(a => a.parentId != parentId);

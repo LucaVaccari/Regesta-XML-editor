@@ -61,7 +61,7 @@ function XMLtoCustomJSON(xml) {
 
 }
 
-function CustomJSONToXML(customJson, attributes, formatter) {
+function CustomJSONToXML(customJson, attributes, formatter, id = -1) {
   let xml = "";
 
   if (typeof customJson != "object") return customJson;
@@ -69,7 +69,8 @@ function CustomJSONToXML(customJson, attributes, formatter) {
     for (let el of customJson) {
       let isLast = customJson.indexOf(el) == customJson.length - 1;
       let filteredAttributes = attributes.filter(a => a.parentId == el.id)
-      xml += formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast);
+      let content = formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter, id), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast, true);
+      xml += (id == el.id) ? formatter.setBold(content) : content;
     }
   } else {
     console.warn("You shouldn't reach this point CustomJSONToXML");
