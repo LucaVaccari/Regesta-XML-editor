@@ -106,7 +106,8 @@ sap.ui.define(
         let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
         subTree.key = buttons[KEY_INPUT_INDEX].getValue().replaceAll(/[^\w-_]+/g, "");
-        subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g, "");
+        if (!Array.isArray(subTree.value))
+          subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g, "");
 
         if (!subTree.key) {
           subTree.key = "key";
@@ -371,9 +372,10 @@ sap.ui.define(
 
       onAttributeModifyLive: function(event) {
         let inputParent = event.getSource().oParent;
-        let id = inputParent.oParent.mAggregations.customData[0].mProperties.value;
+        let id = inputParent.mAggregations.customData[0].mProperties.value;
+        // console.log(model.allAttributes);
         for (let attr of model.allAttributes) {
-          if (attr.id = id) {
+          if (attr.id == id) {
             let inputs = inputParent.mAggregations.items;
             attr.attributeKey = inputs[0].getValue().replaceAll(/[^\w-_:]+|^:$/g, "");
             attr.attributeValue = inputs[1].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g, "");
