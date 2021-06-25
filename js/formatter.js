@@ -52,6 +52,7 @@ class Formatter {
     }
     else {
       // tag containing text
+      content = this._bContent + content + this._aContent;
       if (this.isCompact) {
         returnValue += content;
       }

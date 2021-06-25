@@ -18,7 +18,5 @@
   - responsive, mobile first
   - translatable text
   - dark theme
-  - JSON view
-  - syntax highlighting JSON
   - database con file salvati e utenti registrati
 - documentazione

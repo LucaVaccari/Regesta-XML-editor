@@ -348,17 +348,17 @@ sap.ui.define(
       },
 
       onXMLSwitch: function () {
-        formatter.isCompact = false;
+        formatter = XMLformatter;
         update();
       },
 
       onCompactXMLSwitch: function () {
-        formatter.isCompact = true;
+        formatter = compactXMLformatter;
         update();
       },
 
       onJSONSwitch: function () {
-        formatter = JSONFormatter;
+        formatter = JSONformatter;
         update();
       },
 

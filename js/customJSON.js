@@ -68,8 +68,9 @@ function CustomJSONToXML(customJson, attributes, formatter, id = -1) {
   if (Array.isArray(customJson)) {
     for (let el of customJson) {
       let isLast = customJson.indexOf(el) == customJson.length - 1;
+      let isFirst = customJson.indexOf(el) == 0;
       let filteredAttributes = attributes.filter(a => a.parentId == el.id)
-      let content = formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter, id), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast, true);
+      let content = formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter, id), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast, isFirst);
       xml += (id == el.id) ? formatter.setBold(content) : content;
     }
   } else {

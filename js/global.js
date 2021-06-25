@@ -18,4 +18,7 @@ dataQueueIndex = 0;
 
 //const formatter = new Formatter("   ", true);
 
-const formatter = new HTMLFormatter("black", "#346187", "#FF6600", "red", "#73C2E1", false);
+const XMLformatter = new HTMLFormatter("purple", "#346187", "#FF6600", "red", "#73C2E1", false);
+const compactXMLformatter = new HTMLFormatter("purple", "#346187", "#FF6600", "red", "#73C2E1", true);
+const JSONformatter = new JSONFormatter("purple", "#346187", "#FF6600", "red", "#73C2E1", false);
+let formatter = XMLformatter;

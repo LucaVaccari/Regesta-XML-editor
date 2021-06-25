@@ -50,7 +50,7 @@
 								<m:items>
 									<m:SegmentedButtonItem text="XML" press="onXMLSwitch" />
 									<m:SegmentedButtonItem text="Compact XML" press="onCompactXMLSwitch" />
-									<m:SegmentedButtonItem text="JSON" press="onJSONSwitch" visible="false" />
+									<m:SegmentedButtonItem text="JSON" press="onJSONSwitch" />
 								</m:items>
 							</m:SegmentedButton>
 							<m:ToolbarSpacer />
