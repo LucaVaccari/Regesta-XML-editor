@@ -2,8 +2,8 @@
 	<m:App>
 		<m:Page id="page" showFooter="true" title="XML visual editor" class="body">
 			<m:content>
-				<m:HBox width="auto" height="90%">
-					<m:VBox height="auto" width="50%">
+				<m:HBox width="auto" height="90%" alignContent="Center" justifyContent="Center">
+					<m:VBox height="auto" width="45%">
 						<m:OverflowToolbar>
 							<m:ToolbarSpacer />
 							<m:Button icon="sap-icon://undo" iconFirst="true" width="auto" press="onUndo" id="undoButton" tooltip="Undo the last action" />
