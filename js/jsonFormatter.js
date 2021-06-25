@@ -18,9 +18,9 @@ class JSONFormatter extends Formatter {
             `"</code>`,
             `<code style="color:${baseColor};"> `,
             `</code>`,
-            `dwada`,
-            `wdawd`,
-            `awdaw`
+            ``,
+            `<strong><em>`,
+            `</em></strong>`
         );
         this._bOpenObj = `<code style="color:${bracketsColor};">{</code>`;
         this._aCloseObj = `<code style="color:${bracketsColor};">}</code>`;
@@ -35,7 +35,7 @@ class JSONFormatter extends Formatter {
 
         returnValue += this._bOpenObj;
 
-        if (new RegExp("^\s*" + this._bArray).test(content.trimLeft())) {
+        if (new RegExp("^\s*" + this._bArray).test(content.trimLeft()) || new RegExp("^\s*" + this._bSelectedContent + this._bArray).test(content.trimLeft())) {
             // object containing an object (inside an Array)
             // attributes start
             if (hasAttributes) {
