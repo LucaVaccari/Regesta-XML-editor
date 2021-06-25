@@ -20,7 +20,7 @@ function XMLtoCustomJSON(xml) {
         return leaf;
       }
       case Node.ELEMENT_NODE: // a branch of the document tree
-        noAttributesCJ.id = lastId++;
+        noAttributesCJ.id = lastElementId++;
         noAttributesCJ.key = node.nodeName;
 
         if (node.childNodes.length == 0)
@@ -41,7 +41,7 @@ function XMLtoCustomJSON(xml) {
         break;
       case Node.ATTRIBUTE_NODE: // an attribute
         return {
-          id: lastId++,
+          id: lastElementId++,
           attributeKey: node.nodeName,
           attributeValue: node.nodeValue,
           parentId: id,
