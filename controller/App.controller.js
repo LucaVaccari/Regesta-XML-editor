@@ -41,8 +41,7 @@ sap.ui.define(
         sap.ui.getCore().attachValidationSuccess(function (oEvent) {
           oEvent.getParameter("element").setValueState(ValueState.None);
         });
-
-
+        
         update();
       },
 
@@ -74,6 +73,8 @@ sap.ui.define(
       },
 
       onEditAttributes: function () {
+        closeKeyValueInputs();
+
         if (!this._popover) {
           this._popover = Fragment.load({
             id: view.getId(),
@@ -93,38 +94,45 @@ sap.ui.define(
       onSubmit: function (event) {
         let selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
-
+        
         buttons[KEY_INPUT_INDEX].setVisible(false);
         buttons[KEY_LABEL_INDEX].setVisible(true);
         buttons[VALUE_INPUT_INDEX].setVisible(false);
-
+        
         let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
         if (subTree != undefined)
-          buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+        buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
         else console.error("You shouldn't reach this point (onEdit)");
-
-        subTree.key = subTree.key || "key";
-
+        
         onModify();
         update();
       },
-
+      
       onKeyValueEditLive: function(event) {
         let selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
-
+        
         let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
         subTree.key = buttons[KEY_INPUT_INDEX].getValue().replaceAll(/[^\w-_]+/g, "");
-        subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]/g, "");
-        jsonModel.updateBindings(true);
-      },
+        subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g, "");
 
+        if (!subTree.key) {
+          subTree.key = "key";
+          jsonModel.updateBindings(true);
+          buttons[KEY_INPUT_INDEX].selectText(0, 3);
+        }
+
+        jsonModel.updateBindings(true);
+        
+        update();
+      },
+      
       onAdd: function () {
         let selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
-
+        
         let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
@@ -137,24 +145,24 @@ sap.ui.define(
           subTreeValue.value = subTree.value;
           subTree.value = [subTreeValue];
         }
-
+        
         closeKeyValueInputs();
         onModify();
         update();
-
+        
         originalTree.expand(originalTree.indexOfItem(selected));
-
+        
         update();
       },
-
+      
       onRemove: function () {
         closeKeyValueInputs();
-
+        
         let selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
-
+        
         let id = getCustomIdFromRecord(selected);
-
+        
         if (id == model.data[0].id) {
           console.warn("Cannot remove root node");
           return;
@@ -162,7 +170,7 @@ sap.ui.define(
 
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
-
+        
         // remove attributes
         removeAttributesInSubTree(subTree);
         function removeAttributesInSubTree(tree) {
@@ -175,7 +183,7 @@ sap.ui.define(
             model.allAttributes = model.allAttributes.filter(a => a.parentId != tree.id);
           }
         }
-
+        
         if (parent.value.length <= 1) {
           parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
         }
@@ -183,9 +191,9 @@ sap.ui.define(
         delete subTree.key;
         delete subTree.value;
         delete subTree.id;
-
+        
         clearTree(model.data);
-
+        
         onModify();
         update();
       },
@@ -370,6 +378,27 @@ sap.ui.define(
         update();
       },
 
+      onAttributeModifyLive: function(event) {
+        let inputParent = event.getSource().oParent;
+        let id = inputParent.oParent.mAggregations.customData[0].mProperties.value;
+        for (let attr of model.allAttributes) {
+          if (attr.id = id) {
+            let inputs = inputParent.mAggregations.items;
+            attr.attributeKey = inputs[0].getValue().replaceAll(/[^\w-_:]+|^:$/g, "");
+            attr.attributeValue = inputs[1].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g, "");
+
+            if (!attr.attributeKey) {
+              attr.attributeKey = "attributeName";
+              jsonModel.updateBindings(true);
+              inputs[0].selectText(0, 50);
+            }
+
+            jsonModel.updateBindings(true);
+            break;
+          }
+        }
+      },
+
       onAddAttribute: function () {
         let selected = originalTree.getSelectedItems()[0];
         let newAttr = {
@@ -508,6 +537,28 @@ function replaceIds(tree) {
   return obj;
 }
 
+function onModify() {
+  let currentData = {
+    noAttributes: model.data,
+    attributes: model.allAttributes
+  };
+  let currentDataString = JSON.stringify(currentData);
+  let previousData = JSON.stringify(dataQueue[dataQueueIndex]);
+  if (currentDataString != previousData) {
+    dataQueue = dataQueue.slice(0, ++dataQueueIndex);
+    let dataCopy = JSON.parse(currentDataString);
+    dataQueue.push(dataCopy);
+  }
+}
+
+function closeKeyValueInputs() {
+  lastKeyInput?.setVisible(false);
+  lastValueInput?.setVisible(false);
+  lastKeyLabel?.setVisible(true);
+
+  update();
+}
+
 function update() {
   // data
   clearTree(model.data);
@@ -530,6 +581,9 @@ function update() {
       }
     }
   })
+  for (let attr of model.allAttributes) {
+    attr.attributeKey = attr.attributeKey || "attributeName";          
+  }
 
   // graphics
   view.byId("undoButton").setEnabled(dataQueueIndex > 0);
@@ -569,26 +623,4 @@ function update() {
   }
 
   jsonModel.updateBindings(true);
-}
-
-function onModify() {
-  let currentData = {
-    noAttributes: model.data,
-    attributes: model.allAttributes
-  };
-  let currentDataString = JSON.stringify(currentData);
-  let previousData = JSON.stringify(dataQueue[dataQueueIndex]);
-  if (currentDataString != previousData) {
-    dataQueue = dataQueue.slice(0, ++dataQueueIndex);
-    let dataCopy = JSON.parse(currentDataString);
-    dataQueue.push(dataCopy);
-  }
-}
-
-function closeKeyValueInputs() {
-  lastKeyInput?.setVisible(false);
-  lastValueInput?.setVisible(false);
-  lastKeyLabel?.setVisible(true);
-
-  update();
 }
