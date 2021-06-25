@@ -21,4 +21,10 @@
   - JSON view
   - syntax highlighting JSON
   - database con file salvati e utenti registrati
+- file management:
+  - interazione database:
+    - add file
+    - remove file
+    - edit file
+    - download file
 - documentazione
