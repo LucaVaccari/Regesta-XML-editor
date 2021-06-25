@@ -88,4 +88,40 @@ class JSONFormatter extends Formatter {
         }
         return returnValue + this._indentContent("\n" + this._bArray.replaceAll(/\\/g, "") + attributes) + this._aArray.replaceAll(/\\/g, "") + ",";
     }
+
+    setBold(content, isLast, isFirst) {
+        let returnValue = "";
+        // if (isFirst && !isLast) {
+        //     returnValue = this._bArray.replaceAll(/\\/g, "") + this._bSelectedContent + content.replace(new RegExp("^\s*" + this._bArray), "") + this._aSelectedContent;
+        // }
+
+        if (isLast && !isFirst) {
+            returnValue = this._bSelectedContent + content.replace(new RegExp(this._aArray + "$"), "") + this._aSelectedContent + this._aArray.replaceAll(/\\/g, "");
+            return returnValue;
+        }
+
+
+        if (!isLast) {
+            if (isFirst && !isLast) {
+                let endTestString = content.replaceAll(/\n/g, "\n")
+                returnValue = this._bArray.replaceAll(/\\/g, "") + this._bSelectedContent + content.replace(new RegExp("^\s*" + this._bArray), "");
+            }
+            else
+            {
+                returnValue = this._bSelectedContent + content;
+            }
+            
+            returnValue = returnValue.replaceAll(/,\n$/g, "");
+            returnValue += this._aSelectedContent + ",\n";
+            return returnValue;
+
+        }
+
+        if (isFirst ^ isLast) {
+            console.log(isFirst, isLast);
+            return returnValue;
+        }
+        else
+            return this._bSelectedContent + content + this._aSelectedContent;
+    }
 }

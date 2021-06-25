@@ -71,7 +71,7 @@ function CustomJSONToXML(customJson, attributes, formatter, id = -1) {
       let isFirst = customJson.indexOf(el) == 0;
       let filteredAttributes = attributes.filter(a => a.parentId == el.id)
       let content = formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter, id), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast, isFirst);
-      xml += (id == el.id) ? formatter.setBold(content) : content;
+      xml += (id == el.id) ? formatter.setBold(content, isLast, isFirst) : content;
     }
   } else {
     console.warn("You shouldn't reach this point CustomJSONToXML");
