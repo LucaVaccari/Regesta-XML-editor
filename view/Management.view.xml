@@ -1,13 +1,25 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.Management" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
     <m:App>
-        <m:Page id="page" showFooter="true" title="Management" class="body">
+        <m:Page id="page" showFooter="true" title="Management" class="body" enableScrolling="false">
             <m:content>
-                <m:HBox>
-                    
-                </m:HBox>
-                    <m:TileContainer tiles="{path:'/data', templateShareable: false}">
-                        <m:StandardTile title="{}" />
-                    </m:TileContainer>
+                <m:VBox alignContent="Center" alignItems="Stretch" justifyContent="Center" width="97%">
+                    <m:OverflowToolbar width="100%">
+                        <m:Label text="Ciao!" />
+                        <m:ToolbarSpacer />
+                        <m:Button icon="sap-icon://add" press="onAdd" />
+                        <m:ToolbarSpacer />
+                        <m:Avatar />
+                    </m:OverflowToolbar>
+                    <f:GridList id="gridList" class="sapUiResponsiveMargin" headerText="Your files" items="{/files}" noDataText="No files yet..." width="100%">
+                        <f:GridListItem>
+                            <m:VBox alignItems="Center" cd:id="{id}">
+                                <m:Title text="{title}" />
+                                <m:Button text="Edit" icon="sap-icon://edit" press="onEdit" />
+                                <m:Button text="Download" icon="sap-icon://download" press="onDownload" />
+                            </m:VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+                </m:VBox>
             </m:content>
         </m:Page>
     </m:App>

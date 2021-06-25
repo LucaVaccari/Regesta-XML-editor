@@ -130,7 +130,7 @@ sap.ui.define(
         let subTreeValue = {
           key: "key",
           value: "value",
-          id: lastId++,
+          id: lastElementId++,
         };
         if (Array.isArray(subTree.value)) subTree.value.push(subTreeValue);
         else {
@@ -206,7 +206,7 @@ sap.ui.define(
         let newSubTree = {
           key: subTree.key,
           value: replaceIds(subTree.value),
-          id: lastId++,
+          id: lastElementId++,
         };
 
         // add attributes
@@ -217,7 +217,7 @@ sap.ui.define(
             for (let index in originalTree.value) {
               for (let attribute of filteredAttributes) {
                 model.allAttributes.push({
-                  id: lastId++,
+                  id: lastElementId++,
                   attributeKey: attribute.attributeKey,
                   attributeValue: attribute.attributeValue,
                   parentId: newTree.id,
@@ -228,7 +228,7 @@ sap.ui.define(
           } else {
             for (let attribute of filteredAttributes) {
               model.allAttributes.push({
-                id: lastId++,
+                id: lastElementId++,
                 attributeKey: attribute.attributeKey,
                 attributeValue: attribute.attributeValue,
                 parentId: newTree.id,
@@ -398,7 +398,7 @@ sap.ui.define(
       onAddAttribute: function () {
         let selected = originalTree.getSelectedItems()[0];
         let newAttr = {
-          id: lastId++,
+          id: lastElementId++,
           attributeKey: "name",
           attributeValue: "value",
           parentId: getCustomIdFromRecord(selected),
