@@ -7,7 +7,7 @@ sap.ui.define(
   (Controller, JSONModel, Fragment) => {
     "use strict";
 
-    return Controller.extend("sap.ui.demo.walkthrough.controller.App", {
+    return Controller.extend("sap.ui.demo.walkthrough.controller.Editor", {
       onInit: function () {
         jsonModel = new JSONModel(model);
         view = this.getView();

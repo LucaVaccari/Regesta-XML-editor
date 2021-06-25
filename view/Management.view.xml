@@ -1,0 +1,14 @@
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.Management" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
+    <m:App>
+        <m:Page id="page" showFooter="true" title="Management" class="body">
+            <m:content>
+                <m:HBox>
+                    
+                </m:HBox>
+                    <m:TileContainer tiles="{path:'/data', templateShareable: false}">
+                        <m:StandardTile title="{}" />
+                    </m:TileContainer>
+            </m:content>
+        </m:Page>
+    </m:App>
+</mvc:View>
