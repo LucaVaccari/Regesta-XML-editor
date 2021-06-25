@@ -5,7 +5,7 @@ const KEY_LABEL_INDEX = 0,
   MOVE_UP_BUTTON_INDEX = 5,
   MOVE_DOWN_BUTTON_INDEX = 6;
 
-let jsonModel, view, originalTree, root, popoverView, attributesShown = true;
+let jsonModel, view, originalTree, selected, root, popoverView, attributesShown = true;
 let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
 
 function getRecordElement(event) {
@@ -146,7 +146,7 @@ function updateModel() {
 }
 
 function updatePreview() {
-    let selected = originalTree.getSelectedItems()[0];
+    selected = originalTree.getSelectedItems()[0];
     let attributes = attributesShown ? model.allAttributes : [];
     let fontSize = view.byId("fontSizeSlider").getValue();
     model.preview = HTMLtoFormatted(
@@ -185,14 +185,13 @@ function updateGraphics() {
             [MOVE_DOWN_BUTTON_INDEX].setEnabled(parent.value[parent.value.length - 1].id != id);
         }
 
-        let keyLabel = node.getContent()[0].getContent()[KEY_LABEL_INDEX];
+        // let keyLabel = node.getContent()[0].getContent()[KEY_LABEL_INDEX];
         // keyLabel.setWidth(keyLabel.getText().length + 6 + "em");
-
-        let valueLabel = node.getContent()[0].getContent()[VALUE_LABEL_INDEX];
+        // let valueLabel = node.getContent()[0].getContent()[VALUE_LABEL_INDEX];
         // valueLabel.setWidth(valueLabel.getText().length + 6 + "em");
     }
 
-    let selected = originalTree.getSelectedItems()[0];
+    selected = originalTree.getSelectedItems()[0];
     if (!selected) {
         view.byId("removeButton").setEnabled(false);
         view.byId("duplicateButton").setEnabled(false);
