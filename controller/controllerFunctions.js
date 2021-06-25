@@ -146,10 +146,11 @@ function updateModel() {
 }
 
 function updatePreview() {
+    let selected = originalTree.getSelectedItems()[0];
     let attributes = attributesShown ? model.allAttributes : [];
     let fontSize = view.byId("fontSizeSlider").getValue();
     model.preview = HTMLtoFormatted(
-        CustomJSONToXML(model.data, attributes, formatter),
+        CustomJSONToXML(model.data, attributes, formatter, getCustomIdFromRecord(selected)),
         fontSize
     );
 }

@@ -18,7 +18,10 @@ class HTMLFormatter extends Formatter {
       `"</code>`,
       `<code style="color:${baseColor};">`,
       `</code>`,
-      `<code style="color:${bracketsColor};">/</code>`
+      `<code style="color:${bracketsColor};">/</code>`,
+      `<strong><em>`,
+      `</em></strong>`
     );
   }
+
 }
