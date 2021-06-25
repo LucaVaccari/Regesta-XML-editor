@@ -46,14 +46,15 @@ class Formatter {
     // tag containing something
     returnValue += this._aKey;
 
-    if (new RegExp("^\s*" + this._bSelectedContent + "^\s*" + this._bKey).test(content.trimLeft())) {
+    if (new RegExp("^\s*" + this._bKey).test(content.trimLeft()) || new RegExp("^\s*" + this._bSelectedContent + this._bKey).test(content.trimLeft())) {
       // tag containing a tag
       returnValue += this._indentContent("\n" + content) + "\n";
     }
     else {
       // tag containing text
-      if (this.isCompact)
+      if (this.isCompact) {
         returnValue += content;
+      }
       else {
         returnValue += this._indentContent("\n" + content) + "\n";
       }
@@ -76,8 +77,7 @@ class Formatter {
     return content.replaceAll(/\n/g, "\n" + this._indent);
   }
 
-  setBold(content)
-  {
+  setBold(content) {
     return this._bSelectedContent + content + this._aSelectedContent;
   }
 }
