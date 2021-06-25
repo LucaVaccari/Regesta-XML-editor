@@ -1,9 +1,4 @@
-<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App"
-	xmlns:m="sap.m"
-	xmlns:f="sap.f"
-	xmlns:l="sap.ui.layout"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
 	<m:App>
 		<m:Page id="page" showFooter="true" title="XML visual editor" class="body">
 			<m:content>
@@ -29,10 +24,10 @@
 									<m:CustomTreeItem>
 										<m:OverflowToolbar cd:id="{id}" width="100%">
 											<!-- Key input -->
-											<m:Label text="{key}" visible="true" width="40%" />
+											<m:Label text="{key}" width="40%" />
 											<m:Input value="{key}" visible="false" change="onSubmit" submit="onSubmit" liveChange="onKeyValueEditLive" width="40%" />
 											<!-- Value input -->
-											<m:Label text="{value}" visible="true" class="padding-side" width="40%" />
+											<m:Label text="{value}" class="padding-side" width="40%" />
 											<m:Input value="{value}" visible="false" change="onSubmit" submit="onSubmit" liveChange="onKeyValueEditLive" width="40%" />
 											<!-- Move buttons -->
 											<m:ToolbarSpacer />

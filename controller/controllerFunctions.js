@@ -91,7 +91,7 @@ function replaceIds(tree) {
         return {
             key: tree.key,
             value: tree.value,
-            id: lastId++,
+            id: lastElementId++,
         };
     }
 

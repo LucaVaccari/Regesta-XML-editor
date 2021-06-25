@@ -20,4 +20,10 @@
   - translatable text
   - dark theme
   - database con file salvati e utenti registrati
+- file management:
+  - interazione database:
+    - add file
+    - remove file
+    - edit file
+    - download file
 - documentazione

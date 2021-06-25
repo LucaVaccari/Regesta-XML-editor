@@ -1,0 +1,26 @@
+<mvc:View controllerName="sap.ui.demo.walkthrough.controller.Management" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
+    <m:App>
+        <m:Page id="page" showFooter="true" class="body" enableScrolling="true">
+            <m:content>
+                <m:VBox width="100%" height="100%">
+                    <m:OverflowToolbar>
+                        <m:Label text="Ciao!" />
+                        <m:ToolbarSpacer />
+                        <m:Button icon="sap-icon://add" press="onAdd" />
+                        <m:ToolbarSpacer />
+                        <m:Avatar />
+                    </m:OverflowToolbar>
+                    <f:GridList id="gridList" class="sapUiResponsiveMargin" mode="Delete" delete="onDelete" headerText="Your files" items="{/files}" noDataText="No files yet..." width="90%">
+                        <f:GridListItem>
+                            <m:VBox alignItems="Center" cd:id="{id}">
+                                <m:Title text="{title}" />
+                                <m:Button text="Edit" icon="sap-icon://edit" press="onEdit" />
+                                <m:Button text="Download" icon="sap-icon://download" press="onDownload" />
+                            </m:VBox>
+                        </f:GridListItem>
+                    </f:GridList>
+                </m:VBox>
+            </m:content>
+        </m:Page>
+    </m:App>
+</mvc:View>
