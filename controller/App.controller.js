@@ -34,6 +34,15 @@ sap.ui.define(
           attributes: model.allAttributes,
         }
         dataQueue[0] = JSON.parse(JSON.stringify(initData));
+
+        sap.ui.getCore().attachValidationError(function (oEvent) {
+          oEvent.getParameter("element").setValueState(ValueState.Error);
+        });
+        sap.ui.getCore().attachValidationSuccess(function (oEvent) {
+          oEvent.getParameter("element").setValueState(ValueState.None);
+        });
+
+
         update();
       },
 
@@ -84,6 +93,7 @@ sap.ui.define(
       onSubmit: function (event) {
         let selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
+
         buttons[KEY_INPUT_INDEX].setVisible(false);
         buttons[KEY_LABEL_INDEX].setVisible(true);
         buttons[VALUE_INPUT_INDEX].setVisible(false);
@@ -94,8 +104,21 @@ sap.ui.define(
           buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
         else console.error("You shouldn't reach this point (onEdit)");
 
+        subTree.key = subTree.key || "key";
+
         onModify();
         update();
+      },
+
+      onKeyValueEditLive: function(event) {
+        let selected = getRecordElement(event);
+        let buttons = selected.getContent()[0].getContent();
+
+        let id = getCustomIdFromRecord(selected);
+        let subTree = findSubTreeById(model.data, id);
+        subTree.key = buttons[KEY_INPUT_INDEX].getValue().replaceAll(/[^\w-_]+/g, "");
+        subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]/g, "");
+        jsonModel.updateBindings(true);
       },
 
       onAdd: function () {
