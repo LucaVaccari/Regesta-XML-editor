@@ -1,6 +1,15 @@
 <mvc:View controllerName="sap.ui.demo.walkthrough.controller.App" xmlns:m="sap.m" xmlns:f="sap.f" xmlns:l="sap.ui.layout" xmlns:mvc="sap.ui.core.mvc" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" displayBlock="true">
 	<m:App>
-		<m:Page id="page" showFooter="true" title="XML visual editor" class="body">
+		<m:Page id="page" showFooter="true" showHeader="true" class="body">
+			<m:customHeader>
+				<m:OverflowToolbar>
+					<m:ToolbarSpacer />
+					<m:Title text="{/title}" id="titleLabel" />
+					<m:Input value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" visible="false" width="50%"/>
+					<m:Button icon="sap-icon://edit" press="onTitleEdit" tooltip="Change the name of this file" />
+					<m:ToolbarSpacer />
+				</m:OverflowToolbar>
+			</m:customHeader>
 			<m:content>
 				<m:HBox width="auto" height="90%" alignContent="Center" justifyContent="Center">
 					<m:VBox height="auto" width="45%">
@@ -67,7 +76,7 @@
 				<m:OverflowToolbar>
 					<m:ToolbarSpacer />
 					<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
-					<m:Button type="Accept" text="Export" press="onExport" enabled="false" tooltip="Save the changes and export the file" />
+					<m:Button type="Accept" text="Export" press="onExport" tooltip="Save the changes and export the file" />
 				</m:OverflowToolbar>
 			</m:footer>
 		</m:Page>

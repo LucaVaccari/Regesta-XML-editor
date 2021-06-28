@@ -11,34 +11,30 @@ sap.ui.define(
       },
 
       onAdd: function () {
-        console.log("Adding a new file");
-        // model.files.push({
-        //   id: lastFileId++,
-        //   title: "HeySus",
-        //   content: "<sus></sus>",
-        // });
-        updateGraphics();
-
-        window.location.href = `database/editFile.php?userId=${userId}&fileName=HeySus`;
+        window.location.href = `database/addFile.php?userId=${userId}&fileName=HeySus`;
       },
 
       onDelete: function (event) {
         let id =
           event.getParameter("listItem").mAggregations.content[0].mAggregations
             .customData[0].mProperties.value;
-        console.log("Removing file with id " + id);
+        window.location.href = `database/removeFile.php?fileId=${id}&userId=${userId}`;
       },
 
       onEdit: function (event) {
         let tile = getRecordElement(event);
         let id = getCustomIdFromRecord(tile);
-        console.log("Editing file with id " + id);
+        window.location.href = `editor.php?userId=${userId}&fileId=${id}`;
       },
 
       onDownload: function (event) {
         let tile = getRecordElement(event);
         let id = getCustomIdFromRecord(tile);
         console.log("Downloading file with id " + id);
+      },
+
+      onClearFiles: function () {
+        window.location.href = `database/clearDBfiles.php?userId=${userId}`;
       },
     });
   }

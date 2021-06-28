@@ -15,14 +15,20 @@ sap.ui.define(
 
         originalTree = view.byId("tree");
         root = originalTree.getItems()[0];
-        root.getContent()[0].getContent()[MOVE_UP_BUTTON_INDEX].setVisible(false);
-        root.getContent()[0].getContent()[MOVE_DOWN_BUTTON_INDEX].setVisible(false);
+        root
+          .getContent()[0]
+          .getContent()
+          [MOVE_UP_BUTTON_INDEX].setVisible(false);
+        root
+          .getContent()[0]
+          .getContent()
+          [MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
         clearTree(model.data);
         let initData = {
           noAttributes: model.data,
           attributes: model.allAttributes,
-        }
+        };
         dataQueue[0] = JSON.parse(JSON.stringify(initData));
 
         sap.ui.getCore().attachValidationError(function (oEvent) {
@@ -31,7 +37,7 @@ sap.ui.define(
         sap.ui.getCore().attachValidationSuccess(function (oEvent) {
           oEvent.getParameter("element").setValueState(ValueState.None);
         });
-        
+
         update();
       },
 
@@ -84,30 +90,36 @@ sap.ui.define(
       onSubmit: function (event) {
         selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
-        
+
         buttons[KEY_INPUT_INDEX].setVisible(false);
         buttons[KEY_LABEL_INDEX].setVisible(true);
         buttons[VALUE_INPUT_INDEX].setVisible(false);
-        
+
         let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
         if (subTree != undefined)
-        buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
+          buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
         else console.error("You shouldn't reach this point (onEdit)");
-        
+
         onModify();
         update();
       },
-      
-      onKeyValueEditLive: function(event) {
+
+      onKeyValueEditLive: function (event) {
         selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
-        
+
         let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
-        subTree.key = buttons[KEY_INPUT_INDEX].getValue().replaceAll(/[^\w-_]+/g, "");
+        subTree.key = buttons[KEY_INPUT_INDEX].getValue().replaceAll(
+          /[^\w-_]+/g,
+          ""
+        );
         if (!Array.isArray(subTree.value))
-          subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g, "");
+          subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(
+            /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+            ""
+          );
 
         if (!subTree.key) {
           subTree.key = "key";
@@ -120,11 +132,11 @@ sap.ui.define(
 
         jsonModel.updateBindings(true);
       },
-      
+
       onAdd: function () {
         selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
-        
+
         let id = getCustomIdFromRecord(selected);
         let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
@@ -137,54 +149,58 @@ sap.ui.define(
           subTreeValue.value = subTree.value;
           subTree.value = [subTreeValue];
         }
-        
+
         closeKeyValueInputs();
         onModify();
         update();
-        
+
         originalTree.expand(originalTree.indexOfItem(selected));
-        
+
         update();
       },
-      
+
       onRemove: function () {
         closeKeyValueInputs();
-        
+
         selected = originalTree.getSelectedItems()[0];
         if (selected == undefined) return;
-        
+
         let id = getCustomIdFromRecord(selected);
         if (id == model.data[0].id) {
           console.warn("Cannot remove root node");
           return;
         }
-        
+
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
-        
+
         // remove attributes
         removeAttributesInSubTree(subTree);
         function removeAttributesInSubTree(tree) {
           if (Array.isArray(tree.value)) {
-            model.allAttributes = model.allAttributes.filter(a => a.parentId != tree.id);
+            model.allAttributes = model.allAttributes.filter(
+              (a) => a.parentId != tree.id
+            );
             for (let el of tree.value) {
               removeAttributesInSubTree(el);
             }
           } else {
-            model.allAttributes = model.allAttributes.filter(a => a.parentId != tree.id);
+            model.allAttributes = model.allAttributes.filter(
+              (a) => a.parentId != tree.id
+            );
           }
         }
-        
+
         if (parent.value.length <= 1) {
           parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
         }
-        
+
         delete subTree.key;
         delete subTree.value;
         delete subTree.id;
-        
+
         clearTree(model.data);
-        
+
         onModify();
         update();
         update();
@@ -212,7 +228,9 @@ sap.ui.define(
         // add attributes
         addAttributesInSubTree(subTree, newSubTree);
         function addAttributesInSubTree(originalTree, newTree) {
-          let filteredAttributes = model.allAttributes.filter(a => a.parentId == originalTree.id);
+          let filteredAttributes = model.allAttributes.filter(
+            (a) => a.parentId == originalTree.id
+          );
           if (Array.isArray(originalTree.value)) {
             for (let index in originalTree.value) {
               for (let attribute of filteredAttributes) {
@@ -221,9 +239,12 @@ sap.ui.define(
                   attributeKey: attribute.attributeKey,
                   attributeValue: attribute.attributeValue,
                   parentId: newTree.id,
-                })
+                });
               }
-              addAttributesInSubTree(originalTree.value[index], newTree.value[index]);
+              addAttributesInSubTree(
+                originalTree.value[index],
+                newTree.value[index]
+              );
             }
           } else {
             for (let attribute of filteredAttributes) {
@@ -232,7 +253,7 @@ sap.ui.define(
                 attributeKey: attribute.attributeKey,
                 attributeValue: attribute.attributeValue,
                 parentId: newTree.id,
-              })
+              });
             }
           }
         }
@@ -244,8 +265,7 @@ sap.ui.define(
               break;
             }
           }
-        }
-        else {
+        } else {
           console.warn("You shouldn't reach this point onDuplicate");
         }
 
@@ -297,12 +317,14 @@ sap.ui.define(
       },
 
       onCancel: function () {
-        // go to previous page
+        window.location.href = `database/managementLoader.php?userId=${userId}`;
       },
 
       onUndo: function () {
         if (dataQueueIndex >= 1) {
-          let previousData = JSON.parse(JSON.stringify(dataQueue[--dataQueueIndex]));
+          let previousData = JSON.parse(
+            JSON.stringify(dataQueue[--dataQueueIndex])
+          );
           model.data = previousData.noAttributes;
           model.allAttributes = previousData.attributes;
         }
@@ -312,7 +334,9 @@ sap.ui.define(
 
       onRedo: function () {
         if (dataQueueIndex < dataQueue.length - 1) {
-          let previousData = JSON.parse(JSON.stringify(dataQueue[++dataQueueIndex]));
+          let previousData = JSON.parse(
+            JSON.stringify(dataQueue[++dataQueueIndex])
+          );
           model.data = previousData.noAttributes;
           model.allAttributes = previousData.attributes;
         }
@@ -362,23 +386,42 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () { },
-
+      onExport: function () {
+        formatter = cleanFormatter;
+        update();
+        model.preview = CustomJSONToXML(
+          model.data,
+          model.allAttributes,
+          formatter,
+          getCustomIdFromRecord(selected)
+        );
+        window.location.href = `database/saveFile.php?userId=${userId}&fileId=${fileId}&fileName=${
+          model.title
+        }&fileContent=${model.preview.replaceAll(/\t|\n/g, "")}`;
+      },
 
       onAttributesModify: function () {
         onModify();
         update();
       },
 
-      onAttributeModifyLive: function(event) {
+      onAttributeModifyLive: function (event) {
         let inputParent = event.getSource().oParent;
-        let id = inputParent.oParent.mAggregations.customData[0].mProperties.value;
+        let id =
+          inputParent.oParent.mAggregations.customData[0].mProperties.value;
         // console.log(model.allAttributes);
         for (let attr of model.allAttributes) {
           if (attr.id == id) {
             let inputs = inputParent.mAggregations.items;
-            attr.attributeKey = inputs[0].getValue().replaceAll(/[^\w-_:]+|^:$/g, "");
-            attr.attributeValue = inputs[1].getValue().replaceAll(/[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g, "");
+            attr.attributeKey = inputs[0]
+              .getValue()
+              .replaceAll(/[^\w-_:]+|^:$/g, "");
+            attr.attributeValue = inputs[1]
+              .getValue()
+              .replaceAll(
+                /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+                ""
+              );
 
             if (!attr.attributeKey) {
               attr.attributeKey = "attributeName";
@@ -402,7 +445,7 @@ sap.ui.define(
           attributeKey: "name",
           attributeValue: "value",
           parentId: getCustomIdFromRecord(selected),
-        }
+        };
 
         model.selectedAttributes.push(newAttr);
         model.allAttributes.push(newAttr);
@@ -412,8 +455,10 @@ sap.ui.define(
       onRemoveAttribute: function (event) {
         let item = event.getParameter("listItem");
         let id = item.mAggregations.customData[0].mProperties.value;
-        model.selectedAttributes = model.selectedAttributes.filter(a => a.id != id);
-        model.allAttributes = model.allAttributes.filter(a => a.id != id);
+        model.selectedAttributes = model.selectedAttributes.filter(
+          (a) => a.id != id
+        );
+        model.allAttributes = model.allAttributes.filter((a) => a.id != id);
         this.onAttributesModify();
       },
 
@@ -421,7 +466,9 @@ sap.ui.define(
         selected = originalTree.getSelectedItems()[0];
         let parentId = getCustomIdFromRecord(selected);
 
-        model.allAttributes = model.allAttributes.filter(a => a.parentId != parentId);
+        model.allAttributes = model.allAttributes.filter(
+          (a) => a.parentId != parentId
+        );
         model.selectedAttributes = [];
         this.onAttributesModify();
       },
@@ -431,7 +478,17 @@ sap.ui.define(
         update();
       },
 
-      update: update
+      onTitleEdit: function () {
+        view.byId("titleLabel").setVisible(false);
+        view.byId("titleInput").setVisible(true);
+      },
+
+      onTitleChange: function () {
+        view.byId("titleLabel").setVisible(true);
+        view.byId("titleInput").setVisible(false);
+      },
+
+      update: update,
     });
   }
 );
