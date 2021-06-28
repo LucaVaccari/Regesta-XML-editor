@@ -6,7 +6,6 @@
 - callback:
 - funzionalità:
   - import del file
-  - download del file
 - grafica:
 - piccoli dettagli:
   - pulsanti move fuori dalla toolbar
