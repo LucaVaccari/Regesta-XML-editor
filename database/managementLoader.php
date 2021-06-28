@@ -2,4 +2,5 @@
 
 if (!session_id()) session_start();
 
-header("location: ../management.php?userId=3");
+$userId = $_GET["userId"];
+header("location: ../management.php?userId=" . $userId);

@@ -1,30 +1,3 @@
-let jsonModel,
-  lastFileId = 0;
-let model = {
-  files: [
-    {
-      id: lastFileId++,
-      title: "Hey1",
-      content: "<sus></sus>",
-    },
-    {
-      id: lastFileId++,
-      title: "Hey2",
-      content: "<sus></sus>",
-    },
-    {
-      id: lastFileId++,
-      title: "Hey3",
-      content: "<sus></sus>",
-    },
-    {
-      id: lastFileId++,
-      title: "Hey4",
-      content: "<sus></sus>",
-    },
-  ],
-};
-
 sap.ui.define(
   ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
   (Controller, JSONModel) => {
@@ -35,17 +8,18 @@ sap.ui.define(
         jsonModel = new JSONModel(model);
         let view = this.getView();
         view.setModel(jsonModel);
-        console.log(x);
       },
 
       onAdd: function () {
         console.log("Adding a new file");
-        model.files.push({
-          id: lastFileId++,
-          title: "HeySus",
-          content: "<sus></sus>",
-        });
+        // model.files.push({
+        //   id: lastFileId++,
+        //   title: "HeySus",
+        //   content: "<sus></sus>",
+        // });
         updateGraphics();
+
+        window.location.href = `database/editFile.php?userId=${userId}&fileName=HeySus`;
       },
 
       onDelete: function (event) {
