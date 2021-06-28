@@ -22,6 +22,7 @@
   - mobile first 
 - file management:
   - interazione database:
+    - show files
     - add file
     - remove file
     - edit file
