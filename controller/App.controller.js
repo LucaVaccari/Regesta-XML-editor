@@ -478,6 +478,16 @@ sap.ui.define(
         update();
       },
 
+      onTitleEdit: function () {
+        view.byId("titleLabel").setVisible(false);
+        view.byId("titleInput").setVisible(true);
+      },
+
+      onTitleChange: function () {
+        view.byId("titleLabel").setVisible(true);
+        view.byId("titleInput").setVisible(false);
+      },
+
       update: update,
     });
   }
