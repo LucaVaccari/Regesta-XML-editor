@@ -35,7 +35,8 @@ class JSONFormatter extends Formatter {
 
         returnValue += this._bOpenObj;
 
-        if (new RegExp("^\s*" + this._bArray).test(content.trimLeft()) || new RegExp("^\s*" + this._bSelectedContent + this._bArray).test(content.trimLeft())) {
+        // if (new RegExp("^\s*" + this._bArray).test(content.trimLeft())) {
+        if (new RegExp("^\s*" + "(" + this._bSelectedContent + ")*" + this._bArray).test(content.trimLeft())) {
             // object containing an object (inside an Array)
             // attributes start
             if (hasAttributes) {
@@ -44,9 +45,9 @@ class JSONFormatter extends Formatter {
 
             // attributes end
             let objectContent = this._bKey + key + this._aKey;
-            objectContent += ":" + this._indentContent("\n" + content) + "\n";
+            objectContent += ":" + this._indentContent("\n" + content);
 
-            returnValue += this._indentContent("\n" + objectContent);
+            returnValue += this._indentContent("\n" + objectContent) + "\n";
         }
         else {
             // object containing text
@@ -71,7 +72,7 @@ class JSONFormatter extends Formatter {
     }
 
     _attributes(attributeNames, attributeValues) {
-        let returnValue = this._bKey + `attributes` + this._aKey;
+        let returnValue = this._bKey + `attributes` + this._aKey + ":";
         let attributes = "";
         for (let index in attributeNames) {
             attributes +=

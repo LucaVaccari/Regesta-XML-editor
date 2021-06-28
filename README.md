@@ -3,7 +3,6 @@
 ## Todo:
 
 - bug:
-  - } indentate male
 - callback:
   - cancel
   - export
@@ -20,6 +19,7 @@
   - translatable text
   - dark theme
   - database con file salvati e utenti registrati
+  - mobile first 
 - file management:
   - interazione database:
     - add file

@@ -46,7 +46,7 @@ class Formatter {
     // tag containing something
     returnValue += this._aKey;
 
-    if (new RegExp("^\s*" + this._bKey).test(content.trimLeft()) || new RegExp("^\s*" + this._bSelectedContent + this._bKey).test(content.trimLeft())) {
+    if (new RegExp("^\s*" + "(" + this._bSelectedContent + ")*" + this._bKey).test(content.trimLeft())) {
       // tag containing a tag
       returnValue += this._indentContent("\n" + content) + "\n";
     }
