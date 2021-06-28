@@ -11,7 +11,7 @@ sap.ui.define(
       },
 
       onAdd: function () {
-        window.location.href = `database/addFile.php?userId=${userId}&fileName=HeySus`;
+        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled`;
       },
 
       onDelete: function (event) {
@@ -35,6 +35,10 @@ sap.ui.define(
 
       onClearFiles: function () {
         window.location.href = `database/clearDBfiles.php?userId=${userId}`;
+      },
+
+      onHomePage: function () {
+        window.location.href = `index.php`;
       },
     });
   }

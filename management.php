@@ -13,15 +13,7 @@
         let userId = ' . $_GET['userId'] . ';
       </script>';
 
-  $host = "localhost";
-  $user = "root";
-  $password = '';
-  $db_name = "regesta-XML-editor-db";
-
-  $con = mysqli_connect($host, $user, $password, $db_name);
-  if (mysqli_connect_errno()) {
-    die("Failed to connect with MySQL: " . mysqli_connect_error());
-  }
+  include 'global.php';
 
   $sql = ("SELECT * from files where userId = " . $_GET["userId"]);
   $result = $con->query($sql);
