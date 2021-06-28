@@ -18,7 +18,7 @@ sap.ui.define(
         let id =
           event.getParameter("listItem").mAggregations.content[0].mAggregations
             .customData[0].mProperties.value;
-        console.log("Removing file with id " + id);
+        window.location.href = `database/removeFile.php?fileId=${id}`;
       },
 
       onEdit: function (event) {
