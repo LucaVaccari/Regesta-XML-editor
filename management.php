@@ -5,7 +5,10 @@
     <title>XML Visual Editor</title>
 
     <?php 
-      echo "hello";
+      echo '<script>
+        let x = "sas";
+        console.log(x);
+      </script>';
     ?>
 
     <script
