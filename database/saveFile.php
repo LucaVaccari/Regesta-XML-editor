@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";
 $password = '';
-$db_name = "users";
+$db_name = "regesta-XML-editor-db";
 
 $con = mysqli_connect($host, $user, $password, $db_name);
 if (mysqli_connect_errno()) {
@@ -20,7 +20,7 @@ echo $fileId . "<br>";
 echo $fileName . "<br>";
 echo '"' . $fileContent . '"' . "<br>";
 
-$sql = ('UPDATE file SET idUser = "' . $userId . '", fileName = "' . $fileName . '", fileContent = "' . $fileContent . '" where idFile = ' . $fileId);
+$sql = ('UPDATE files SET userId = "' . $userId . '", fileName = "' . $fileName . '", fileContent = "' . $fileContent . '" where fileId = ' . $fileId);
 $con->query($sql);
 
 header("location: ../management.php?userId=" . $userId);

@@ -17,7 +17,7 @@
   $host = "localhost";
   $user = "root";
   $password = '';
-  $db_name = "users";
+  $db_name = "regesta-XML-editor-db";
 
   $con = mysqli_connect($host, $user, $password, $db_name);
   if (mysqli_connect_errno()) {
@@ -27,7 +27,7 @@
   $userId = $_GET['userId'];
   $fileId = $_GET['fileId'];
 
-  $sql = ('SELECT * from file WHERE idFile = ' . $fileId . ' and idUser = ' . $userId);
+  $sql = ('SELECT * from files WHERE fileId = ' . $fileId . ' and userId = ' . $userId);
   $result = $con->query($sql);
 
   $row = mysqli_fetch_array($result);

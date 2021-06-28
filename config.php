@@ -10,7 +10,7 @@ if (!session_id()) session_start();
 $host = "localhost";
 $user = "root";
 $password = '';
-$db_name = "users";
+$db_name = "regesta-XML-editor-db";
 
 
 $con = mysqli_connect($host, $user, $password, $db_name);
@@ -34,7 +34,7 @@ $password = stripcslashes($password);
 $email = mysqli_real_escape_string($con, $email);
 $password = mysqli_real_escape_string($con, $password);
 
-$sql = ("SELECT id from account where email = '$email' and password = '$password'");
+$sql = ("SELECT id from accounts where email = '$email' and password = '$password'");
 
 $result = $con->query($sql);
 

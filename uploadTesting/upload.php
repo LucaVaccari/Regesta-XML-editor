@@ -3,7 +3,7 @@
 $host = "localhost";  
 $user = "root";  
 $password = '';  
-$db_name = "users";  
+$db_name = "regesta-XML-editor-db";  
   
 
 $con = mysqli_connect($host, $user, $password, $db_name);  
@@ -22,7 +22,7 @@ $txtFile = $_POST['myfile'];
 $string = file_get_contents($txtFile);
 echo($string);
 
-$sql = "INSERT INTO `account` (`file`) VALUES ('$string)";
+$sql = "INSERT INTO `accounts` (`files`) VALUES ('$string)";
 $rs = mysqli_query($con, $sql);
 
 
