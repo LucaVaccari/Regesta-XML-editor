@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+if (!session_id()) session_start();
 
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
@@ -44,11 +44,12 @@ $active = $row['active'];
 
 $count = mysqli_num_rows($result);
 
+echo mysqli_fetch_assoc($result);
+
 // if ($count > 0) {
-//     $_SESSION['name'] = $username;
-//     header("location: ..\management.php");
+//     header("location: ./managementLoader.php");
 // } else {
-//     header("location: ..\register.html");
+//     header("location: register.html");
 // }
 
    // if($rs)
