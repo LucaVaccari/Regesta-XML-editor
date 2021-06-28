@@ -36,6 +36,10 @@ sap.ui.define(
       onClearFiles: function () {
         window.location.href = `database/clearDBfiles.php?userId=${userId}`;
       },
+
+      onHomePage: function () {
+        window.location.href = `index.php`;
+      },
     });
   }
 );
