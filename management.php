@@ -4,6 +4,10 @@
     <meta charset="utf-8" />
     <title>XML Visual Editor</title>
 
+    <?php 
+      echo "hello";
+    ?>
+
     <script
       id="sap-ui-bootstrap"
       src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
