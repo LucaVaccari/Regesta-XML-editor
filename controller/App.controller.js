@@ -388,16 +388,15 @@ sap.ui.define(
 
       onExport: function () {
         formatter = cleanFormatter;
-        update();
-        model.preview = CustomJSONToXML(
+        let output = CustomJSONToXML(
           model.data,
           model.allAttributes,
-          formatter,
-          getCustomIdFromRecord(selected)
-        );
+          formatter
+        ).replaceAll(/\t|\n/g, "");
+        console.log(output);
         window.location.href = `database/saveFile.php?userId=${userId}&fileId=${fileId}&fileName=${
           model.title
-        }&fileContent=${model.preview.replaceAll(/\t|\n/g, "")}`;
+        }&fileContent=${output}`;
       },
 
       onAttributesModify: function () {
