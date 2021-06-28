@@ -17,6 +17,4 @@
   - mobile first
 - file management:
   - interazione database:
-    - remove file
-    - download file
 - documentazione

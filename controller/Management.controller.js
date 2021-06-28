@@ -30,7 +30,8 @@ sap.ui.define(
       onDownload: function (event) {
         let tile = getRecordElement(event);
         let id = getCustomIdFromRecord(tile);
-        console.log("Downloading file with id " + id);
+        let element = model.files.filter((file) => file.id == id)[0];
+        download(`${element.title}.xml`, element.content);
       },
 
       onClearFiles: function () {
@@ -57,4 +58,20 @@ function getCustomIdFromRecord(record) {
 
 function updateGraphics() {
   jsonModel.updateBindings(true);
+}
+
+function download(filename, text) {
+  var element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/xml;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }
