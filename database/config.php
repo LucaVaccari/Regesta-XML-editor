@@ -50,10 +50,10 @@ session_start();
           
         if($count > 0) {
             $_SESSION['username'] = $username;
-            header("location: index.html");
+            header("location: editor.html");
         }
         else{
-            header("location: home.html");
+            header("location: register.html");
             
         }
 
