@@ -7,9 +7,9 @@ session_start();
 
         //Database Connection
 
-    $host = "localhost";  
+    $host = "sql11.freemysqlhosting.net";  
     $user = "root";  
-    $password = '';  
+    $password = 'mdTT1WcU9a';  
     $db_name = "register";  
       
 
