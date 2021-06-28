@@ -37,5 +37,6 @@ const JSONformatter = new JSONFormatter(
   "#73C2E1",
   false
 );
+const cleanFormatter = new Formatter("");
 
 let formatter = XMLformatter;

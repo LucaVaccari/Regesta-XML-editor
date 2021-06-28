@@ -67,7 +67,7 @@
 				<m:OverflowToolbar>
 					<m:ToolbarSpacer />
 					<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
-					<m:Button type="Accept" text="Export" press="onExport" enabled="false" tooltip="Save the changes and export the file" />
+					<m:Button type="Accept" text="Export" press="onExport" tooltip="Save the changes and export the file" />
 				</m:OverflowToolbar>
 			</m:footer>
 		</m:Page>

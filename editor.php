@@ -33,6 +33,8 @@
   $row = mysqli_fetch_array($result);
 
   echo "<script>\n";
+  echo "let userId = `" . $userId . "`;\n";
+  echo "let fileId = `" . $fileId . "`;\n";
   echo "model.preview = `" . $row["fileContent"] . "`;\n";
   echo "model.title = `" . $row["fileName"] . "`;\n";
   echo "customJson = XMLtoCustomJSON(model.preview);\n
