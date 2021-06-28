@@ -32,7 +32,7 @@
         <div class="center">
             <h1>XML Visual Editor</h1>
             <h3>Import your file and start editing it!</h3>
-            <a class="button" href="database/managementLoader.php">IMPORT</a>
+            <a class="button" href="editor.php">IMPORT</a>
         </div>
         <footer>
             <div class="texts">
