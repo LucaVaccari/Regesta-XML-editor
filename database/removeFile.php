@@ -11,6 +11,9 @@ if (mysqli_connect_errno()) {
 }
 
 $fileId = $_GET["fileId"];
+$userId = $_GET["userId"];
 
 $sql = ('DELETE FROM file WHERE idFile = ' . $fileId);
 $con->query($sql);
+
+header("location: managementLoader.php?userId=" . $userId);
