@@ -154,12 +154,11 @@ sap.ui.define(
         if (selected == undefined) return;
         
         let id = getCustomIdFromRecord(selected);
-        
         if (id == model.data[0].id) {
           console.warn("Cannot remove root node");
           return;
         }
-
+        
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
         
@@ -179,7 +178,7 @@ sap.ui.define(
         if (parent.value.length <= 1) {
           parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
         }
-
+        
         delete subTree.key;
         delete subTree.value;
         delete subTree.id;
@@ -187,6 +186,7 @@ sap.ui.define(
         clearTree(model.data);
         
         onModify();
+        update();
         update();
       },
 
