@@ -1,15 +1,15 @@
 <?php
 
-$host = "sql11.freemysqlhosting.net";  
-$user = "sql11421864";  
-$password = 'mdTT1WcU9a';  
-$db_name = "sql11421864";  
-  
+$host = "sql11.freemysqlhosting.net";
+$user = "sql11421864";
+$password = 'mdTT1WcU9a';
+$db_name = "sql11421864";
 
-$con = mysqli_connect($host, $user, $password, $db_name);  
 
-if(mysqli_connect_errno()) {  
-    die("Failed to connect with MySQL: ". mysqli_connect_error()); 
+$con = mysqli_connect($host, $user, $password, $db_name);
+
+if (mysqli_connect_errno()) {
+  die("Failed to connect with MySQL: " . mysqli_connect_error());
 }
 
 //$id = 0;
@@ -18,7 +18,7 @@ $txtFile = $_POST['myfile'];
 
 
 $string = file_get_contents($txtFile);
-echo($string);
+echo ($string);
 
 $sql = "INSERT INTO `accounts` (`files`) VALUES ('$string)";
 $rs = mysqli_query($con, $sql);

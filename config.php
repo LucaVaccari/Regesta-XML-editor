@@ -1,29 +1,6 @@
 <?php
 
-if (!session_id()) session_start();
-
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
-
-//Database Connection
-
-$host = "sql11.freemysqlhosting.net";
-$user = "sql11421864";
-$password = 'mdTT1WcU9a';
-$db_name = "sql11421864";
-
-
-$con = mysqli_connect($host, $user, $password, $db_name);
-
-if (mysqli_connect_errno()) {
-    die("Failed to connect with MySQL: " . mysqli_connect_error());
-}
-
-//$txtName = $_POST['email'];
-//$txtEmail = $_POST['psw'];
-
-//$sql = "INSERT INTO `test1` (`username`, `password`) VALUES ('$txtName', '$txtEmail')";
-//$rs = mysqli_query($con, $sql);
+include 'global.php';
 
 $email = $_POST['email'];
 $password = $_POST['psw'];
