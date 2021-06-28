@@ -35,10 +35,11 @@ sap.ui.define(
         jsonModel = new JSONModel(model);
         let view = this.getView();
         view.setModel(jsonModel);
+        console.log(x);
       },
 
       onAdd: function () {
-        console.log("Adding a new file!");
+        console.log("Adding a new file");
         model.files.push({
           id: lastFileId++,
           title: "HeySus",
