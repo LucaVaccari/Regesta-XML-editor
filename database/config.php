@@ -25,8 +25,6 @@ if (mysqli_connect_errno()) {
 //$sql = "INSERT INTO `test1` (`username`, `password`) VALUES ('$txtName', '$txtEmail')";
 //$rs = mysqli_query($con, $sql);
 
-
-
 $username = $_POST['email'];
 $password = $_POST['psw'];
 
