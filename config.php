@@ -10,7 +10,7 @@ session_start();
 $host = "localhost";
 $user = "root";
 $password = '';
-$db_name = "test1";
+$db_name = "users";
 
 
 $con = mysqli_connect($host, $user, $password, $db_name);
@@ -34,7 +34,7 @@ $password = stripcslashes($password);
 $username = mysqli_real_escape_string($con, $username);
 $password = mysqli_real_escape_string($con, $password);
 
-$sql = ("SELECT * from test1 where username = '$username' and password = '$password'");
+$sql = ("SELECT * from account where name = '$username' and password = '$password'");
 
 $result = mysqli_query($con, $sql);
 
@@ -44,12 +44,12 @@ $active = $row['active'];
 
 $count = mysqli_num_rows($result);
 
-if ($count > 0) {
-    $_SESSION['username'] = $username;
-    header("location: editor.html");
-} else {
-    header("location: register.html");
-}
+// if ($count > 0) {
+//     $_SESSION['name'] = $username;
+//     header("location: ..\management.php");
+// } else {
+//     header("location: ..\register.html");
+// }
 
    // if($rs)
 /*{
