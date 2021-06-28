@@ -34,7 +34,7 @@ $password = stripcslashes($password);
 $username = mysqli_real_escape_string($con, $username);
 $password = mysqli_real_escape_string($con, $password);
 
-$sql = ("SELECT *from test1 where username = '$username' and password = '$password'");
+$sql = ("SELECT * from test1 where username = '$username' and password = '$password'");
 
 $result = mysqli_query($con, $sql);
 
