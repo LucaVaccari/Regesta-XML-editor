@@ -153,6 +153,10 @@ footer .icons {
 }
 
 @media (max-width: 1000px) {
+  section {
+    margin-top: 20%;
+  }
+
   footer .icons {
     margin-left: 30%;
   }
@@ -161,6 +165,10 @@ footer .icons {
 @media (max-width: 700px) {
   body {
     background-image: url("../resources/images/bg-image-mobile.png"); /*PROVVISORIO*/
+  }
+
+  section {
+    margin-top: 30%;
   }
 
   .center {
