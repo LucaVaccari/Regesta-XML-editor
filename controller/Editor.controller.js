@@ -448,7 +448,6 @@ sap.ui.define(
       },
 
       onDownloadPreview: function () {
-        console.log("Downloading preview");
         let output = CustomJSONToXML(
           model.data,
           model.allAttributes,
