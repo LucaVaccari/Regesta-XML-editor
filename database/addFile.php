@@ -12,7 +12,7 @@ $fileContent = $_GET["fileContent"];
 $lastModification = $_GET["date"];
 
 $sql = ('INSERT INTO files (fileId, userId, fileName, fileContent, lastModification) 
-    VALUES (' . $fileId . ', "' . $userId . '", "' . $fileName . '", ' . $fileContent . ', ' . $lastModification . ')');
+    VALUES (' . $fileId . ', "' . $userId . '", "' . $fileName . '", \'' . $fileContent . '\', "' . $lastModification . '")');
 $con->query($sql);
 
 header("location: ../management.php?userId=" . $userId);

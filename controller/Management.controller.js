@@ -66,9 +66,8 @@ sap.ui.define(
 
       onCreateEmptyFile: function () {
         let date = new Date();
-        let dateString = date.toString();
-        console.log(dateString);
-        // window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent="<empty />&date=${dateString}`;
+        let dateString = formatDateToSQL(date).split(" ")[0];
+        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent=<empty />&date=${dateString}`;
       },
 
       onFileUpload: function (event) {
@@ -81,7 +80,9 @@ sap.ui.define(
 
           reader.onload = (file) => {
             let fileContent = file.currentTarget.result.replaceAll(/'/g, '"');
-            // window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent='${fileContent}'`;
+            let date = new Date();
+            let dateString = formatDateToSQL(date).split(" ")[0];
+            window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
           };
 
           reader.readAsText(file);
@@ -104,6 +105,10 @@ function getCustomIdFromRecord(record) {
 
 function updateGraphics() {
   jsonModel.updateBindings(true);
+}
+
+function formatDateToSQL(date) {
+  return date.toISOString().slice(0, 19).replace("T", " ");
 }
 
 function download(filename, text) {
