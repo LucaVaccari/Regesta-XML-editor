@@ -12,7 +12,6 @@
 - nice to have:
   - data di caricamento/modifica dei file
   - tasto salva che resta nell'editor
-  - download preview
   - nome dell'utente in management.php
   - accesso con nome/email
   - log out
