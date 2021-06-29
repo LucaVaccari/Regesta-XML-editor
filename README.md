@@ -10,7 +10,6 @@
 - piccoli dettagli:
   - pulsanti move fuori dalla toolbar
 - nice to have:
-  - rick roll
   - data di caricamento/modifica dei file
   - tasto salva che resta nell'editor
   - download preview
