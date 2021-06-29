@@ -239,6 +239,10 @@ footer #rightToLeft:hover {
     margin-top: 100px;
   }
 
+  footer div.texts {
+    width: 10%;
+  }
+
   footer div.texts a#hide,
   footer div.icons a#hide {
     visibility: hidden;
