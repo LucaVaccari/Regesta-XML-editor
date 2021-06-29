@@ -124,6 +124,9 @@ footer div a {
   text-decoration: none;
   user-select: none;
   font-size: 1.1em;
+}
+
+footer div a#hide {
   opacity: 0;
   animation: slide_up 0.5s linear forwards;
   animation-delay: calc(2s + 0.2s * var(--i));
@@ -164,26 +167,38 @@ footer #rightToLeft {
 }
 
 .dropdown {
-  float: left;
-  overflow: hidden;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
+  background-color: rgba(0, 0, 0, 0.253);
+  max-height: auto;
+  color: #fff;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
   z-index: 1;
 }
 
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
+.texts .dropdown .dropdown-content {
+  min-width: 150px;
+}
+
+.icons .dropdown .dropdown-content {
+  left: 50%;
+  margin-left: -20px;
+  min-width: 36px;
+}
+
+.dropdown:hover .dropdown-content {
   display: block;
-  text-align: left;
+  position: absolute;
+  margin-top: 3px;
+  font: 10px;
+  bottom: 100%;
+  left: 50%;
 }
 
 footer #leftToRight:hover {
@@ -224,7 +239,8 @@ footer #rightToLeft:hover {
     margin-top: 100px;
   }
 
-  footer div a {
+  footer div.texts a#hide,
+  footer div.icons a#hide {
     visibility: hidden;
   }
 
