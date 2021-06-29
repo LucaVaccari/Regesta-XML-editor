@@ -6,7 +6,6 @@
 - callback:
 - funzionalità:
   - import del file
-  - download del file
 - grafica:
 - piccoli dettagli:
   - pulsanti move fuori dalla toolbar
@@ -17,6 +16,4 @@
   - mobile first
 - file management:
   - interazione database:
-    - remove file
-    - download file
 - documentazione

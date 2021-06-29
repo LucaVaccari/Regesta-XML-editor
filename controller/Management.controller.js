@@ -1,17 +1,38 @@
+let view;
+
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
-  (Controller, JSONModel) => {
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment",
+  ],
+  (Controller, JSONModel, Fragment) => {
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Management", {
       onInit: function () {
         jsonModel = new JSONModel(model);
-        let view = this.getView();
+        view = this.getView();
         view.setModel(jsonModel);
       },
 
-      onAdd: function () {
-        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled`;
+      onAdd: function (event) {
+        var button = event.getSource();
+
+        // create popover
+        if (!this._popover) {
+          this._popover = Fragment.load({
+            id: view.getId(),
+            name: "sap.ui.demo.walkthrough.view.AddFile",
+            controller: this,
+          }).then(function (popover) {
+            view.addDependent(popover);
+            return popover;
+          });
+        }
+        this._popover.then(function (oPopover) {
+          oPopover.openBy(button);
+        });
       },
 
       onDelete: function (event) {
@@ -30,7 +51,8 @@ sap.ui.define(
       onDownload: function (event) {
         let tile = getRecordElement(event);
         let id = getCustomIdFromRecord(tile);
-        console.log("Downloading file with id " + id);
+        let element = model.files.filter((file) => file.id == id)[0];
+        download(`${element.title}.xml`, element.content);
       },
 
       onClearFiles: function () {
@@ -39,6 +61,14 @@ sap.ui.define(
 
       onHomePage: function () {
         window.location.href = `index.php`;
+      },
+
+      onCreateEmptyFile: function () {
+        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent="<empty />"`;
+      },
+
+      onUploadFile: function () {
+        
       },
     });
   }
@@ -57,4 +87,20 @@ function getCustomIdFromRecord(record) {
 
 function updateGraphics() {
   jsonModel.updateBindings(true);
+}
+
+function download(filename, text) {
+  var element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/xml;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }

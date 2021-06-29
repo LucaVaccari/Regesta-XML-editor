@@ -487,6 +487,10 @@ sap.ui.define(
         view.byId("titleInput").setVisible(false);
       },
 
+      onDownloadPreview: function() {
+        console.log("Downloading preview");
+      },
+
       update: update,
     });
   }
