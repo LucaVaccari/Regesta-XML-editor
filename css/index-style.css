@@ -175,8 +175,8 @@ footer .icons {
     margin-top: 100px;
   }
 
-  footer .icons {
-    margin-left: 20%;
+  footer div {
+    visibility: hidden;
   }
 }
 

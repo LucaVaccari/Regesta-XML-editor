@@ -36,6 +36,7 @@
         </div>
         <footer>
             <div class="texts">
+                <img src="resources/images/dropdown.png" height="20px" width="auto"">
                 <a style="--i: 1" href="https://www.google.com/maps/place/Regesta+S.R.L./@45.5472802,10.1902087,15z/data=!4m5!3m4!1s0x0:0x551a640910ca7610!8m2!3d45.5472802!4d10.1902087" target="_blank">Find us</a>
                 <a style="--i: 2" href="https://www.regestaitalia.eu/contatti/" target="_blank">Contact us</a>
                 <a style="--i: 3" href="https://www.regestaitalia.eu/azienda/" target="_blank">About us</a>
