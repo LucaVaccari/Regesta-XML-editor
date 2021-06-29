@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Carme&display=swap");
 
+/* MAIN */
 * {
   margin: 0;
   padding: 0;
@@ -20,6 +21,16 @@ section {
   min-height: 100vh;
 }
 
+.test {
+  font-size: xx-large !important;
+}
+
+.padding-side {
+  padding-left: 5% !important;
+  padding-right: 5% !important;
+}
+
+/* HEADER */
 header {
   position: fixed;
   top: 0;
@@ -42,6 +53,7 @@ header {
   animation-delay: 2s;
 }
 
+/* TITLE TEXT */
 .center {
   justify-content: center;
   align-items: center;
@@ -87,6 +99,7 @@ h3 {
   transform: scale(1.2);
 }
 
+/* FOOTER */
 footer {
   position: fixed;
   display: flex;
@@ -136,13 +149,49 @@ footer .icons {
   display: flex;
 }
 
-.test {
-  font-size: xx-large !important;
+/* FOOTER DROPDOWN */
+footer #leftToRight {
+  position: absolute;
+  margin-right: 10%;
+  visibility: hidden;
 }
 
-.padding-side {
-  padding-left: 5% !important;
-  padding-right: 5% !important;
+footer #rightToLeft {
+  position: absolute;
+  margin-left: 20%;
+  margin-right: 5%;
+  visibility: hidden;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+footer #leftToRight:hover {
+  animation: rotate_left 0.5s linear forwards;
+}
+
+footer #rightToLeft:hover {
+  animation: rotate_right 0.5s linear forwards;
 }
 
 /* RESPONSIVE */
@@ -175,8 +224,16 @@ footer .icons {
     margin-top: 100px;
   }
 
-  footer div {
+  footer div a {
     visibility: hidden;
+  }
+
+  footer #leftToRight {
+    visibility: visible;
+  }
+
+  footer #rightToLeft {
+    visibility: visible;
   }
 }
 
@@ -236,6 +293,26 @@ footer .icons {
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes rotate_left {
+  50% {
+    transform: rotate(225deg);
+  }
+
+  100% {
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes rotate_right {
+  50% {
+    transform: rotate(-225deg);
+  }
+
+  100% {
+    transform: rotate(-270deg);
   }
 }
 
