@@ -14,17 +14,6 @@ let jsonModel,
   attributesShown = true;
 let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
 
-function getRecordElement(event) {
-  let id = event.getSource().getId();
-  return sap.ui.getCore().getElementById(id).oParent.oParent;
-}
-
-function getCustomIdFromRecord(record) {
-  if (record == undefined) return -1;
-  return record.mAggregations.content[0].mAggregations.customData[2].mProperties
-    .value;
-}
-
 function findSubTreeById(tree, id) {
   if (tree == undefined) return;
 
@@ -198,3 +187,19 @@ function update() {
   updatePreview();
   updateGraphics();
 }
+
+function download(filename, text, mimeType = "text/xml") {
+    var element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      `data:${mimeType};charset=utf-8,` + encodeURIComponent(text)
+    );
+    element.setAttribute("download", filename);
+  
+    element.style.display = "none";
+    document.body.appendChild(element);
+  
+    element.click();
+  
+    document.body.removeChild(element);
+  }
