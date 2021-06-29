@@ -79,7 +79,7 @@ sap.ui.define(
           let reader = new FileReader();
 
           reader.onload = (file) => {
-            let fileContent = file.currentTarget.result.replaceAll(/'/g, '"');
+            let fileContent = file.currentTarget.result.replaceAll(/'/g, '"').replaceAll(/\n|\t/g, "");
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
             window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;

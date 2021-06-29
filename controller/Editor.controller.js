@@ -278,7 +278,7 @@ sap.ui.define(
       },
 
       onCancel: function () {
-        window.location.href = `database/managementLoader.php?userId=${userId}`;
+        window.location.href = `management.php?userId=${userId}`;
       },
 
       onUndo: function () {
@@ -400,7 +400,6 @@ sap.ui.define(
       },
 
       onAddAttribute: function () {
-        // selected = originalTree.getSelectedItems()[0];
         let newAttr = {
           id: lastElementId++,
           attributeKey: "name",
@@ -424,7 +423,6 @@ sap.ui.define(
       },
 
       onClearAttributes: function () {
-        // selected = originalTree.getSelectedItems()[0];
         let parentId = selectedItem.id;
 
         model.allAttributes = model.allAttributes.filter(

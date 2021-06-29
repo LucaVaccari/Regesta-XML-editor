@@ -25,10 +25,10 @@ function XMLtoCustomJSON(xml) {
         if (node.childNodes.length == 0) noAttributesCJ.value = "";
         else {
           noAttributesCJ.value = [];
-          for (let i in node.childNodes) {
+          for (let i = 0; i < node.childElementCount; i++) {
             let temp = XMLDocToCustomJSON(node.childNodes.item(i));
             temp.isFirst = i == 0;
-            temp.isLast = i == node.childNodes.length - 1;
+            temp.isLast = i == node.childElementCount - 1;
             noAttributesCJ.value.push(temp);
           }
         }
