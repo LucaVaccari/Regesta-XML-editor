@@ -13,6 +13,8 @@ sap.ui.define(
         view = this.getView();
         view.setModel(jsonModel);
 
+        originalTree = view.byId("tree");
+
         updateModel();
         let initData = {
           noAttributes: model.data,
@@ -335,14 +337,14 @@ sap.ui.define(
         model.preview.mimeType = "text/xml";
         update();
       },
-      
+
       onCompactXMLSwitch: function () {
         formatter = compactXMLformatter;
         previewFormatter = compactXMLPreviewFormatter;
         model.preview.mimeType = "text/xml";
         update();
       },
-      
+
       onJSONSwitch: function () {
         formatter = JSONformatter;
         previewFormatter = JSONPreviewFormatter;

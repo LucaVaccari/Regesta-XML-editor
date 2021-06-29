@@ -173,7 +173,6 @@ function updateGraphics() {
 
   jsonModel.updateBindings(true);
 
-  // selected = originalTree.getSelectedItems()[0];
   if (!selectedItem) {
     model.somethingSelected = false;
     model.isRootSelected = false;
