@@ -8,12 +8,20 @@
   <script src="js/managementFunctions.js"></script>
 
   <?php
-  if (!session_id()) session_start();
+  include "global.php";
+  $userId = $_GET["userId"];
+  $sql = "SELECT * from accounts where id = " . $userId;
+  $result = $con->query($sql);
+  $row = mysqli_fetch_array($result);
+
+  if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
+    header("location: https://youtu.be/dQw4w9WgXcQ");
+  }
+
   echo '<script>
         let userId = ' . $_GET['userId'] . ';
       </script>';
 
-  include 'global.php';
 
   $sql = ("SELECT * from files where userId = " . $_GET["userId"]);
   $result = $con->query($sql);
