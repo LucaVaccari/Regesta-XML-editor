@@ -1,0 +1,6 @@
+<core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+    <m:Popover title="Add file" placement="Bottom">
+        <m:Button text="Upload" icon="sap-icon://upload" press="onUploadFile" tooltip="Upload a file from your computer" width="100%" />
+        <m:Button text="Create empty" icon="sap-icon://document" press="onCreateEmptyFile" tooltip="Create an empty file" width="100%" />
+    </m:Popover>
+</core:FragmentDefinition>
