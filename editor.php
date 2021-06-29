@@ -27,9 +27,9 @@
   echo "<script>\n";
   echo "let userId = `" . $userId . "`;\n";
   echo "let fileId = `" . $fileId . "`;\n";
-  echo "model.preview = `" . $row["fileContent"] . "`;\n";
+  echo "model.preview.content = `" . $row["fileContent"] . "`;\n";
   echo "model.title = `" . $row["fileName"] . "`;\n";
-  echo "customJson = XMLtoCustomJSON(model.preview);\n
+  echo "customJson = XMLtoCustomJSON(model.preview.content);\n
     model.data = [customJson.noAttributesCJ];\n
     model.allAttributes = customJson.attributes;\n";
   echo "</script>\n";

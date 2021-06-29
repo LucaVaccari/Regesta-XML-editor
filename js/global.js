@@ -11,7 +11,15 @@ let test2 = `<ConfigAdvanced xmlns:xsi="http://www.w3.org/2001/XMLSchema-instanc
 model.selectedAttributes = [];
 dataQueueIndex = 0;
 
-//const formatter = new Formatter("   ", true);
+model.preview = {};
+
+// buttons active
+model.somethingChanged = false;
+model.somethingUndone = false;
+model.fileChanged = false;
+model.somethingSelected = false;
+model.isRootSelected = false;
+model.preview.fontSize = 20;
 
 const XMLformatter = new HTMLFormatter(
   "purple",

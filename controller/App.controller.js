@@ -15,16 +15,8 @@ sap.ui.define(
 
         originalTree = view.byId("tree");
         root = originalTree.getItems()[0];
-        root
-          .getContent()[0]
-          .getContent()
-          [MOVE_UP_BUTTON_INDEX].setVisible(false);
-        root
-          .getContent()[0]
-          .getContent()
-          [MOVE_DOWN_BUTTON_INDEX].setVisible(false);
 
-        clearTree(model.data);
+        updateModel();
         let initData = {
           noAttributes: model.data,
           attributes: model.allAttributes,
@@ -42,30 +34,8 @@ sap.ui.define(
       },
 
       onEdit: function () {
-        selected = originalTree.getSelectedItems()[0];
-        if (selected == undefined) return;
-
-        let buttons = selected.getContent()[0].getContent();
-
-        lastKeyLabel?.setVisible(true);
-        lastKeyInput?.setVisible(false);
-
-        lastKeyInput = buttons[KEY_INPUT_INDEX];
-        lastKeyInput.setVisible(true);
-        lastKeyLabel = buttons[KEY_LABEL_INDEX];
-        lastKeyLabel.setVisible(false);
-
-        //lastValueLabel?.setVisible(true);
-        lastValueInput?.setVisible(false);
-
-        lastValueInput = buttons[VALUE_INPUT_INDEX];
-        let id = getCustomIdFromRecord(selected);
-        let subTree = findSubTreeById(model.data, id);
-        if (subTree != undefined)
-          lastValueInput.setVisible(!Array.isArray(subTree.value));
-        else console.error("You shouldn't reach this point (onEdit)");
-        lastValueLabel = buttons[VALUE_LABEL_INDEX];
-        lastValueLabel.setVisible(false);
+        if (selectedItem != undefined) selectedItem.editing = true;
+        jsonModel.updateBindings(true);
       },
 
       onEditAttributes: function () {
@@ -88,25 +58,18 @@ sap.ui.define(
       },
 
       onSubmit: function (event) {
-        selected = getRecordElement(event);
-        let buttons = selected.getContent()[0].getContent();
-
-        buttons[KEY_INPUT_INDEX].setVisible(false);
-        buttons[KEY_LABEL_INDEX].setVisible(true);
-        buttons[VALUE_INPUT_INDEX].setVisible(false);
-
-        let id = getCustomIdFromRecord(selected);
-        let subTree = findSubTreeById(model.data, id);
-        if (subTree != undefined)
-          buttons[VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
-        else console.error("You shouldn't reach this point (onEdit)");
+        selectedItem = findSubTreeById(
+          model.data[0],
+          getCustomIdFromRecord(getRecordElement(event))
+        );
+        if (selectedItem != undefined) selectedItem.editing = false;
 
         onModify();
         update();
       },
 
       onKeyValueEditLive: function (event) {
-        selected = getRecordElement(event);
+        let selected = getRecordElement(event);
         let buttons = selected.getContent()[0].getContent();
 
         let id = getCustomIdFromRecord(selected);
@@ -134,20 +97,20 @@ sap.ui.define(
       },
 
       onAdd: function () {
-        selected = originalTree.getSelectedItems()[0];
-        if (selected == undefined) return;
+        let selected = originalTree.getSelectedItems()[0];
+        if (selectedItem == undefined) return;
 
-        let id = getCustomIdFromRecord(selected);
-        let subTree = findSubTreeById(model.data, id);
         let subTreeValue = {
           key: "key",
           value: "value",
           id: lastElementId++,
+          editing: false,
         };
-        if (Array.isArray(subTree.value)) subTree.value.push(subTreeValue);
+        if (Array.isArray(selectedItem.value))
+          selectedItem.value.push(subTreeValue);
         else {
-          subTreeValue.value = subTree.value;
-          subTree.value = [subTreeValue];
+          subTreeValue.value = selectedItem.value;
+          selectedItem.value = [subTreeValue];
         }
 
         closeKeyValueInputs();
@@ -162,20 +125,20 @@ sap.ui.define(
       onRemove: function () {
         closeKeyValueInputs();
 
-        selected = originalTree.getSelectedItems()[0];
-        if (selected == undefined) return;
+        if (selectedItem == undefined) return;
 
-        let id = getCustomIdFromRecord(selected);
-        if (id == model.data[0].id) {
+        if (selectedItem.id == model.data[0].id) {
           console.warn("Cannot remove root node");
           return;
         }
+
+        let id = selectedItem.id;
 
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
         // remove attributes
-        removeAttributesInSubTree(subTree);
+        removeAttributesInSubTree(selectedItem);
         function removeAttributesInSubTree(tree) {
           if (Array.isArray(tree.value)) {
             model.allAttributes = model.allAttributes.filter(
@@ -195,22 +158,20 @@ sap.ui.define(
           parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
         }
 
-        delete subTree.key;
-        delete subTree.value;
-        delete subTree.id;
+        for (let key in selectedItem) delete subTree[key];
 
         clearTree(model.data);
 
         onModify();
+        selectedItem = undefined;
         update();
         update();
       },
 
       onDuplicate: function () {
-        selected = originalTree.getSelectedItems()[0];
-        if (selected == undefined) return;
+        if (selectedItem == undefined) return;
 
-        let id = getCustomIdFromRecord(selected);
+        let id = selectedItem.id;
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
@@ -223,6 +184,7 @@ sap.ui.define(
           key: subTree.key,
           value: replaceIds(subTree.value),
           id: lastElementId++,
+          editing: false,
         };
 
         // add attributes
@@ -351,23 +313,21 @@ sap.ui.define(
         update();
       },
 
-      onSelect: function () {
-        selected = originalTree.getSelectedItems()[0];
-        if (selected == undefined) return;
-        let id = getCustomIdFromRecord(selected);
-        let isRoot = id == getCustomIdFromRecord(root);
+      onSelect: function (event) {
+        closeKeyValueInputs();
+        let element = event.getParameter("listItem");
+        let id = getCustomIdFromRecord(element);
+        selectedItem = findSubTreeById(model.data[0], id);
+        if (selectedItem == undefined) return;
+        id = selectedItem.id;
 
-        view.byId("removeButton").setEnabled(!isRoot);
-        view.byId("duplicateButton").setEnabled(!isRoot);
-        view.byId("addButton").setEnabled(true);
-        view.byId("editButton").setEnabled(true);
-        view.byId("editAttributesButton").setEnabled(true);
+        model.somethingSelected = true;
+        model.isRootSelected = id == getCustomIdFromRecord(root);
 
         model.selectedAttributes = model.allAttributes.filter(
           (a) => a.parentId == id
         );
 
-        closeKeyValueInputs();
         jsonModel.updateBindings(true);
       },
 
@@ -393,10 +353,7 @@ sap.ui.define(
           model.allAttributes,
           formatter
         ).replaceAll(/\t|\n/g, "");
-        console.log(output);
-        window.location.href = `database/saveFile.php?userId=${userId}&fileId=${fileId}&fileName=${
-          model.title
-        }&fileContent=${output}`;
+        window.location.href = `database/saveFile.php?userId=${userId}&fileId=${fileId}&fileName=${model.title}&fileContent=${output}`;
       },
 
       onAttributesModify: function () {
@@ -408,7 +365,6 @@ sap.ui.define(
         let inputParent = event.getSource().oParent;
         let id =
           inputParent.oParent.mAggregations.customData[0].mProperties.value;
-        // console.log(model.allAttributes);
         for (let attr of model.allAttributes) {
           if (attr.id == id) {
             let inputs = inputParent.mAggregations.items;
@@ -438,12 +394,12 @@ sap.ui.define(
       },
 
       onAddAttribute: function () {
-        selected = originalTree.getSelectedItems()[0];
+        // selected = originalTree.getSelectedItems()[0];
         let newAttr = {
           id: lastElementId++,
           attributeKey: "name",
           attributeValue: "value",
-          parentId: getCustomIdFromRecord(selected),
+          parentId: selectedItem.id,
         };
 
         model.selectedAttributes.push(newAttr);
@@ -462,8 +418,8 @@ sap.ui.define(
       },
 
       onClearAttributes: function () {
-        selected = originalTree.getSelectedItems()[0];
-        let parentId = getCustomIdFromRecord(selected);
+        // selected = originalTree.getSelectedItems()[0];
+        let parentId = selectedItem.id;
 
         model.allAttributes = model.allAttributes.filter(
           (a) => a.parentId != parentId
@@ -487,11 +443,13 @@ sap.ui.define(
         view.byId("titleInput").setVisible(false);
       },
 
-      onDownloadPreview: function() {
+      onDownloadPreview: function () {
         console.log("Downloading preview");
       },
 
       update: update,
+
+      updatePreview: updatePreview,
     });
   }
 );
