@@ -13,9 +13,6 @@ sap.ui.define(
         view = this.getView();
         view.setModel(jsonModel);
 
-        originalTree = view.byId("tree");
-        root = originalTree.getItems()[0];
-
         updateModel();
         let initData = {
           noAttributes: model.data,
@@ -322,12 +319,13 @@ sap.ui.define(
         id = selectedItem.id;
 
         model.somethingSelected = true;
-        model.isRootSelected = id == getCustomIdFromRecord(root);
+        model.isRootSelected = id == 0;
 
         model.selectedAttributes = model.allAttributes.filter(
           (a) => a.parentId == id
         );
 
+        updatePreview();
         jsonModel.updateBindings(true);
       },
 
@@ -434,13 +432,13 @@ sap.ui.define(
       },
 
       onTitleEdit: function () {
-        view.byId("titleLabel").setVisible(false);
-        view.byId("titleInput").setVisible(true);
+        model.editingTitle = true;
+        jsonModel.updateBindings(true);
       },
 
       onTitleChange: function () {
-        view.byId("titleLabel").setVisible(true);
-        view.byId("titleInput").setVisible(false);
+        model.editingTitle = false;
+        jsonModel.updateBindings(true);
       },
 
       onDownloadPreview: function () {

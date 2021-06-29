@@ -183,19 +183,6 @@ function updateGraphics() {
   model.fileChanged = currentData != originalData;
 
   jsonModel.updateBindings(true);
-  for (let node of originalTree.getItems()) {
-    let id = getCustomIdFromRecord(node);
-    let subTree = findSubTreeById(model.data, id);
-    if (subTree != undefined) {
-      node
-        .getContent()[0]
-        .getContent()
-        [VALUE_LABEL_INDEX].setVisible(!Array.isArray(subTree.value));
-    } else
-      console.error(
-        "You shouldn't reach this point. subtree.value is undefined"
-      );
-  }
 
   // selected = originalTree.getSelectedItems()[0];
   if (!selectedItem) {

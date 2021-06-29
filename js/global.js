@@ -20,6 +20,7 @@ model.fileChanged = false;
 model.somethingSelected = false;
 model.isRootSelected = false;
 model.preview.fontSize = 20;
+model.editingTitle = false;
 
 const XMLformatter = new HTMLFormatter(
   "purple",

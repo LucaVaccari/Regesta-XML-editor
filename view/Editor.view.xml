@@ -4,8 +4,8 @@
 			<m:customHeader>
 				<m:OverflowToolbar>
 					<m:ToolbarSpacer />
-					<m:Title text="{/title}" id="titleLabel" />
-					<m:Input value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" visible="false" width="50%" />
+					<m:Title visible="{=!${/editingTitle}}" text="{/title}" id="titleLabel" />
+					<m:Input visible="{/editingTitle}" value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" width="50%" />
 					<m:Button icon="sap-icon://edit" press="onTitleEdit" tooltip="Change the name of this file" />
 					<m:ToolbarSpacer />
 				</m:OverflowToolbar>
