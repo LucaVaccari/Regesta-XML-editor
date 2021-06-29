@@ -65,7 +65,10 @@ sap.ui.define(
       },
 
       onCreateEmptyFile: function () {
-        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent="<empty />"`;
+        let date = new Date();
+        let dateString = date.toString();
+        console.log(dateString);
+        // window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent="<empty />&date=${dateString}`;
       },
 
       onFileUpload: function (event) {
@@ -78,12 +81,11 @@ sap.ui.define(
 
           reader.onload = (file) => {
             let fileContent = file.currentTarget.result.replaceAll(/'/g, '"');
-            window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent='${fileContent}'`;
+            // window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent='${fileContent}'`;
           };
 
           reader.readAsText(file);
         });
-        // popoverView.close();
       },
     });
   }
@@ -114,8 +116,6 @@ function download(filename, text) {
 
   element.style.display = "none";
   document.body.appendChild(element);
-
   element.click();
-
   document.body.removeChild(element);
 }

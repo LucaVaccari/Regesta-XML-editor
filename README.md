@@ -16,6 +16,7 @@
   - nome dell'utente in management.php
   - accesso con nome/email
   - log out
+  - funzioni poste in ordine alfabetico
   - responsive, mobile first
   - translatable text
   - dark theme
