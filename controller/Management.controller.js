@@ -1,4 +1,4 @@
-let view;
+let view, popoverView;
 
 sap.ui.define(
   [
@@ -30,8 +30,9 @@ sap.ui.define(
             return popover;
           });
         }
-        this._popover.then(function (oPopover) {
-          oPopover.openBy(button);
+        this._popover.then(function (popover) {
+          popoverView = popover;
+          popover.openBy(button);
         });
       },
 
@@ -52,7 +53,7 @@ sap.ui.define(
         let tile = getRecordElement(event);
         let id = getCustomIdFromRecord(tile);
         let element = model.files.filter((file) => file.id == id)[0];
-        download(`${element.title}.xml`, element.content);
+        download(`${element.name}.xml`, element.content);
       },
 
       onClearFiles: function () {
@@ -67,8 +68,22 @@ sap.ui.define(
         window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent="<empty />"`;
       },
 
-      onUploadFile: function () {
-        
+      onFileUpload: function (event) {
+        let fileUploader = event.getSource();
+        fileUploader.checkFileReadable().then(() => {
+          let fileName = fileUploader.getValue().replaceAll(/\..*$/g, "");
+
+          let file = jQuery.sap.domById(fileUploader.getId() + "-fu").files[0];
+          let reader = new FileReader();
+
+          reader.onload = (file) => {
+            let fileContent = file.currentTarget.result.replaceAll(/'/g, '"');
+            window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent='${fileContent}'`;
+          };
+
+          reader.readAsText(file);
+        });
+        // popoverView.close();
       },
     });
   }
