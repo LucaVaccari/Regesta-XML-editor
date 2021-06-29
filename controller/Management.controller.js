@@ -65,7 +65,9 @@ sap.ui.define(
       },
 
       onCreateEmptyFile: function () {
-        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent="<empty />"`;
+        let date = new Date();
+        let dateString = formatDateToSQL(date).split(" ")[0];
+        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent=<empty />&date=${dateString}`;
       },
 
       onFileUpload: function (event) {
@@ -78,12 +80,13 @@ sap.ui.define(
 
           reader.onload = (file) => {
             let fileContent = file.currentTarget.result.replaceAll(/'/g, '"');
-            window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent='${fileContent}'`;
+            let date = new Date();
+            let dateString = formatDateToSQL(date).split(" ")[0];
+            window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
           };
 
           reader.readAsText(file);
         });
-        // popoverView.close();
       },
     });
   }
@@ -104,18 +107,6 @@ function updateGraphics() {
   jsonModel.updateBindings(true);
 }
 
-function download(filename, text) {
-  var element = document.createElement("a");
-  element.setAttribute(
-    "href",
-    "data:text/xml;charset=utf-8," + encodeURIComponent(text)
-  );
-  element.setAttribute("download", filename);
-
-  element.style.display = "none";
-  document.body.appendChild(element);
-
-  element.click();
-
-  document.body.removeChild(element);
+function formatDateToSQL(date) {
+  return date.toISOString().slice(0, 19).replace("T", " ");
 }

@@ -1,4 +1,3 @@
-
 function XMLtoCustomJSON(xml) {
   let attributes = [];
   let doc = new DOMParser().parseFromString(
@@ -8,7 +7,7 @@ function XMLtoCustomJSON(xml) {
 
   let root = doc.getRootNode();
   let noAttributesCJ = XMLDocToCustomJSON(root);
-  return { noAttributesCJ, attributes};
+  return { noAttributesCJ, attributes };
 
   function XMLDocToCustomJSON(node, id = -1) {
     let noAttributesCJ = {};
@@ -23,12 +22,13 @@ function XMLtoCustomJSON(xml) {
         noAttributesCJ.id = lastElementId++;
         noAttributesCJ.key = node.nodeName;
 
-        if (node.childNodes.length == 0)
-          noAttributesCJ.value = "";
+        if (node.childNodes.length == 0) noAttributesCJ.value = "";
         else {
           noAttributesCJ.value = [];
-          for (let child of node.childNodes) {
-            let temp = XMLDocToCustomJSON(child);
+          for (let i in node.childNodes) {
+            let temp = XMLDocToCustomJSON(node.childNodes.item(i));
+            temp.isFirst = i == 0;
+            temp.isLast = i == node.childNodes.length - 1;
             noAttributesCJ.value.push(temp);
           }
         }
@@ -37,6 +37,13 @@ function XMLtoCustomJSON(xml) {
           let temp = XMLDocToCustomJSON(attr, noAttributesCJ.id);
           attributes.push(temp);
         }
+
+        // view properties
+        noAttributesCJ.editing = false;
+        noAttributesCJ.isParent = Array.isArray(noAttributesCJ.value);
+        noAttributesCJ.isFirst = true;
+        noAttributesCJ.isLast = true;
+        noAttributesCJ.editing = false;
 
         break;
       case Node.ATTRIBUTE_NODE: // an attribute
@@ -58,7 +65,6 @@ function XMLtoCustomJSON(xml) {
 
     return noAttributesCJ;
   }
-
 }
 
 function CustomJSONToXML(customJson, attributes, formatter, id = -1) {
@@ -69,9 +75,17 @@ function CustomJSONToXML(customJson, attributes, formatter, id = -1) {
     for (let el of customJson) {
       let isLast = customJson.indexOf(el) == customJson.length - 1;
       let isFirst = customJson.indexOf(el) == 0;
-      let filteredAttributes = attributes.filter(a => a.parentId == el.id)
-      let content = formatter.surround(el.key, CustomJSONToXML(el.value, attributes, formatter, id), filteredAttributes.map(a => a.attributeKey), filteredAttributes.map(a => a.attributeValue), isLast, isFirst);
-      xml += (id == el.id) ? formatter.setBold(content, isLast, isFirst) : content;
+      let filteredAttributes = attributes.filter((a) => a.parentId == el.id);
+      let content = formatter.surround(
+        el.key,
+        CustomJSONToXML(el.value, attributes, formatter, id),
+        filteredAttributes.map((a) => a.attributeKey),
+        filteredAttributes.map((a) => a.attributeValue),
+        isLast,
+        isFirst
+      );
+      xml +=
+        id == el.id ? formatter.setBold(content, isLast, isFirst) : content;
     }
   } else {
     console.warn("You shouldn't reach this point CustomJSONToXML");

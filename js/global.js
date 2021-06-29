@@ -8,10 +8,21 @@ let test = `<grid tablename="tblRisorse" keyfieldname="IDRisorsa" caption="RISOR
 let test1 = `<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"> <environment>test</environment> <dbConn>Data Source=GNUTTIKST02\REGORC;Initial Catalog=NETORC_TGN;Persist Security Info=True;User ID=netorc;Password=regesta08</dbConn> <sapRfcConnection>ASHOST=161.27.223.173 SYSNR=00 CLIENT=100 USER=regorc PASSWD=regesta08</sapRfcConnection> <sapMandante>100</sapMandante> <sapServer>161.27.223.173</sapServer> <sapServerPort>50000</sapServerPort> <sapWSUsr>regorc</sapWSUsr> <sapWSPwd>regesta08</sapWSPwd> <sapLSPartner>TGNCLNT100</sapLSPartner> <sapLSPort>SAPTGN</sapLSPort> <regWSMiddleware>http://161.27.223.177:84</regWSMiddleware> </Config>`;
 let test2 = `<ConfigAdvanced xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><NoPrintLabelPlants><string>IN10</string><string>SE10</string><string>SE50</string><string>SE20</string><string>IT14</string><string>CZ10</string><string>CA20</string></NoPrintLabelPlants><NoPrintLabelControlKeys><string>PP06</string><string>ZP06</string></NoPrintLabelControlKeys><NoTimeTicketControlKeys><string>ZP06</string></NoTimeTicketControlKeys><TaktControlKeys><string>ZP04</string><string>ZP05</string><string>ZP15</string></TaktControlKeys><NoConfirmationControlKeys><string>PP07</string></NoConfirmationControlKeys><NoScrapControlKeys><string>ZP06</string></NoScrapControlKeys><TecoPlants><string>IT10</string><string>SE10</string><string>SE20</string><string>IT14</string><string>SE50</string><string>CZ10</string><string>CA20</string></TecoPlants><RinvPlants><string>IT10:RINV</string></RinvPlants><RequiredRILPlants><string>SE50</string><string>CZ10</string><string>CA20</string></RequiredRILPlants><NeedTimeTicketPlants><string>SE10</string></NeedTimeTicketPlants><ShiftControlPlants><string>IT10</string><string>SE50</string></ShiftControlPlants><ShiftTolerance> 15 </ShiftTolerance><ComponentsPlants><string>SE50</string><string>CA20</string></ComponentsPlants><CustomDevReason><string>SE50</string><string>CZ10</string></CustomDevReason><OrderTypeForPlletTraciability><string>ZP07</string><string>ZP11</string><string>ZP13</string><string>ZP14</string><string>ZP15</string><string>ZP16</string></OrderTypeForPlletTraciability><DefaultListenerForLocalPrint>http://10.1.10.4:82/default.aspx</DefaultListenerForLocalPrint><OperationControlKeyForHuManagement><string>ZP01</string><string>ZP04</string></OperationControlKeyForHuManagement><PlantListThatNotAllowIntermecPrintingForHU><string>CZ10</string><string>SE50</string><string>CN10</string><string>CN20</string><string>CA20</string><string>IT10</string></PlantListThatNotAllowIntermecPrintingForHU><QuiescencePeriodInMinutes>5</QuiescencePeriodInMinutes><PlantListWhichRequireSummaryPopup><string>SE50</string><string>CZ10</string></PlantListWhichRequireSummaryPopup><PlantListWitchRequireHUChoice><string>CZ10</string></PlantListWitchRequireHUChoice><PlantListWitchRequireHUChoiceTest><string>CZ10</string></PlantListWitchRequireHUChoiceTest><NoSerialCheckOrderTypes><string>ZP13</string></NoSerialCheckOrderTypes></ConfigAdvanced>`;
 
+model.allAttributes = [];
 model.selectedAttributes = [];
 dataQueueIndex = 0;
 
-//const formatter = new Formatter("   ", true);
+model.preview = {};
+
+// buttons active
+model.somethingChanged = false;
+model.somethingUndone = false;
+model.fileChanged = false;
+model.somethingSelected = false;
+model.isRootSelected = false;
+model.preview.fontSize = 20;
+model.preview.mimeType = "text/xml";
+model.editingTitle = false;
 
 const XMLformatter = new HTMLFormatter(
   "purple",
@@ -29,7 +40,7 @@ const compactXMLformatter = new HTMLFormatter(
   "#73C2E1",
   true
 );
-const JSONformatter = new JSONFormatter(
+const JSONformatter = new JSONHTMLFormatter(
   "purple",
   "#346187",
   "#FF6600",
@@ -39,4 +50,9 @@ const JSONformatter = new JSONFormatter(
 );
 const cleanFormatter = new Formatter("");
 
+const XMLPreviewFormatter = new Formatter("    ", false);
+const compactXMLPreviewFormatter = new Formatter("    ", true);
+const JSONPreviewFormatter = new JSONFormatter();
+
 let formatter = XMLformatter;
+let previewFormatter = XMLPreviewFormatter;

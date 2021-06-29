@@ -8,6 +8,7 @@
   <script src="js/formatter.js"></script>
   <script src="js/htmlFormatter.js"></script>
   <script src="js/jsonFormatter.js"></script>
+  <script src="js/jsonHtmlFormatter.js"></script>
   <script src="js/converters.js"></script>
   <script src="js/customJSON.js"></script>
   <script src="js/global.js"></script>
@@ -27,9 +28,9 @@
   echo "<script>\n";
   echo "let userId = `" . $userId . "`;\n";
   echo "let fileId = `" . $fileId . "`;\n";
-  echo "model.preview = `" . $row["fileContent"] . "`;\n";
+  echo "model.preview.content = `" . $row["fileContent"] . "`;\n";
   echo "model.title = `" . $row["fileName"] . "`;\n";
-  echo "customJson = XMLtoCustomJSON(model.preview);\n
+  echo "customJson = XMLtoCustomJSON(model.preview.content);\n
     model.data = [customJson.noAttributesCJ];\n
     model.allAttributes = customJson.attributes;\n";
   echo "</script>\n";

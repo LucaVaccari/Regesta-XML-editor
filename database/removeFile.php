@@ -8,4 +8,4 @@ $userId = $_GET["userId"];
 $sql = ('DELETE FROM files WHERE fileId = ' . $fileId);
 $con->query($sql);
 
-header("location: managementLoader.php?userId=" . $userId);
+header("location: ../management.php?userId=" . $userId);
