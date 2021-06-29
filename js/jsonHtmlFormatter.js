@@ -1,18 +1,29 @@
-class JSONFormatter extends Formatter {
-    constructor() {
+class JSONHTMLFormatter extends Formatter {
+    constructor(
+        baseColor,
+        tagColor,
+        attributeNameColor,
+        attributeValueColor,
+        bracketsColor,
+        compact = true
+    ) {
         super(
             "  ",
-            true,
-            `"`,
-            `"`,
-            `"`,
-            `"`,
-            `"`,
-            `"`,
-            ` `,
+            compact,
+            `<code style="color:${tagColor};">"`,
+            `"</code>`,
+            `<code style="color:${attributeNameColor};">"`,
+            `"</code>`,
+            `<code style="color:${attributeValueColor};">"`,
+            `"</code>`,
+            `<code style="color:${baseColor};"> `,
+            `</code>`,
+            ``,
+            `<strong><em>`,
+            `</em></strong>`
         );
-        this._bOpenObj = `{`;
-        this._aCloseObj = `}`;
+        this._bOpenObj = `<code style="color:${bracketsColor};">{</code>`;
+        this._aCloseObj = `<code style="color:${bracketsColor};">}</code>`;
         this._bArray = "\\[";
         this._aArray = "\\]";
     }

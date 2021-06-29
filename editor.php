@@ -8,6 +8,7 @@
   <script src="js/formatter.js"></script>
   <script src="js/htmlFormatter.js"></script>
   <script src="js/jsonFormatter.js"></script>
+  <script src="js/jsonHtmlFormatter.js"></script>
   <script src="js/converters.js"></script>
   <script src="js/customJSON.js"></script>
   <script src="js/global.js"></script>

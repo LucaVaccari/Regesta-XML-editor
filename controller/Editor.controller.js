@@ -331,16 +331,22 @@ sap.ui.define(
 
       onXMLSwitch: function () {
         formatter = XMLformatter;
+        previewFormatter = XMLPreviewFormatter;
+        model.preview.mimeType = "text/xml";
         update();
       },
-
+      
       onCompactXMLSwitch: function () {
         formatter = compactXMLformatter;
+        previewFormatter = compactXMLPreviewFormatter;
+        model.preview.mimeType = "text/xml";
         update();
       },
-
+      
       onJSONSwitch: function () {
         formatter = JSONformatter;
+        previewFormatter = JSONPreviewFormatter;
+        model.preview.mimeType = "application/json";
         update();
       },
 
@@ -443,6 +449,13 @@ sap.ui.define(
 
       onDownloadPreview: function () {
         console.log("Downloading preview");
+        let output = CustomJSONToXML(
+          model.data,
+          model.allAttributes,
+          previewFormatter
+        );
+
+        download(model.title, output, model.preview.mimeType);
       },
 
       update: update,
@@ -451,3 +464,14 @@ sap.ui.define(
     });
   }
 );
+
+function getRecordElement(event) {
+  let id = event.getSource().getId();
+  return sap.ui.getCore().getElementById(id).oParent.oParent;
+}
+
+function getCustomIdFromRecord(record) {
+  if (record == undefined) return -1;
+  return record.mAggregations.content[0].mAggregations.customData[2].mProperties
+    .value;
+}
