@@ -36,6 +36,14 @@
         </div>
         <footer>
             <div class="texts">
+                <div class="dropdown">
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+                <img src="resources/images/dropdown_L-R.png" height="20px" width="auto" id="leftToRight">
                 <a style="--i: 1" href="https://www.google.com/maps/place/Regesta+S.R.L./@45.5472802,10.1902087,15z/data=!4m5!3m4!1s0x0:0x551a640910ca7610!8m2!3d45.5472802!4d10.1902087" target="_blank">Find us</a>
                 <a style="--i: 2" href="https://www.regestaitalia.eu/contatti/" target="_blank">Contact us</a>
                 <a style="--i: 3" href="https://www.regestaitalia.eu/azienda/" target="_blank">About us</a>
@@ -45,6 +53,14 @@
                 <a style="--i: 6" href="https://www.instagram.com/regesta_italia/" target="_blank"><img src="resources/images/instagram-ico.png" height="20px" width="auto"></a>
                 <a style="--i: 7" href="https://www.facebook.com/Regesta.Italia" target="_blank"><img src="resources/images/facebook-ico.png" height="20px" width="auto"></a>
                 <a style="--i: 8" href="https://www.youtube.com/channel/UCcernNHpymJT3_Ap697_hSQ" target="_blank"><img src="resources/images/youtube-ico.png" height="20px" width="auto"></a>
+                <div class="dropdown">
+                    <div class="dropdown-content">
+                        <a href="#">Link 1</a>
+                        <a href="#">Link 2</a>
+                        <a href="#">Link 3</a>
+                    </div>
+                </div>
+                <img src="resources/images/dropdown_R-L.png" height="20px" width="auto" id="rightToLeft">
             </div>
         </footer>
     </section>
