@@ -5,7 +5,6 @@
 - bug:
 - callback:
 - funzionalità:
-  - import del file
 - grafica:
 - piccoli dettagli:
   - pulsanti move fuori dalla toolbar
@@ -13,7 +12,10 @@
   - responsive, mobile first
   - translatable text
   - dark theme
-  - mobile first
-- file management:
-  - interazione database:
+  - rick roll
+  - data di caricamento/modifica dei file
+  - tasto salva che resta nell'editor
+  - download preview
+  - nome dell'utente in management.php
+  - accesso con nome/email
 - documentazione
