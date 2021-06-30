@@ -365,7 +365,7 @@ footer #rightToLeft:hover {
   width: 100px;
 }
 
-.form-popup {
+/* .form-popup {
   display: none;
   position: fixed;
   top: 0;
@@ -433,4 +433,4 @@ p.alert-message {
   text-align: justify;
   font-weight: lighter;
   display: none;
-}
+} */

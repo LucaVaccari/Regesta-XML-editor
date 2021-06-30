@@ -17,7 +17,7 @@
   $result = $con->query($sql);
   $row = mysqli_fetch_array($result);
 
-  if ($row["name"] != $_POST["username"] || $row["password"] != $_POST["password"]) {
+  if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
     // echo '<script id="alert-message">', 'alertMessage;', '</script>';
     // header("location: https://youtu.be/dQw4w9WgXcQ"); (Rick Roll)
   }

@@ -18,11 +18,11 @@ if (!session_id()) session_start();
         <header>
             <div>
                 <a href="#"><img src="resources/images/logo.png" height="60px" width="auto"></a>
-                <a href="register.html"><button class="open-button" id="signup">Sign Up</button><a>
-                <button class="open-button" id="login" onclick="openForm()">Log In</button>
-                <span>
-                    <div class="form-popup" id="myForm">
-                        <form action="config.php" class="form-container" method="POST">
+                <a href="signup.html"><button class="open-button" id="signup">Sign Up</button></a>
+                <a href="login.php"><button class="open-button" id="login">Log In</button></a>
+                <!-- <span>
+                    <!-- <div class="form-popup" id="myForm">
+                        <!-- <form action="config.php" class="form-container" method="POST">
                             <label for="email" id="user" name="user"><b>Email</b></label>
                             <input type="text" placeholder="Enter Email" name="email" required>
                             <label for="psw" id="pass" name="pass"><b>Password</b></label>
@@ -32,7 +32,7 @@ if (!session_id()) session_start();
                             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                         </form>
                     </div>
-                </span>
+                </span> -->
             </div>
         </header>
         <div class="center">
