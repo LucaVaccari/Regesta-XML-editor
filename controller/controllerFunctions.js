@@ -5,14 +5,7 @@ const KEY_LABEL_INDEX = 0,
   MOVE_UP_BUTTON_INDEX = 5,
   MOVE_DOWN_BUTTON_INDEX = 6;
 
-let jsonModel,
-  view,
-  originalTree,
-  selectedItem,
-  root,
-  popoverView,
-  attributesShown = true;
-let lastKeyInput, lastKeyLabel, lastValueInput, lastValueLabel;
+let jsonModel, view, originalTree, selectedItem, popoverView;
 
 function findSubTreeById(tree, id) {
   if (tree == undefined) return;
@@ -151,9 +144,8 @@ function updateModel() {
 }
 
 function updatePreview() {
-  // selected = originalTree.getSelectedItems()[0];
   let id = selectedItem ? selectedItem.id : -1;
-  let attributes = attributesShown ? model.allAttributes : [];
+  let attributes = model.preview.showAttributes ? model.allAttributes : [];
   model.preview.content = HTMLtoFormatted(
     CustomJSONToXML(model.data, attributes, formatter, id),
     model.preview.fontSize

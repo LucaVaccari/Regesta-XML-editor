@@ -435,7 +435,6 @@ sap.ui.define(
       },
 
       onToggleAttributesVisibility: function (event) {
-        attributesShown = event.getParameters().state;
         update();
       },
 
@@ -450,9 +449,10 @@ sap.ui.define(
       },
 
       onDownloadPreview: function () {
+
         let output = CustomJSONToXML(
           model.data,
-          model.allAttributes,
+          model.preview.showAttributes ? model.allAttributes : [],
           previewFormatter
         );
 

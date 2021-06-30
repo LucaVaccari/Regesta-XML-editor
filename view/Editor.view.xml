@@ -31,16 +31,16 @@
 							<m:Tree showNoData="false" items="{path:'/data' , templateShareable: false}" id="tree" toggleOpenState="update" includeItemInSelection="true" mode="SingleSelectMaster" select="onSelect">
 								<m:items>
 									<m:CustomTreeItem>
-											<m:OverflowToolbar cd:id="{id}" width="100%">
-												<!-- Key input -->
-												<m:Label visible="{=!${editing}}" text="{key}" width="40%" />
-												<m:Input visible="{editing}" value="{key}" change="onSubmit" submit="onSubmit" liveChange="onKeyValueEditLive" width="40%" />
-												<!-- Value input -->
-												<m:Label visible="{=!${editing} &amp;&amp; !${isParent}}" text="{value}" class="padding-side" width="40%" />
-												<m:Input visible="{=${editing} &amp;&amp; !${isParent}}" value="{value}" change="onSubmit" submit="onSubmit" liveChange="onKeyValueEditLive" width="40%" />
-												<!-- Move buttons -->
-												<m:ToolbarSpacer />
-											</m:OverflowToolbar>
+										<m:OverflowToolbar cd:id="{id}" width="100%">
+											<!-- Key input -->
+											<m:Label visible="{=!${editing}}" text="{key}" width="40%" />
+											<m:Input visible="{editing}" value="{key}" change="onSubmit" submit="onSubmit" liveChange="onKeyValueEditLive" width="40%" />
+											<!-- Value input -->
+											<m:Label visible="{=!${editing} &amp;&amp; !${isParent}}" text="{value}" class="padding-side" width="40%" />
+											<m:Input visible="{=${editing} &amp;&amp; !${isParent}}" value="{value}" change="onSubmit" submit="onSubmit" liveChange="onKeyValueEditLive" width="40%" />
+											<!-- Move buttons -->
+											<m:ToolbarSpacer />
+										</m:OverflowToolbar>
 										<m:HBox>
 											<m:Button enabled="{=!${isLast}}" visible="{=${id} !== 0}" icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="Move this element down" width="5%" />
 											<m:Button enabled="{=!${isFirst}}" visible="{=${id} !== 0}" icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" width="5%" />
@@ -62,7 +62,7 @@
 							<m:Button text="Download preview" icon="sap-icon://download" press="onDownloadPreview" tooltip="Download the file as you see it in the preview below" />
 							<m:ToolbarSpacer />
 							<m:Label text="Show attributes:" />
-							<m:Switch state="true" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="Toggle attributes visibility in the preview">
+							<m:Switch state="{/preview/showAttributes}" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="Toggle attributes visibility in the preview">
 								<m:layoutData>
 									<m:FlexItemData growFactor="1" />
 								</m:layoutData>
