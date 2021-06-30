@@ -64,10 +64,7 @@ sap.ui.define(
         let keyInput = event.getSource();
         let id = getItemCustomId(event.getSource());
         let subTree = findSubTreeById(model.data[0], id);
-        subTree.key = keyInput.getValue().replaceAll(
-          /[^\w-_]+/g,
-          ""
-        );
+        subTree.key = keyInput.getValue().replaceAll(/[^\w-_]+/g, "");
 
         if (!subTree.key) {
           subTree.key = "key";
@@ -85,10 +82,12 @@ sap.ui.define(
         let id = getItemCustomId(event.getSource());
         let subTree = findSubTreeById(model.data[0], id);
         if (!Array.isArray(subTree.value))
-          subTree.value = valueInput.getValue().replaceAll(
-            /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
-            ""
-          );
+          subTree.value = valueInput
+            .getValue()
+            .replaceAll(
+              /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+              ""
+            );
 
         updateModel();
         updatePreview();
@@ -163,7 +162,10 @@ sap.ui.define(
 
         onModify();
         update();
-        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
+        selectedItem = findSubTreeById(
+          model.data[0],
+          getItemCustomId(originalTree.getSelectedItem())
+        );
         update();
       },
 
@@ -291,7 +293,10 @@ sap.ui.define(
         }
 
         update();
-        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
+        selectedItem = findSubTreeById(
+          model.data[0],
+          getItemCustomId(originalTree.getSelectedItem())
+        );
         update();
       },
 
@@ -304,7 +309,10 @@ sap.ui.define(
           model.allAttributes = previousData.attributes;
         }
         update();
-        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
+        selectedItem = findSubTreeById(
+          model.data[0],
+          getItemCustomId(originalTree.getSelectedItem())
+        );
         update();
       },
 
@@ -314,7 +322,10 @@ sap.ui.define(
         model.allAttributes = previousData.attributes;
         onModify();
         update();
-        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
+        selectedItem = findSubTreeById(
+          model.data[0],
+          getItemCustomId(originalTree.getSelectedItem())
+        );
         update();
       },
 
@@ -389,6 +400,19 @@ sap.ui.define(
               attributeNameInput.selectText(0, 50);
             }
 
+            while (
+              model.selectedAttributes.filter(
+                (a) => a.attributeKey == attr.attributeKey
+              ).length > 1
+            ) {
+              attr.attributeKey = attr.attributeKey + "_";
+              jsonModel.updateBindings(true);
+              attributeNameInput.selectText(
+                attr.attributeKey.length - 1,
+                attr.attributeKey.length
+              );
+            }
+
             updateModel();
             updatePreview();
 
@@ -427,8 +451,18 @@ sap.ui.define(
           parentId: selectedItem.id,
         };
 
+        while (
+          model.selectedAttributes.filter(
+            (a) => a.attributeKey == newAttr.attributeKey
+          ).length > 0
+        ) {
+          newAttr.attributeKey = newAttr.attributeKey + "_";
+          jsonModel.updateBindings(true);
+        }
+        
         model.selectedAttributes.push(newAttr);
         model.allAttributes.push(newAttr);
+        jsonModel.updateBindings(true);
         this.onAttributesModify();
       },
 
@@ -467,7 +501,6 @@ sap.ui.define(
       },
 
       onDownloadPreview: function () {
-
         let output = CustomJSONToXML(
           model.data,
           model.preview.showAttributes ? model.allAttributes : [],

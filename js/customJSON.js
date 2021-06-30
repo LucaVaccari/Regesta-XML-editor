@@ -1,6 +1,4 @@
 function XMLtoCustomJSON(xml) {
-  console.log(xml);
-
   let attributes = [];
   let doc = new DOMParser().parseFromString(
     xml.replaceAll(/\n|\t/g, "").replaceAll(/>\s*</g, "><"),
