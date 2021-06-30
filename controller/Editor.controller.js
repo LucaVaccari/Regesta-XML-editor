@@ -162,11 +162,6 @@ sap.ui.define(
 
         onModify();
         update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
-        update();
       },
 
       onDuplicate: function () {
@@ -291,12 +286,6 @@ sap.ui.define(
           model.data = previousData.noAttributes;
           model.allAttributes = previousData.attributes;
         }
-
-        update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
         update();
       },
 
@@ -309,11 +298,6 @@ sap.ui.define(
           model.allAttributes = previousData.attributes;
         }
         update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
-        update();
       },
 
       onReset: function () {
@@ -321,11 +305,6 @@ sap.ui.define(
         model.data = previousData.noAttributes;
         model.allAttributes = previousData.attributes;
         onModify();
-        update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
         update();
       },
 

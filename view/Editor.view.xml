@@ -3,6 +3,7 @@
 		<m:Page id="page" showFooter="true" showHeader="true" class="body">
 			<m:customHeader>
 				<m:OverflowToolbar>
+					<m:Button icon="sap-icon://navigation-left-arrow" tooltip="Back to your files (auto saves)" press="onBack" />
 					<m:ToolbarSpacer />
 					<m:Title visible="{=!${/editingTitle}}" text="{/title}" id="titleLabel" />
 					<m:Input visible="{/editingTitle}" value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" width="50%" />
