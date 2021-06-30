@@ -1,4 +1,6 @@
-<?php
+<!-- <script id="alert" src="index.php"></script> -->
+
+<?php 
 
 include 'php/global.php';
 
@@ -24,5 +26,7 @@ if ($result->num_rows > 0) {
     $_SESSION["userId"] = $row["id"];
     header("location: management.php");
 } else {
-    header("location: register.html");
+    // echo <script type="text/javascript"> 'alertMessage();' '</script>';
+    // header("location: register.html");
 }
+?>

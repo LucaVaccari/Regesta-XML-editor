@@ -5,8 +5,6 @@
   <meta charset="utf-8" />
   <title>Manage XVE files</title>
 
-  <script src="js/functions.js"></script>
-
   <?php
   include "php/global.php";
 
@@ -16,8 +14,9 @@
   $result = $con->query($sql);
   $row = mysqli_fetch_array($result);
 
-  if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
-    header("location: https://youtu.be/dQw4w9WgXcQ");
+  if ($row["name"] != $_POST["username"] || $row["password"] != $_POST["password"]) {
+    // echo '<script id="alert-message">', 'alertMessage;', '</script>';
+    // header("location: https://youtu.be/dQw4w9WgXcQ"); (Rick Roll)
   }
 
   echo "<script>
@@ -40,7 +39,7 @@
       content: `" . $row["fileContent"] . "`,
     });\n";
   }
-  echo "</script>\n";
+  echo "<script/>\n";
 
   // riempire l'array "files" del modello JS
   ?>

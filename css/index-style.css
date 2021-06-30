@@ -337,7 +337,7 @@ footer #rightToLeft:hover {
 }
 
 /* LOGIN FORM */
-.open-button {
+.open-button#login {
   background-color: rgba(255, 255, 255, 0.144);
   color: white;
   padding: 16px 20px;
@@ -348,6 +348,20 @@ footer #rightToLeft:hover {
   position: fixed;
   bottom: 23px;
   right: 28px;
+  width: 100px;
+}
+
+.open-button#signup {
+  background-color: rgba(255, 255, 255, 0.144);
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 140px;
   width: 100px;
 }
 
@@ -410,4 +424,13 @@ footer #rightToLeft:hover {
 .form-popup :focus {
   opacity: 0;
   animation: fade_in 0.5s linear forwards;
+}
+
+p.alert-message {
+  color: red;
+  font-size: small;
+  margin-bottom: 20px;
+  text-align: justify;
+  font-weight: lighter;
+  display: none;
 }

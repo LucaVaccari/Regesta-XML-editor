@@ -16,7 +16,8 @@
         <header>
             <div>
                 <a href="#"><img src="resources/images/logo.png" height="60px" width="auto"></a>
-                <button class="open-button" onclick="openForm()">Log in</button>
+                <a href="register.html"><button class="open-button" id="signup">Sign Up</button><a>
+                <button class="open-button" id="login" onclick="openForm()">Log In</button>
                 <span>
                     <div class="form-popup" id="myForm">
                         <form action="config.php" class="form-container" method="POST">
@@ -24,6 +25,7 @@
                             <input type="text" placeholder="Enter Email" name="email" required>
                             <label for="psw" id="pass" name="pass"><b>Password</b></label>
                             <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
+                            <p class="alert-message">Wrong username or password!</p>
                             <button type="submit" id="btn" name="btn" class="btn">Login</button>
                             <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
                         </form>
@@ -67,6 +69,7 @@
             </div>
         </footer>
     </section>
+
     <script>
         function openForm() {
             document.getElementById("myForm").style.display = "block";
@@ -76,6 +79,13 @@
             document.getElementById("myForm").style.display = "none";
         }
     </script>
+
+    <!-- <script id="alert">
+        function alertMessage() {
+            document.getElementByClassName("alert-message").style.display = block;
+        }
+    </script> -->
+    
 </body>
 
 </html>
