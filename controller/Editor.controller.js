@@ -490,7 +490,3 @@ sap.ui.define(
     });
   }
 );
-
-function getItemCustomId(item) {
-  return item ? item.data("id") : -1;
-}

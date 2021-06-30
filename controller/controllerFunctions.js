@@ -1,12 +1,3 @@
-const KEY_LABEL_INDEX = 0,
-  KEY_INPUT_INDEX = 1,
-  VALUE_LABEL_INDEX = 2,
-  VALUE_INPUT_INDEX = 3,
-  MOVE_UP_BUTTON_INDEX = 5,
-  MOVE_DOWN_BUTTON_INDEX = 6;
-
-let jsonModel, view, originalTree, selectedItem, popoverView;
-
 function findSubTreeById(tree, id) {
   if (tree == undefined) return;
 
@@ -177,4 +168,9 @@ function update() {
   updateModel();
   updatePreview();
   updateGraphics();
+}
+
+
+function getItemCustomId(item) {
+  return item ? item.data("id") : -1;
 }

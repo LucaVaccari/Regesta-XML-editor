@@ -6,6 +6,7 @@
   <title>Manage XVE files</title>
 
   <script src="js/functions.js"></script>
+  <script src="controller/controllerFunctions.js"></script>
 
   <?php
   include "php/global.php";
