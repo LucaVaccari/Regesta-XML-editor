@@ -3,6 +3,7 @@
 		<m:Page id="page" showFooter="true" showHeader="true" class="body">
 			<m:customHeader>
 				<m:OverflowToolbar>
+					<m:Button icon="sap-icon://navigation-left-arrow" tooltip="Back to your files (auto saves)" press="onBack" />
 					<m:ToolbarSpacer />
 					<m:Title visible="{=!${/editingTitle}}" text="{/title}" id="titleLabel" />
 					<m:Input visible="{/editingTitle}" value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" width="50%" />
@@ -79,7 +80,7 @@
 				<m:OverflowToolbar>
 					<m:ToolbarSpacer />
 					<m:Button type="Reject" text="{i18n>CancelButtonText}" press="onCancel" class="test" tooltip="{i18n>CancelButtonTooltip}" />
-					<m:Button type="Accept" text="{i18n>SaveButtonText}" press="onExport" tooltip="{i18n>SaveButtonTooltip}" />
+					<m:Button type="Accept" text="{i18n>SaveButtonText}" press="onSave" tooltip="{i18n>SaveButtonTooltip}" />
 				</m:OverflowToolbar>
 			</m:footer>
 		</m:Page>

@@ -168,11 +168,6 @@ sap.ui.define(
 
         onModify();
         update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
-        update();
       },
 
       onDuplicate: function () {
@@ -297,12 +292,6 @@ sap.ui.define(
           model.data = previousData.noAttributes;
           model.allAttributes = previousData.attributes;
         }
-
-        update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
         update();
       },
 
@@ -315,11 +304,6 @@ sap.ui.define(
           model.allAttributes = previousData.attributes;
         }
         update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
-        update();
       },
 
       onReset: function () {
@@ -327,11 +311,6 @@ sap.ui.define(
         model.data = previousData.noAttributes;
         model.allAttributes = previousData.attributes;
         onModify();
-        update();
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(originalTree.getSelectedItem())
-        );
         update();
       },
 
@@ -374,7 +353,7 @@ sap.ui.define(
         update();
       },
 
-      onExport: function () {
+      onSave: function () {
         formatter = cleanFormatter;
         let output = CustomJSONToXML(
           model.data,
@@ -383,7 +362,19 @@ sap.ui.define(
         ).replaceAll(/\t|\n/g, "");
         let date = new Date();
         let dateString = formatDateToSQL(date).split(" ")[0];
-        window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}`;
+        window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}&comeBack=true`;
+      },
+
+      onBack: function() {
+        formatter = cleanFormatter;
+        let output = CustomJSONToXML(
+          model.data,
+          model.allAttributes,
+          formatter
+        ).replaceAll(/\t|\n/g, "");
+        let date = new Date();
+        let dateString = formatDateToSQL(date).split(" ")[0];
+        window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}&comeBack=false`;
       },
 
       onAttributesModify: function () {

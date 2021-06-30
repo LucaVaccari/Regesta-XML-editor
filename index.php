@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php session_start() ?>
+<?php
+if (!session_id()) session_start();
+?>
 
 <head>
     <meta charset="utf-8" />
@@ -75,6 +77,8 @@
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
+
+        // show error
     </script>
 </body>
 

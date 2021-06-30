@@ -164,12 +164,20 @@ function updateGraphics() {
   jsonModel.updateBindings(true);
 }
 
+function updateSelectedItem() {
+  selectedItem = findSubTreeById(
+    model.data[0],
+    getItemCustomId(originalTree.getSelectedItem())
+  );
+}
+
 function update() {
   updateModel();
+  jsonModel.updateBindings(true);
+  updateSelectedItem();
   updatePreview();
   updateGraphics();
 }
-
 
 function getItemCustomId(item) {
   return item ? item.data("id") : -1;

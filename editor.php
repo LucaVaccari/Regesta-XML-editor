@@ -18,6 +18,9 @@
   <?php
   include 'php/global.php';
 
+  if (!$_SESSION["logged"])
+    header("location: index.php");
+
   $userId = $_SESSION["userId"];
 
   if (isset($_GET["fileId"])) {

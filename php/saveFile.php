@@ -16,4 +16,9 @@ $sql = ('UPDATE files
     where fileId = ' . $fileId);
 $con->query($sql);
 
-header("location: ../management.php");
+echo $_GET["comeBack"];
+
+if ($_GET["comeBack"] == "true")
+    header("location: ../editor.php");
+else
+    header("location: ../management.php");

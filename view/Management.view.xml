@@ -16,6 +16,7 @@
                         <f:GridListItem cd:id="{id}">
                             <m:VBox alignItems="Center" cd:id="{id}">
                                 <m:Title text="{name}" />
+                                <m:Label text="{lastModification}"/>
                                 <m:Button text="Edit" icon="sap-icon://edit" press="onEdit" cd:id="{id}" />
                                 <m:Button text="Download" icon="sap-icon://download" press="onDownload" cd:id="{id}" />
                             </m:VBox>
