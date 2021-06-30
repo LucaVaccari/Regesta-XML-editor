@@ -3,13 +3,15 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>XML Visual Editor</title>
+  <title>Manage XVE files</title>
 
   <script src="js/functions.js"></script>
 
   <?php
   include "global.php";
-  $userId = $_GET["userId"];
+
+  $userId = $_SESSION["userId"];
+
   $sql = "SELECT * from accounts where id = " . $userId;
   $result = $con->query($sql);
   $row = mysqli_fetch_array($result);
@@ -19,14 +21,14 @@
   }
 
   echo "<script>
-    let userId = " . $_GET['userId'] . ";
+    let userId = " . $userId . ";
     let model = {
       files: [],
     };
   </script>\n";
 
 
-  $sql = ("SELECT * from files where userId = " . $_GET["userId"]);
+  $sql = ("SELECT * from files where userId = " . $userId);
   $result = $con->query($sql);
 
   echo "<script>\n";

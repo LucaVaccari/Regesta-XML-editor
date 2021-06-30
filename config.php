@@ -21,8 +21,8 @@ $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 if ($result->num_rows > 0) {
     $_SESSION["username"] = $row["name"];
     $_SESSION["password"] = $row["password"];
-    $userId = $row["id"];
-    header("location: management.php?userId=" . $userId);
+    $_SESSION["userId"] = $row["id"];
+    header("location: management.php");
 } else {
     header("location: register.html");
 }

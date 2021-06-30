@@ -278,7 +278,7 @@ sap.ui.define(
       },
 
       onCancel: function () {
-        window.location.href = `management.php?userId=${userId}`;
+        window.location.href = `management.php`;
       },
 
       onUndo: function () {
@@ -361,7 +361,7 @@ sap.ui.define(
         ).replaceAll(/\t|\n/g, "");
         let date = new Date();
         let dateString = formatDateToSQL(date).split(" ")[0];
-        window.location.href = `database/saveFile.php?userId=${userId}&fileId=${fileId}&fileName=${model.title}&fileContent=${output}`;
+        window.location.href = `database/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}`;
       },
 
       onAttributesModify: function () {

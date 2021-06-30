@@ -2,10 +2,10 @@
 
 include '../global.php';
 
-$fileId = $_GET["fileId"];
-$userId = $_GET["userId"];
+$fileId = $_SESSION["fileId"];
+$userId = $_SESSION["userId"];
 
 $sql = ('DELETE FROM files WHERE fileId = ' . $fileId);
 $con->query($sql);
 
-header("location: ../management.php?userId=" . $userId);
+header("location: ../management.php");
