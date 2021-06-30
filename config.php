@@ -1,6 +1,6 @@
 <?php
 
-include 'global.php';
+include 'php/global.php';
 
 $email = $_POST['email'];
 $password = $_POST['psw'];
@@ -22,6 +22,7 @@ if ($result->num_rows > 0) {
     $_SESSION["username"] = $row["name"];
     $_SESSION["password"] = $row["password"];
     $_SESSION["userId"] = $row["id"];
+    $_SESSION["logged"] = true;
     header("location: management.php");
 } else {
     header("location: register.html");

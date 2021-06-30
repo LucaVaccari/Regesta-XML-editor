@@ -20,6 +20,9 @@ if (!isset($_SESSION["userId"]))
 if (!isset($_SESSION["fileId"]))
   $_SESSION["fileId"] = -1;
 
+if (!isset($_SESSION["logged"]))
+  $_SESSION["logged"] = false;
+
 $con = mysqli_connect($host, $user, $password, $db_name);
 
 if (mysqli_connect_errno()) {

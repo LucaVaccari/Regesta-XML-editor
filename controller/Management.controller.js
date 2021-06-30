@@ -44,7 +44,7 @@ sap.ui.define(
         let id =
           event.getParameter("listItem").mAggregations.content[0].mAggregations
             .customData[0].mProperties.value;
-        window.location.href = `database/removeFile.php`;
+        window.location.href = `php/removeFile.php`;
       },
 
       onEdit: function (event) {
@@ -61,7 +61,7 @@ sap.ui.define(
       },
 
       onClearFiles: function () {
-        window.location.href = `database/clearDBfiles.php`;
+        window.location.href = `php/clearDBfiles.php`;
       },
 
       onHomePage: function () {
@@ -71,7 +71,7 @@ sap.ui.define(
       onCreateEmptyFile: function () {
         let date = new Date();
         let dateString = formatDateToSQL(date).split(" ")[0];
-        window.location.href = `database/addFile.php?fileName=Untitled&fileContent=<empty />&date=${dateString}`;
+        window.location.href = `php/addFile.php?fileName=Untitled&fileContent=<empty />&date=${dateString}`;
       },
 
       onFileUpload: function (event) {
@@ -86,7 +86,7 @@ sap.ui.define(
             let fileContent = file.currentTarget.result.replaceAll(/'/g, '"').replaceAll(/\n|\t/g, "");
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
-            window.location.href = `database/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
+            window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
           };
 
           reader.readAsText(file);

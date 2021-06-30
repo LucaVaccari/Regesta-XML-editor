@@ -1,6 +1,6 @@
 <?php
 
-include 'global.php';
+include 'php/global.php';
 
 $txtName = $_POST['name'];
 

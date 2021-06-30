@@ -1,6 +1,9 @@
 <?php
 
-include '../global.php';
+include 'global.php';
+
+if (!$_SESSION["logged"])
+    header("location: ../index.php");
 
 $sql = ('SELECT MAX(fileId) from files');
 $result = $con->query($sql);
