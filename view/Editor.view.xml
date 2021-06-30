@@ -79,7 +79,7 @@
 			<m:footer>
 				<m:OverflowToolbar>
 					<m:ToolbarSpacer />
-					<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
+					<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all non-saved changes" />
 					<m:Button type="Accept" text="Save" press="onSave" tooltip="Save the changes without exiting" />
 				</m:OverflowToolbar>
 			</m:footer>
