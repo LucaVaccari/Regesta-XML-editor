@@ -51,7 +51,7 @@ sap.ui.define(
           });
         }
         this._popover.then(function (popover) {
-          popover.openBy(originalTree.getSelectedItems()[0]);
+          popover.openBy(originalTree.getSelectedItem());
           popoverView = popover;
         });
       },
@@ -59,7 +59,7 @@ sap.ui.define(
       onSubmit: function (event) {
         selectedItem = findSubTreeById(
           model.data[0],
-          getCustomIdFromRecord(getRecordElement(event))
+          getItemCustomId(event.getSource())
         );
         if (selectedItem != undefined) selectedItem.editing = false;
 
@@ -67,34 +67,41 @@ sap.ui.define(
         update();
       },
 
-      onKeyValueEditLive: function (event) {
-        let selected = getRecordElement(event);
-        let buttons = selected.getContent()[0].getContent();
-
-        let id = getCustomIdFromRecord(selected);
-        let subTree = findSubTreeById(model.data, id);
-        subTree.key = buttons[KEY_INPUT_INDEX].getValue().replaceAll(
+      onKeyEditLive: function (event) {
+        let keyInput = event.getSource();
+        let id = getItemCustomId(event.getSource());
+        let subTree = findSubTreeById(model.data[0], id);
+        subTree.key = keyInput.getValue().replaceAll(
           /[^\w-_]+/g,
           ""
         );
-        if (!Array.isArray(subTree.value))
-          subTree.value = buttons[VALUE_INPUT_INDEX].getValue().replaceAll(
-            /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
-            ""
-          );
 
         if (!subTree.key) {
           subTree.key = "key";
           jsonModel.updateBindings(true);
-          buttons[KEY_INPUT_INDEX].selectText(0, 3);
+          keyInput.selectText(0, 3);
         }
 
         updateModel();
         updatePreview();
-
         jsonModel.updateBindings(true);
       },
 
+      onValueEditLive: function (event) {
+        let valueInput = event.getSource();
+        let id = getItemCustomId(event.getSource());
+        let subTree = findSubTreeById(model.data[0], id);
+        if (!Array.isArray(subTree.value))
+          subTree.value = valueInput.getValue().replaceAll(
+            /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+            ""
+          );
+
+        updateModel();
+        updatePreview();
+        jsonModel.updateBindings(true);
+      },
+      
       onAdd: function () {
         let selected = originalTree.getSelectedItems()[0];
         if (selectedItem == undefined) return;
@@ -163,8 +170,7 @@ sap.ui.define(
 
         onModify();
         update();
-        let id2 = getItemCustomId(originalTree.getSelectedItem());
-        selectedItem = findSubTreeById(model.data[0], id2);
+        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
         update();
       },
 
@@ -237,7 +243,7 @@ sap.ui.define(
       },
 
       onMoveUp: function (event) {
-        let id = getCustomIdFromRecord(getRecordElement(event));
+        let id = getItemCustomId(event.getSource());
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
@@ -258,7 +264,7 @@ sap.ui.define(
       },
 
       onMoveDown: function (event) {
-        let id = getCustomIdFromRecord(getRecordElement(event));
+        let id = getItemCustomId(event.getSource());
         let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
 
@@ -292,6 +298,8 @@ sap.ui.define(
         }
 
         update();
+        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
+        update();
       },
 
       onRedo: function () {
@@ -303,6 +311,8 @@ sap.ui.define(
           model.allAttributes = previousData.attributes;
         }
         update();
+        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
+        update();
       },
 
       onReset: function () {
@@ -311,12 +321,12 @@ sap.ui.define(
         model.allAttributes = previousData.attributes;
         onModify();
         update();
+        selectedItem = findSubTreeById(model.data[0], getItemCustomId(originalTree.getSelectedItem()));
+        update();
       },
 
       onSelect: function (event) {
         closeKeyValueInputs();
-        // let element = event.getParameter("listItem");
-        // let id = getCustomIdFromRecord(element);
         let id = getItemCustomId(event.getParameters().listItem);
         selectedItem = findSubTreeById(model.data[0], id);
         if (selectedItem == undefined) return;
@@ -372,6 +382,7 @@ sap.ui.define(
       },
 
       onAttributeModifyLive: function (event) {
+        // TODO: decouple
         let inputParent = event.getSource().oParent;
         let id =
           inputParent.oParent.mAggregations.customData[0].mProperties.value;
