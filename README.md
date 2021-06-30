@@ -8,7 +8,6 @@
 - funzionalità:
 - grafica:
 - piccoli dettagli:
-  - pulsanti move fuori dalla toolbar
 - nice to have:
   - data di caricamento/modifica dei file
   - tasto salva che resta nell'editor
