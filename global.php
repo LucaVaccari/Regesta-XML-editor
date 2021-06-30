@@ -9,10 +9,16 @@ $password = 'mdTT1WcU9a';
 $db_name = "sql11421864";
 
 if (!isset($_SESSION["username"]))
-  $_SESSION["username"] = "s";
+  $_SESSION["username"] = "name";
 
 if (!isset($_SESSION["password"]))
-  $_SESSION["password"] = "s";
+  $_SESSION["password"] = "psw";
+
+if (!isset($_SESSION["userId"]))
+  $_SESSION["userId"] = -1;
+
+if (!isset($_SESSION["fileId"]))
+  $_SESSION["fileId"] = -1;
 
 $con = mysqli_connect($host, $user, $password, $db_name);
 

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>XML Visual Editor</title>
+  <title>XVE - In Editor</title>
 
   <script src="js/formatter.js"></script>
   <script src="js/htmlFormatter.js"></script>
@@ -13,12 +13,19 @@
   <script src="js/customJSON.js"></script>
   <script src="js/global.js"></script>
   <script src="controller/controllerFunctions.js"></script>
+  <script src="js/functions.js"></script>
 
   <?php
   include 'global.php';
 
-  $userId = $_GET['userId'];
-  $fileId = $_GET['fileId'];
+  $userId = $_SESSION["userId"];
+
+  if (isset($_GET["fileId"])) {
+    $_SESSION["fileId"] = $_GET["fileId"];
+    header("location: editor.php");
+  }
+
+  $fileId = $_SESSION['fileId'];
 
   $sql = ('SELECT * from files WHERE fileId = ' . $fileId . ' and userId = ' . $userId);
   $result = $con->query($sql);

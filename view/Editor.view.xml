@@ -67,7 +67,7 @@
 							<m:Button text="Download preview" icon="sap-icon://download" press="onDownloadPreview" tooltip="Download the file as you see it in the preview below" />
 							<m:ToolbarSpacer />
 							<m:Label text="Show attributes:" />
-							<m:Switch state="true" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="Toggle attributes visibility in the preview">
+							<m:Switch state="{/preview/showAttributes}" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="Toggle attributes visibility in the preview">
 								<m:layoutData>
 									<m:FlexItemData growFactor="1" />
 								</m:layoutData>

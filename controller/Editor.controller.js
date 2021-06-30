@@ -279,7 +279,7 @@ sap.ui.define(
       },
 
       onCancel: function () {
-        window.location.href = `management.php?userId=${userId}`;
+        window.location.href = `management.php`;
       },
 
       onUndo: function () {
@@ -361,7 +361,9 @@ sap.ui.define(
           model.allAttributes,
           formatter
         ).replaceAll(/\t|\n/g, "");
-        window.location.href = `database/saveFile.php?userId=${userId}&fileId=${fileId}&fileName=${model.title}&fileContent=${output}`;
+        let date = new Date();
+        let dateString = formatDateToSQL(date).split(" ")[0];
+        window.location.href = `database/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}`;
       },
 
       onAttributesModify: function () {
@@ -435,7 +437,6 @@ sap.ui.define(
       },
 
       onToggleAttributesVisibility: function (event) {
-        attributesShown = event.getParameters().state;
         update();
       },
 
@@ -450,9 +451,10 @@ sap.ui.define(
       },
 
       onDownloadPreview: function () {
+
         let output = CustomJSONToXML(
           model.data,
-          model.allAttributes,
+          model.preview.showAttributes ? model.allAttributes : [],
           previewFormatter
         );
 
@@ -473,8 +475,7 @@ function getRecordElement(event) {
 
 function getCustomIdFromRecord(record) {
   if (record == undefined) return -1;
-  return record.mAggregations.content[0].mAggregations.customData[2].mProperties
-    .value;
+  return record.mAggregations.content[0].data("id");
 }
 
 function getItemCustomId(item) {

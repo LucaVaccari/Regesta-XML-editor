@@ -1,5 +1,9 @@
 let view, popoverView;
 
+let jsonModel,
+  lastFileId = 0;
+
+
 sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
@@ -40,13 +44,13 @@ sap.ui.define(
         let id =
           event.getParameter("listItem").mAggregations.content[0].mAggregations
             .customData[0].mProperties.value;
-        window.location.href = `database/removeFile.php?fileId=${id}&userId=${userId}`;
+        window.location.href = `database/removeFile.php`;
       },
 
       onEdit: function (event) {
         let tile = getRecordElement(event);
         let id = getCustomIdFromRecord(tile);
-        window.location.href = `editor.php?userId=${userId}&fileId=${id}`;
+        window.location.href = `editor.php`;
       },
 
       onDownload: function (event) {
@@ -57,7 +61,7 @@ sap.ui.define(
       },
 
       onClearFiles: function () {
-        window.location.href = `database/clearDBfiles.php?userId=${userId}`;
+        window.location.href = `database/clearDBfiles.php`;
       },
 
       onHomePage: function () {
@@ -67,7 +71,7 @@ sap.ui.define(
       onCreateEmptyFile: function () {
         let date = new Date();
         let dateString = formatDateToSQL(date).split(" ")[0];
-        window.location.href = `database/addFile.php?userId=${userId}&fileName=Untitled&fileContent=<empty />&date=${dateString}`;
+        window.location.href = `database/addFile.php?fileName=Untitled&fileContent=<empty />&date=${dateString}`;
       },
 
       onFileUpload: function (event) {
@@ -82,7 +86,7 @@ sap.ui.define(
             let fileContent = file.currentTarget.result.replaceAll(/'/g, '"').replaceAll(/\n|\t/g, "");
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
-            window.location.href = `database/addFile.php?userId=${userId}&fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
+            window.location.href = `database/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
           };
 
           reader.readAsText(file);
@@ -99,14 +103,9 @@ function getRecordElement(event) {
 
 function getCustomIdFromRecord(record) {
   if (record == undefined) return -1;
-  return record.mAggregations.content[0].mAggregations.customData[0].mProperties
-    .value;
+  return record.mAggregations.content[0].data("id");
 }
 
 function updateGraphics() {
   jsonModel.updateBindings(true);
-}
-
-function formatDateToSQL(date) {
-  return date.toISOString().slice(0, 19).replace("T", " ");
 }

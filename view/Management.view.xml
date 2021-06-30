@@ -7,8 +7,8 @@
                         <m:Button icon="sap-icon://home" press="onHomePage" tooltip="Back to home page" />
                         <m:Label text="Ciao!" />
                         <m:ToolbarSpacer />
-                        <m:Button icon="sap-icon://add-document" press="onAdd" />
-                        <m:Button icon="sap-icon://delete" press="onClearFiles" />
+                        <m:Button icon="sap-icon://add-document" press="onAdd" tooltip="Add a new XML document (choose whether you want to upload it or create it empty)" />
+                        <m:Button icon="sap-icon://delete" press="onClearFiles" tooltip="Delete all of your files (debug purpose)" />
                         <m:ToolbarSpacer />
                         <m:Avatar />
                     </m:OverflowToolbar>

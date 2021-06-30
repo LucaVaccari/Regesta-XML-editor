@@ -22,6 +22,7 @@ model.somethingSelected = false;
 model.isRootSelected = false;
 model.preview.fontSize = 20;
 model.preview.mimeType = "text/xml";
+model.preview.showAttributes = true;
 model.editingTitle = false;
 
 const XMLformatter = new HTMLFormatter(
