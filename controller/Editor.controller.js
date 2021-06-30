@@ -162,8 +162,9 @@ sap.ui.define(
         clearTree(model.data);
 
         onModify();
-        selectedItem = undefined;
         update();
+        let id2 = getItemCustomId(originalTree.getSelectedItem());
+        selectedItem = findSubTreeById(model.data[0], id2);
         update();
       },
 
@@ -314,8 +315,9 @@ sap.ui.define(
 
       onSelect: function (event) {
         closeKeyValueInputs();
-        let element = event.getParameter("listItem");
-        let id = getCustomIdFromRecord(element);
+        // let element = event.getParameter("listItem");
+        // let id = getCustomIdFromRecord(element);
+        let id = getItemCustomId(event.getParameters().listItem);
         selectedItem = findSubTreeById(model.data[0], id);
         if (selectedItem == undefined) return;
         id = selectedItem.id;
@@ -474,4 +476,8 @@ function getRecordElement(event) {
 function getCustomIdFromRecord(record) {
   if (record == undefined) return -1;
   return record.mAggregations.content[0].data("id");
+}
+
+function getItemCustomId(item) {
+  return item ? item.data("id") : -1;
 }
