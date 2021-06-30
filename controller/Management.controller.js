@@ -3,7 +3,6 @@ let view, popoverView;
 let jsonModel,
   lastFileId = 0;
 
-
 sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
