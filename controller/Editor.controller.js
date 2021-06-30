@@ -13,7 +13,7 @@ sap.ui.define(
         view = this.getView();
         
         let i18Model = new ResourceModel({
-          bundleUrl : "i18n/i18n_en.properties",
+          bundleUrl : "i18n/i18n_it.properties",
         });
         view.setModel(i18Model, "i18n");
         jsonModel = new JSONModel(model);
