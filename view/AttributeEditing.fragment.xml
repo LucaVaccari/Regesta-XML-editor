@@ -9,10 +9,10 @@
 		<content>
 			<ScrollContainer>
 				<List noDataText="No attributes" id="attributesList" mode="Delete" delete="onRemoveAttribute" items="{path:'/selectedAttributes', templateShareable: false}">
-					<CustomListItem cd:id="{id}">
+					<CustomListItem>
 						<HBox >
-							<Input value="{attributeKey}" change="onAttributesModify" submit="onAttributesModify" liveChange="onAttributeModifyLive"></Input>
-							<Input value="{attributeValue}" change="onAttributesModify" submit="onAttributesModify" liveChange="onAttributeModifyLive"></Input>
+							<Input value="{attributeKey}" change="onAttributesModify" submit="onAttributesModify" liveChange="onAttributeNameModifyLive" cd:id="{id}" />
+							<Input value="{attributeValue}" change="onAttributesModify" submit="onAttributesModify" liveChange="onAttributeValueModifyLive" cd:id="{id}" />
 						</HBox>
 					</CustomListItem>
 				</List>
