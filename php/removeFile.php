@@ -2,6 +2,9 @@
 
 include 'global.php';
 
+if (!$_SESSION["logged"])
+    header("location: ../index.php");
+
 $fileId = $_SESSION["fileId"];
 $userId = $_SESSION["userId"];
 
