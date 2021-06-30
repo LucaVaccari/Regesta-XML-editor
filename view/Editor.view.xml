@@ -6,7 +6,7 @@
 					<m:ToolbarSpacer />
 					<m:Title visible="{=!${/editingTitle}}" text="{/title}" id="titleLabel" />
 					<m:Input visible="{/editingTitle}" value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" width="50%" />
-					<m:Button icon="sap-icon://edit" press="onTitleEdit" tooltip="Change the name of this file" />
+					<m:Button icon="sap-icon://edit" press="onTitleEdit" tooltip="{i18n>ChangeFileNameButtonTooltip}" />
 					<m:ToolbarSpacer />
 				</m:OverflowToolbar>
 			</m:customHeader>
@@ -15,16 +15,16 @@
 					<m:VBox height="auto" width="45%">
 						<m:OverflowToolbar>
 							<m:ToolbarSpacer />
-							<m:Button enabled="{/somethingChanged}" icon="sap-icon://undo" iconFirst="true" width="auto" press="onUndo" id="undoButton" tooltip="Undo the last action" />
-							<m:Button enabled="{/fileChanged}" icon="sap-icon://reset" iconFirst="true" width="auto" iconDensityAware="false" press="onReset" id="resetButton" tooltip="Reset evertything to the initial state (undoable)" />
-							<m:Button enabled="{/somethingUndone}" icon="sap-icon://redo" iconFirst="false" width="auto" iconDensityAware="false" press="onRedo" id="redoButton" tooltip="Redo the last undone action" />
+							<m:Button enabled="{/somethingChanged}" icon="sap-icon://undo" iconFirst="true" width="auto" press="onUndo" id="undoButton" tooltip="{i18n>UndoButtonTooltip}" />
+							<m:Button enabled="{/fileChanged}" icon="sap-icon://reset" iconFirst="true" width="auto" iconDensityAware="false" press="onReset" id="resetButton" tooltip="{i18n>ResetButtonTooltip}" />
+							<m:Button enabled="{/somethingUndone}" icon="sap-icon://redo" iconFirst="false" width="auto" iconDensityAware="false" press="onRedo" id="redoButton" tooltip="{i18n>RedoButtonTooltip}" />
 							<m:ToolbarSpacer />
-							<m:Button enabled="{/somethingSelected}" icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="Add child" id="addButton" />
-							<m:Button enabled="{=${/somethingSelected} &amp;&amp; !${/isRootSelected}}" icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="Remove this element (and all of his children)" id="removeButton" />
-							<m:Button enabled="{=${/somethingSelected} &amp;&amp; !${/isRootSelected}}" icon="sap-icon://duplicate" iconFirst="true" width="auto" iconDensityAware="false" press="onDuplicate" tooltip="Duplicate this element (and all of his children)" id="duplicateButton" />
+							<m:Button enabled="{/somethingSelected}" icon="sap-icon://add" iconFirst="true" width="auto" iconDensityAware="false" press="onAdd" tooltip="{i18n>AddButtonTooltip}" id="addButton" />
+							<m:Button enabled="{=${/somethingSelected} &amp;&amp; !${/isRootSelected}}" icon="sap-icon://delete" iconFirst="true" width="auto" iconDensityAware="false" press="onRemove" tooltip="{i18n>RemoveButtonTooltip}" id="removeButton" />
+							<m:Button enabled="{=${/somethingSelected} &amp;&amp; !${/isRootSelected}}" icon="sap-icon://duplicate" iconFirst="true" width="auto" iconDensityAware="false" press="onDuplicate" tooltip="{i18n>DuplicateButtonTooltip}" id="duplicateButton" />
 							<m:ToolbarSpacer />
-							<m:Button enabled="{/somethingSelected}" text="Key-value" icon="sap-icon://edit" visible="true" press="onEdit" tooltip="Edit the key and the value of the selected item" id="editButton" />
-							<m:Button enabled="{/somethingSelected}" text="Attributes" icon="sap-icon://edit" visible="true" press="onEditAttributes" tooltip="Edit the attributes of the selected item" id="editAttributesButton" />
+							<m:Button enabled="{/somethingSelected}" text="{i18n>KeyValueEditButtonText}" icon="sap-icon://edit" visible="true" press="onEdit" tooltip="{i18n>KeyValueEditButtonTooltip}" id="editButton" />
+							<m:Button enabled="{/somethingSelected}" text="{i18n>AttributeEditButtonText}" icon="sap-icon://edit" visible="true" press="onEditAttributes" tooltip="{i18n>AttributeEditButtonTooltip}" id="editAttributesButton" />
 							<m:ToolbarSpacer />
 						</m:OverflowToolbar>
 						<m:ScrollContainer horizontal="true" vertical="true" width="100%" height="100%">
@@ -42,8 +42,8 @@
 										</m:OverflowToolbar>
 										<m:HBox>
 											<!-- Move buttons -->
-											<m:Button enabled="{=!${isLast}}" visible="{=${id} !== 0}" icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="Move this element down" width="5%" cd:id="{id}" />
-											<m:Button enabled="{=!${isFirst}}" visible="{=${id} !== 0}" icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="Move this element up" width="5%" cd:id="{id}" />
+											<m:Button enabled="{=!${isLast}}" visible="{=${id} !== 0}" icon="sap-icon://slim-arrow-down" press="onMoveDown" tooltip="{i18n>MoveDownButtonTooltip}" width="5%" cd:id="{id}" />
+											<m:Button enabled="{=!${isFirst}}" visible="{=${id} !== 0}" icon="sap-icon://slim-arrow-up" press="onMoveUp" tooltip="{i18n>MoveUpButtonTooltip}" width="5%" cd:id="{id}" />
 										</m:HBox>
 									</m:CustomTreeItem>
 								</m:items>
@@ -54,15 +54,15 @@
 						<m:OverflowToolbar>
 							<m:SegmentedButton>
 								<m:items>
-									<m:SegmentedButtonItem text="XML" press="onXMLSwitch" />
-									<m:SegmentedButtonItem text="Compact XML" press="onCompactXMLSwitch" />
-									<m:SegmentedButtonItem text="JSON" press="onJSONSwitch" />
+									<m:SegmentedButtonItem text="{i18n>XMLButtonText}" press="onXMLSwitch" />
+									<m:SegmentedButtonItem text="{i18n>CompactXMLButtonText}" press="onCompactXMLSwitch" />
+									<m:SegmentedButtonItem text="{i18n>JSONButtonText}" press="onJSONSwitch" />
 								</m:items>
 							</m:SegmentedButton>
-							<m:Button text="Download preview" icon="sap-icon://download" press="onDownloadPreview" tooltip="Download the file as you see it in the preview below" />
+							<m:Button text="{i18n>DownloadPreviewButtonText}" icon="sap-icon://download" press="onDownloadPreview" tooltip="{i18n>DownloadPreviewButtonTooltip}" />
 							<m:ToolbarSpacer />
-							<m:Label text="Show attributes:" />
-							<m:Switch state="{/preview/showAttributes}" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="Toggle attributes visibility in the preview">
+							<m:Label text="{i18n>ShowAttributesText}" />
+							<m:Switch state="{/preview/showAttributes}" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="{i18n>AttributeSwitchTooltip}">
 								<m:layoutData>
 									<m:FlexItemData growFactor="1" />
 								</m:layoutData>
@@ -78,8 +78,8 @@
 			<m:footer>
 				<m:OverflowToolbar>
 					<m:ToolbarSpacer />
-					<m:Button type="Reject" text="Cancel" press="onCancel" class="test" tooltip="Exit and discard all changes" />
-					<m:Button type="Accept" text="Export" press="onExport" tooltip="Save the changes and export the file" />
+					<m:Button type="Reject" text="{i18n>CancelButtonText}" press="onCancel" class="test" tooltip="{i18n>CancelButtonTooltip}" />
+					<m:Button type="Accept" text="{i18n>SaveButtonText}" press="onExport" tooltip="{i18n>SaveButtonTooltip}" />
 				</m:OverflowToolbar>
 			</m:footer>
 		</m:Page>
