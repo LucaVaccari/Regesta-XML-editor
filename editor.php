@@ -5,18 +5,21 @@
   <meta charset="utf-8" />
   <title>XVE - In Editor</title>
 
-  <script src="js/formatter.js"></script>
-  <script src="js/htmlFormatter.js"></script>
-  <script src="js/jsonFormatter.js"></script>
-  <script src="js/jsonHtmlFormatter.js"></script>
+  <script src="js/formatters/formatter.js"></script>
+  <script src="js/formatters/htmlFormatter.js"></script>
+  <script src="js/formatters/jsonFormatter.js"></script>
+  <script src="js/formatters/jsonHtmlFormatter.js"></script>
   <script src="js/converters.js"></script>
   <script src="js/customJSON.js"></script>
-  <script src="js/global.js"></script>
+  <script src="js/editorVariables.js"></script>
   <script src="controller/controllerFunctions.js"></script>
   <script src="js/functions.js"></script>
 
   <?php
   include 'php/global.php';
+
+  if (!$_SESSION["logged"])
+    header("location: index.php");
 
   $userId = $_SESSION["userId"];
 
@@ -35,6 +38,7 @@
   echo "<script>\n";
   echo "let userId = `" . $userId . "`;\n";
   echo "let fileId = `" . $fileId . "`;\n";
+  echo "model.username = '" . $_SESSION["username"] . "';\n";
   echo 'model.preview.content = `' . $row["fileContent"] . "`;\n";
   echo "model.title = `" . $row["fileName"] . "`;\n";
   echo "customJson = XMLtoCustomJSON(model.preview.content);\n

@@ -11,6 +11,7 @@ let test2 = `<ConfigAdvanced xmlns:xsi="http://www.w3.org/2001/XMLSchema-instanc
 model.allAttributes = [];
 model.selectedAttributes = [];
 dataQueueIndex = 0;
+let jsonModel, selectedItem, popoverView, view, originalTree;
 
 model.preview = {};
 

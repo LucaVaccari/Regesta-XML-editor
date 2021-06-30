@@ -3,7 +3,6 @@ let view, popoverView;
 let jsonModel,
   lastFileId = 0;
 
-
 sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
@@ -41,21 +40,17 @@ sap.ui.define(
       },
 
       onDelete: function (event) {
-        let id =
-          event.getParameter("listItem").mAggregations.content[0].mAggregations
-            .customData[0].mProperties.value;
-        window.location.href = `php/removeFile.php`;
+        let id = getItemCustomId(event.getParameters().listItem);
+        window.location.href = `php/removeFile.php?fileId=${id}`;
       },
 
       onEdit: function (event) {
-        let tile = getRecordElement(event);
-        let id = getCustomIdFromRecord(tile);
-        window.location.href = `editor.php`;
+        let id = getItemCustomId(event.getSource());
+        window.location.href = `editor.php?fileId=${id}`;
       },
 
       onDownload: function (event) {
-        let tile = getRecordElement(event);
-        let id = getCustomIdFromRecord(tile);
+        let id = getItemCustomId(event.getSource());
         let element = model.files.filter((file) => file.id == id)[0];
         download(`${element.name}.xml`, element.content);
       },
@@ -95,16 +90,6 @@ sap.ui.define(
     });
   }
 );
-
-function getRecordElement(event) {
-  let id = event.getSource().getId();
-  return sap.ui.getCore().getElementById(id).oParent.oParent;
-}
-
-function getCustomIdFromRecord(record) {
-  if (record == undefined) return -1;
-  return record.mAggregations.content[0].data("id");
-}
 
 function updateGraphics() {
   jsonModel.updateBindings(true);

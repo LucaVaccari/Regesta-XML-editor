@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php session_start() ?>
+<?php
+if (!session_id()) session_start();
+?>
 
 <head>
     <meta charset="utf-8" />
@@ -36,7 +38,7 @@
         <div class="center">
             <h1>XML Visual Editor</h1>
             <h3>Import your file and start editing it!</h3>
-            <a class="button" href="editor.php">IMPORT</a>
+            <a class="button" href="management.php">IMPORT</a>
         </div>
         <footer>
             <div class="texts">
@@ -48,9 +50,9 @@
                         <a style="--i: 3" href="https://www.regestaitalia.eu/azienda/" target="_blank">About us</a>
                     </div>
                 </div>
-                <a id="hide"style="--i: 1" href="https://www.google.com/maps/place/Regesta+S.R.L./@45.5472802,10.1902087,15z/data=!4m5!3m4!1s0x0:0x551a640910ca7610!8m2!3d45.5472802!4d10.1902087" target="_blank">Find us</a>
-                <a id="hide"style="--i: 2" href="https://www.regestaitalia.eu/contatti/" target="_blank">Contact us</a>
-                <a id="hide"style="--i: 3" href="https://www.regestaitalia.eu/azienda/" target="_blank">About us</a>
+                <a id="hide" style="--i: 1" href="https://www.google.com/maps/place/Regesta+S.R.L./@45.5472802,10.1902087,15z/data=!4m5!3m4!1s0x0:0x551a640910ca7610!8m2!3d45.5472802!4d10.1902087" target="_blank">Find us</a>
+                <a id="hide" style="--i: 2" href="https://www.regestaitalia.eu/contatti/" target="_blank">Contact us</a>
+                <a id="hide" style="--i: 3" href="https://www.regestaitalia.eu/azienda/" target="_blank">About us</a>
             </div>
             <div class="icons">
                 <a id="hide" style="--i: 5" href="https://it.linkedin.com/company/regesta-srl" target="_blank"><img src="resources/images/linkedin-ico.png" height="20px" width="auto"></a>
@@ -78,6 +80,8 @@
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
+
+        // show error
     </script>
 
     <!-- <script id="alert">
