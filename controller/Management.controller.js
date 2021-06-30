@@ -45,12 +45,12 @@ sap.ui.define(
       },
 
       onEdit: function (event) {
-        let id = getItemCustomId(event.getParameters().listItem);
+        let id = getItemCustomId(event.getSource());
         window.location.href = `editor.php?fileId=${id}`;
       },
 
       onDownload: function (event) {
-        let id = getItemCustomId(event.getParameters().listItem);
+        let id = getItemCustomId(event.getSource());
         let element = model.files.filter((file) => file.id == id)[0];
         download(`${element.name}.xml`, element.content);
       },
