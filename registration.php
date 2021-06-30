@@ -2,12 +2,12 @@
 
 include 'php/global.php';
 
-$txtName = $_POST['name'];
 
 $sql = ('SELECT MAX(id) from accounts');
 $result = $con->query($sql);
 $id = mysqli_fetch_row($result)[0] + 1;
 
+$txtName = $_POST['firstName'];
 $txtEmail = $_POST['email'];
 $txtPass = $_POST['psw'];
 
