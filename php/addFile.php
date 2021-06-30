@@ -1,6 +1,6 @@
 <?php
 
-include '../global.php';
+include 'global.php';
 
 $sql = ('SELECT MAX(fileId) from files');
 $result = $con->query($sql);

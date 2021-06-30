@@ -1,6 +1,6 @@
 <?php
 
-include '../global.php';
+include 'global.php';
 
 $fileId = $_SESSION["fileId"];
 $userId = $_SESSION["userId"];

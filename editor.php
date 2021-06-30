@@ -16,7 +16,7 @@
   <script src="js/functions.js"></script>
 
   <?php
-  include 'global.php';
+  include 'php/global.php';
 
   $userId = $_SESSION["userId"];
 

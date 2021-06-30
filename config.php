@@ -1,6 +1,6 @@
 <?php
 
-include 'global.php';
+include 'php/global.php';
 
 $email = $_POST['email'];
 $password = $_POST['psw'];
