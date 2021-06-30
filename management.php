@@ -18,7 +18,8 @@
   $row = mysqli_fetch_array($result);
 
   if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
-    header("location: https://youtu.be/dQw4w9WgXcQ");
+    // echo '<script id="alert-message">', 'alertMessage;', '</script>';
+    // header("location: https://youtu.be/dQw4w9WgXcQ"); (Rick Roll)
   }
 
   echo "<script>
@@ -42,7 +43,7 @@
       lastModification: `" . $row["lastModification"] . "`, 
     });\n";
   }
-  echo "</script>\n";
+  echo "<script/>\n";
 
   // riempire l'array "files" del modello JS
   ?>
