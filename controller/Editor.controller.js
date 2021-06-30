@@ -3,14 +3,20 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
+    "sap/ui/model/resource/ResourceModel",
   ],
-  (Controller, JSONModel, Fragment) => {
+  (Controller, JSONModel, Fragment, ResourceModel) => {
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Editor", {
       onInit: function () {
-        jsonModel = new JSONModel(model);
         view = this.getView();
+        
+        let i18Model = new ResourceModel({
+          bundleUrl : "i18n/i18n_it.properties",
+        });
+        view.setModel(i18Model, "i18n");
+        jsonModel = new JSONModel(model);
         view.setModel(jsonModel);
 
         originalTree = view.byId("tree");

@@ -40,6 +40,7 @@
       userId: " . $row["userId"] . ",
       name: `" . $row["fileName"] . "`,
       content: `" . $row["fileContent"] . "`,
+      lastModification: `" . $row["lastModification"] . "`, 
     });\n";
   }
   echo "<script/>\n";

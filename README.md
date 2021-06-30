@@ -5,11 +5,10 @@
 - bug:
   - sistemare login
 - funzionalità:
+  - controllo DOM parser
 - grafica:
 - piccoli dettagli:
 - nice to have:
-  - data di caricamento/modifica dei file
-  - tasto salva che resta nell'editor
   - accesso con nome/email
   - log out
   - funzioni poste in ordine alfabetico
