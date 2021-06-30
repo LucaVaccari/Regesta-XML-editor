@@ -22,13 +22,6 @@ sap.ui.define(
         };
         dataQueue[0] = JSON.parse(JSON.stringify(initData));
 
-        sap.ui.getCore().attachValidationError(function (oEvent) {
-          oEvent.getParameter("element").setValueState(ValueState.Error);
-        });
-        sap.ui.getCore().attachValidationSuccess(function (oEvent) {
-          oEvent.getParameter("element").setValueState(ValueState.None);
-        });
-
         update();
       },
 
