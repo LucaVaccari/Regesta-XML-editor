@@ -5,6 +5,7 @@
 - bug:
   - sistemare login
 - funzionalità:
+  - controllo DOM parser
 - grafica:
 - piccoli dettagli:
 - nice to have:
