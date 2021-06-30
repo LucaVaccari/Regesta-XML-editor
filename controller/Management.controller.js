@@ -103,8 +103,7 @@ function getRecordElement(event) {
 
 function getCustomIdFromRecord(record) {
   if (record == undefined) return -1;
-  return record.mAggregations.content[0].mAggregations.customData[0].mProperties
-    .value;
+  return record.mAggregations.content[0].data("id");
 }
 
 function updateGraphics() {
