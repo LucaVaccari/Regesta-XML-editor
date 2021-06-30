@@ -359,6 +359,8 @@ sap.ui.define(
           model.allAttributes,
           formatter
         ).replaceAll(/\t|\n/g, "");
+        let date = new Date();
+        let dateString = formatDateToSQL(date).split(" ")[0];
         window.location.href = `database/saveFile.php?userId=${userId}&fileId=${fileId}&fileName=${model.title}&fileContent=${output}`;
       },
 

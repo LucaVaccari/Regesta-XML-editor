@@ -1,5 +1,9 @@
 let view, popoverView;
 
+let jsonModel,
+  lastFileId = 0;
+
+
 sap.ui.define(
   [
     "sap/ui/core/mvc/Controller",
@@ -105,8 +109,4 @@ function getCustomIdFromRecord(record) {
 
 function updateGraphics() {
   jsonModel.updateBindings(true);
-}
-
-function formatDateToSQL(date) {
-  return date.toISOString().slice(0, 19).replace("T", " ");
 }

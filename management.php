@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <title>XML Visual Editor</title>
 
-  <script src="js/managementFunctions.js"></script>
+  <script src="js/functions.js"></script>
 
   <?php
   include "global.php";
@@ -18,9 +18,12 @@
     header("location: https://youtu.be/dQw4w9WgXcQ");
   }
 
-  echo '<script>
-        let userId = ' . $_GET['userId'] . ';
-      </script>';
+  echo "<script>
+    let userId = " . $_GET['userId'] . ";
+    let model = {
+      files: [],
+    };
+  </script>\n";
 
 
   $sql = ("SELECT * from files where userId = " . $_GET["userId"]);

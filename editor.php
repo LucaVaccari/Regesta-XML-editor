@@ -13,6 +13,7 @@
   <script src="js/customJSON.js"></script>
   <script src="js/global.js"></script>
   <script src="controller/controllerFunctions.js"></script>
+  <script src="js/functions.js"></script>
 
   <?php
   include 'global.php';
