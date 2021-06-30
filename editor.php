@@ -11,7 +11,7 @@
   <script src="js/formatters/jsonHtmlFormatter.js"></script>
   <script src="js/converters.js"></script>
   <script src="js/customJSON.js"></script>
-  <script src="js/global.js"></script>
+  <script src="js/editorVariables.js"></script>
   <script src="controller/controllerFunctions.js"></script>
   <script src="js/functions.js"></script>
 

@@ -1,5 +1,3 @@
-let jsonModel, view, originalTree, selectedItem, popoverView;
-
 function findSubTreeById(tree, id) {
   if (tree == undefined) return;
 
@@ -170,4 +168,9 @@ function update() {
   updateModel();
   updatePreview();
   updateGraphics();
+}
+
+
+function getItemCustomId(item) {
+  return item ? item.data("id") : -1;
 }

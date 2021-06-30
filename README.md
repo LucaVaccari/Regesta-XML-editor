@@ -4,7 +4,6 @@
 
 - bug:
   - sistemare login
-- callback:
 - funzionalità:
 - grafica:
 - piccoli dettagli:
