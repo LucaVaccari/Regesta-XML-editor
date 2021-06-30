@@ -96,6 +96,7 @@ sap.ui.define(
   }
 );
 
+//! DESTROY THESE FUNCTIONS
 function getRecordElement(event) {
   let id = event.getSource().getId();
   return sap.ui.getCore().getElementById(id).oParent.oParent;
