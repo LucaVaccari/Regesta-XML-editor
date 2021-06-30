@@ -5,10 +5,10 @@
   <meta charset="utf-8" />
   <title>XVE - In Editor</title>
 
-  <script src="js/formatter.js"></script>
-  <script src="js/htmlFormatter.js"></script>
-  <script src="js/jsonFormatter.js"></script>
-  <script src="js/jsonHtmlFormatter.js"></script>
+  <script src="js/formatters/formatter.js"></script>
+  <script src="js/formatters/htmlFormatter.js"></script>
+  <script src="js/formatters/jsonFormatter.js"></script>
+  <script src="js/formatters/jsonHtmlFormatter.js"></script>
   <script src="js/converters.js"></script>
   <script src="js/customJSON.js"></script>
   <script src="js/global.js"></script>

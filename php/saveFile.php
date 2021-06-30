@@ -12,7 +12,7 @@ $fileContent = $_GET['fileContent'];
 $lastModification = $_GET['date'];
 
 $sql = ('UPDATE files 
-    SET userId = "' . $userId . '", fileName = "' . $fileName . '", fileContent = \'' . $fileContent . '\', lastModification = "' . $lastModification . '" 
+    SET userId = ' . $userId . ', fileName = "' . $fileName . '", fileContent = \'' . $fileContent . '\', lastModification = "' . $lastModification . '" 
     where fileId = ' . $fileId);
 $con->query($sql);
 

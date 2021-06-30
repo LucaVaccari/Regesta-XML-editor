@@ -44,13 +44,13 @@ sap.ui.define(
         let id =
           event.getParameter("listItem").mAggregations.content[0].mAggregations
             .customData[0].mProperties.value;
-        window.location.href = `php/removeFile.php`;
+        window.location.href = `php/removeFile.php?fileId=${id}`;
       },
 
       onEdit: function (event) {
         let tile = getRecordElement(event);
         let id = getCustomIdFromRecord(tile);
-        window.location.href = `editor.php`;
+        window.location.href = `editor.php?fileId=${id}`;
       },
 
       onDownload: function (event) {
