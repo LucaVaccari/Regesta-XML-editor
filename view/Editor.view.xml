@@ -77,7 +77,7 @@
 			</m:content>
 			<m:footer>
 				<m:OverflowToolbar>
-					<m:Button type="Accept" icon="sap-icon://save" text="{i18n>SaveButtonText}" press="onSave" tooltip="{i18n>SaveButtonTooltip}" />
+					<m:Button type="Ghost" icon="sap-icon://save" text="{i18n>SaveButtonText}" press="onSave" tooltip="{i18n>SaveButtonTooltip}" />
 					<m:ToolbarSpacer />
 					<m:Button type="Reject" icon="sap-icon://navigation-left-arrow" text="{i18n>CancelButtonText}" press="onCancel" class="test" tooltip="{i18n>CancelButtonTooltip}" />
 					<m:Button type="Accept" icon="sap-icon://complete" text="{i18n>FinishButtonText}" tooltip="{i18n>FinishButtonTooltip}" press="onBack" />
