@@ -17,7 +17,6 @@ $result = $con->query($sql);
 
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-
 if ($result->num_rows > 0) {
     $_SESSION["username"] = $row["name"];
     $_SESSION["password"] = $row["password"];
@@ -25,5 +24,5 @@ if ($result->num_rows > 0) {
     $_SESSION["logged"] = true;
     header("location: management.php");
 } else {
-    header("location: register.html");
+    header("location: index.php");
 }

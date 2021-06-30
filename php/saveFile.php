@@ -16,4 +16,4 @@ $sql = ('UPDATE files
     where fileId = ' . $fileId);
 $con->query($sql);
 
-header("location: ../management.php");
+header("location: ../editor.php");
