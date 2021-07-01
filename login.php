@@ -16,7 +16,8 @@
     echo "<script>\n
         let incorrectUser = " . $_SESSION["incorrectUser"] . ";
         if (incorrectUser) {\n
-            document.getElementById('alert').style.display = 'block';
+            // document.getElementById('alert').style.display = 'block';
+            alert('Incorrect email, username or passowrd!');
         }
     </script>"
     ?>
