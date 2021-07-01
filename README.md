@@ -15,4 +15,6 @@
   - responsive, mobile first
   - translatable text
   - dark theme
+  - mostra password
+  - conferma password
 - documentazione
