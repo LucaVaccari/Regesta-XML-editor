@@ -2,8 +2,6 @@
 
 include "global.php";
 
-$_SESSION["logged"] = false;
-
-session_destroy();
+$_SESSION["logged"] = 0;
 
 header("location: ../index.php");

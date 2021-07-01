@@ -21,7 +21,7 @@ if ($result->num_rows > 0) {
     $_SESSION["username"] = $row["name"];
     $_SESSION["password"] = $row["password"];
     $_SESSION["userId"] = $row["id"];
-    $_SESSION["logged"] = true;
+    $_SESSION["logged"] = 1;
     header("location: management.php");
 } else {
     header("location: login.html");
