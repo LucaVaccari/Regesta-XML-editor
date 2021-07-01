@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns:com="sap.ui.commons" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
     <m:Popover title="{i18n>AddFileText}" placement="Bottom">
-        <com:FileUploader buttonOnly="true" buttonText="{i18n>UploadFileButtonText}" icon="sap-icon://upload" fileType="xml" mimeType="text/xml" uploadOnChange="true" uploadComplete="onFileUpload" tooltip="{i18n>UploadFileButtonTooltip}" width="100%" />
+        <com:FileUploader buttonOnly="true" buttonText="{i18n>UploadFileButtonText}" icon="sap-icon://upload" fileType="xml" mimeType="application/xml" uploadOnChange="true" uploadComplete="onFileUpload" tooltip="{i18n>UploadFileButtonTooltip}" width="100%" />
         <m:Button text="{i18n>CreateFileButtonText}" icon="sap-icon://document" press="onCreateEmptyFile" tooltip="{i18n>CreateFileButtonTooltip}" width="100%" />
     </m:Popover>
 </core:FragmentDefinition>

@@ -1,7 +1,7 @@
 function XMLSchematoJSONSchema(xml) {
   let doc = new DOMParser().parseFromString(
     xml.replaceAll(/\n|\t/g, ""),
-    "text/xml"
+    "application/xml"
   );
 
   return _XMLDocToObjectSchema(doc.getRootNode().childNodes[0]);

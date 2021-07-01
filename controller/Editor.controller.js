@@ -335,14 +335,14 @@ sap.ui.define(
       onXMLSwitch: function () {
         formatter = XMLformatter;
         previewFormatter = XMLPreviewFormatter;
-        model.preview.mimeType = "text/xml";
+        model.preview.mimeType = "application/xml";
         update();
       },
 
       onCompactXMLSwitch: function () {
         formatter = compactXMLformatter;
         previewFormatter = compactXMLPreviewFormatter;
-        model.preview.mimeType = "text/xml";
+        model.preview.mimeType = "application/xml";
         update();
       },
 

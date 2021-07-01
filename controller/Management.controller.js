@@ -91,9 +91,9 @@ sap.ui.define(
 
             let parser = new DOMParser();
             let parsererrorNS = parser
-              .parseFromString("INVALID", "text/xml")
+              .parseFromString("INVALID", "application/xml")
               .getElementsByTagName("parsererror")[0].namespaceURI;
-            let dom = parser.parseFromString(fileContent, "text/xml");
+            let dom = parser.parseFromString(fileContent, "application/xml");
             if (
               dom.getElementsByTagNameNS(parsererrorNS, "parsererror").length >
               0
