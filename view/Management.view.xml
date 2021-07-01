@@ -5,7 +5,7 @@
                 <m:VBox width="100%" height="100%">
                     <m:OverflowToolbar>
                         <m:Button icon="sap-icon://home" press="onHomePage" tooltip="{i18n>HomeButtonTooltip}" />
-                        <m:Label text="{i18n>GreetingsText} {/username} !" />
+                        <m:Label text="{i18n>GreetingsText} {/username}!" />
                         <m:ToolbarSpacer />
                         <m:Button icon="sap-icon://add-document" press="onAdd" tooltip="{i18n>AddFileButtonTooltip}" />
                         <m:Button icon="sap-icon://delete" press="onClearFiles" tooltip="{i18n>DeleteAllFilesButtonTooltip}" />
