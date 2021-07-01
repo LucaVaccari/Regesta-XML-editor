@@ -18,7 +18,6 @@
   $row = mysqli_fetch_array($result);
 
   if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
-    // echo '<script id="alert-message">', 'alertMessage;', '</script>';
     // header("location: https://youtu.be/dQw4w9WgXcQ"); // (Rick Roll)
     header("location: login.php");
   }
@@ -46,8 +45,6 @@
     });\n";
   }
   echo "</script>\n";
-
-  // riempire l'array "files" del modello JS
   ?>
 
   <script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-theme="sap_belize" data-sap-ui-libs="sap.m" data-sap-ui-compatVersion="edge" data-sap-ui-xx-bindingSyntax="complex" data-sap-ui-async="true" data-sap-ui-onInit="module:sap/ui/demo/walkthrough/js/management" data-sap-ui-resourceroots='{

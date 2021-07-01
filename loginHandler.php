@@ -24,5 +24,5 @@ if ($result->num_rows > 0) {
     $_SESSION["logged"] = 1;
     header("location: management.php");
 } else {
-    header("location: login.html");
+    header("location: login.php");
 }
