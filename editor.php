@@ -41,7 +41,7 @@
   echo "model.username = '" . $_SESSION["username"] . "';\n";
   echo 'model.preview.content = `' . $row["fileContent"] . "`;\n";
   echo "model.title = `" . $row["fileName"] . "`;\n";
-  echo "customJson = XMLtoCustomJSON(model.preview.content);\n
+  echo "customJson = XMLtoCustomJSON(model.preview.content.replaceAll(/╚/g, '\${'));\n
     model.data = [customJson.noAttributesCJ];\n
     model.allAttributes = customJson.attributes;\n";
   echo "</script>\n";

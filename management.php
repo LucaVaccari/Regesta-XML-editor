@@ -21,7 +21,7 @@
   $row = mysqli_fetch_array($result);
 
   if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
-    // header("location: https://youtu.be/dQw4w9WgXcQ"); // (Rick Roll)
+    // header("location: https://youtu.be/dQw4w9WgXcQ"); // (Rick Roll)😃😃
     header("location: login.php");
   }
 
@@ -43,7 +43,7 @@
       id: " . $row["fileId"] . ",
       userId: " . $row["userId"] . ",
       name: `" . $row["fileName"] . "`,
-      content: `" . $row["fileContent"] . "`,
+      content: `" . htmlspecialchars($row["fileContent"]) . "`,
       lastModification: `" . $row["lastModification"] . "`, 
     });\n";
   }

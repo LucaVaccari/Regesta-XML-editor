@@ -17,7 +17,6 @@ sap.ui.define(
     return Controller.extend("sap.ui.demo.walkthrough.controller.Management", {
       onInit: function () {
         view = this.getView();
-
         let i18Model = new ResourceModel({
           bundleUrl: "i18n/management/i18n.properties",
         });
