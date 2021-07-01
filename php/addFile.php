@@ -2,8 +2,8 @@
 
 include 'global.php';
 
-if (!$_SESSION["logged"])
-    header("location: ../index.php");
+if (!$_SESSION["logged"] || !isset($_SESSION["logged"]))
+    header("location: ../login.php");
 
 $sql = ('SELECT COALESCE(MAX(fileId), 0) from files');
 $result = $con->query($sql);

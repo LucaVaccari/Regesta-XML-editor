@@ -19,7 +19,8 @@
 
   if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
     // echo '<script id="alert-message">', 'alertMessage;', '</script>';
-    header("location: https://youtu.be/dQw4w9WgXcQ"); // (Rick Roll)
+    // header("location: https://youtu.be/dQw4w9WgXcQ"); // (Rick Roll)
+    header("location: login.php");
   }
 
   echo "<script>
