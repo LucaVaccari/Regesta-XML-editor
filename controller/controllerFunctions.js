@@ -1,36 +1,3 @@
-function findSubTreeById(tree, id) {
-  if (tree == undefined) return;
-
-  if (Array.isArray(tree)) {
-    for (let el of tree)
-      if (id == el.id) return el;
-      else {
-        let searchResult = findSubTreeById(el, id);
-        if (searchResult != undefined) return searchResult;
-      }
-  } else {
-    if (id == tree.id) return tree;
-    else return findSubTreeById(tree.value, id);
-  }
-}
-
-function findParentFromId(tree, id) {
-  if (tree == undefined || tree.value == undefined) return;
-
-  if (Array.isArray(tree.value)) {
-    for (let el of tree.value) {
-      if (id == el.id) return tree;
-      else {
-        let searchResult = findParentFromId(el, id);
-        if (searchResult != undefined) return searchResult;
-      }
-    }
-  } else {
-    if (id == tree.value.id) return tree;
-    else return findParentFromId(tree.value, id);
-  }
-}
-
 function clearTree(tree) {
   if (typeof tree == "string") return;
 
@@ -62,6 +29,62 @@ function clearTree(tree) {
   }
 }
 
+function closeKeyValueInputs() {
+  if (selectedItem != undefined) selectedItem.editing = false;
+  update();
+}
+
+function findParentFromId(tree, id) {
+  if (tree == undefined || tree.value == undefined) return;
+
+  if (Array.isArray(tree.value)) {
+    for (let el of tree.value) {
+      if (id == el.id) return tree;
+      else {
+        let searchResult = findParentFromId(el, id);
+        if (searchResult != undefined) return searchResult;
+      }
+    }
+  } else {
+    if (id == tree.value.id) return tree;
+    else return findParentFromId(tree.value, id);
+  }
+}
+
+function findSubTreeById(tree, id) {
+  if (tree == undefined) return;
+
+  if (Array.isArray(tree)) {
+    for (let el of tree)
+      if (id == el.id) return el;
+      else {
+        let searchResult = findSubTreeById(el, id);
+        if (searchResult != undefined) return searchResult;
+      }
+  } else {
+    if (id == tree.id) return tree;
+    else return findSubTreeById(tree.value, id);
+  }
+}
+
+function getItemCustomId(item) {
+  return item ? item.data("id") : -1;
+}
+
+function onModify() {
+  let currentData = {
+    noAttributes: model.data,
+    attributes: model.allAttributes,
+  };
+  let currentDataString = JSON.stringify(currentData);
+  let previousData = JSON.stringify(dataQueue[dataQueueIndex]);
+  if (currentDataString != previousData) {
+    dataQueue = dataQueue.slice(0, ++dataQueueIndex);
+    let dataCopy = JSON.parse(currentDataString);
+    dataQueue.push(dataCopy);
+  }
+}
+
 function replaceIds(tree) {
   if (typeof tree != "object") {
     return tree;
@@ -81,38 +104,25 @@ function replaceIds(tree) {
   }
 }
 
-function onModify() {
-  let currentData = {
+function updateGraphics() {
+  model.somethingChanged = dataQueueIndex > 0;
+  model.somethingUndone = dataQueueIndex < dataQueue.length - 1;
+
+  let currentData = JSON.stringify({
     noAttributes: model.data,
     attributes: model.allAttributes,
-  };
-  let currentDataString = JSON.stringify(currentData);
-  let previousData = JSON.stringify(dataQueue[dataQueueIndex]);
-  if (currentDataString != previousData) {
-    dataQueue = dataQueue.slice(0, ++dataQueueIndex);
-    let dataCopy = JSON.parse(currentDataString);
-    dataQueue.push(dataCopy);
+  });
+  let originalData = JSON.stringify(dataQueue[0]);
+  model.fileChanged = currentData != originalData;
+
+  jsonModel.updateBindings(true);
+
+  if (!selectedItem) {
+    model.somethingSelected = false;
+    model.isRootSelected = false;
   }
-}
 
-function closeKeyValueInputs() {
-  if (selectedItem != undefined) selectedItem.editing = false;
-  update();
-}
-
-function updateTree(tree) {
-  if (typeof tree != "object") return;
-
-  if (Array.isArray(tree)) {
-    for (let i in tree) {
-      tree[i].isFirst = i == 0;
-      tree[i].isLast = i == tree.length - 1;
-      updateTree(tree[i]);
-    }
-  } else {
-    tree.isParent = Array.isArray(tree.value);
-    updateTree(tree.value);
-  }
+  jsonModel.updateBindings(true);
 }
 
 function updateModel() {
@@ -143,32 +153,26 @@ function updatePreview() {
   );
 }
 
-function updateGraphics() {
-  model.somethingChanged = dataQueueIndex > 0;
-  model.somethingUndone = dataQueueIndex < dataQueue.length - 1;
-
-  let currentData = JSON.stringify({
-    noAttributes: model.data,
-    attributes: model.allAttributes,
-  });
-  let originalData = JSON.stringify(dataQueue[0]);
-  model.fileChanged = currentData != originalData;
-
-  jsonModel.updateBindings(true);
-
-  if (!selectedItem) {
-    model.somethingSelected = false;
-    model.isRootSelected = false;
-  }
-
-  jsonModel.updateBindings(true);
-}
-
 function updateSelectedItem() {
   selectedItem = findSubTreeById(
     model.data[0],
     getItemCustomId(originalTree.getSelectedItem())
   );
+}
+
+function updateTree(tree) {
+  if (typeof tree != "object") return;
+
+  if (Array.isArray(tree)) {
+    for (let i in tree) {
+      tree[i].isFirst = i == 0;
+      tree[i].isLast = i == tree.length - 1;
+      updateTree(tree[i]);
+    }
+  } else {
+    tree.isParent = Array.isArray(tree.value);
+    updateTree(tree.value);
+  }
 }
 
 function update() {
@@ -177,8 +181,4 @@ function update() {
   updateSelectedItem();
   updatePreview();
   updateGraphics();
-}
-
-function getItemCustomId(item) {
-  return item ? item.data("id") : -1;
 }

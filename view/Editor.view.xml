@@ -62,7 +62,7 @@
 							<m:Button text="{i18n>DownloadPreviewButtonText}" icon="sap-icon://download" press="onDownloadPreview" tooltip="{i18n>DownloadPreviewButtonTooltip}" />
 							<m:ToolbarSpacer />
 							<m:Label text="{i18n>ShowAttributesText}" />
-							<m:Switch state="{/preview/showAttributes}" change="onToggleAttributesVisibility" customTextOn=" " customTextOff=" " tooltip="{i18n>AttributeSwitchTooltip}">
+							<m:Switch state="{/preview/showAttributes}" change="update" customTextOn=" " customTextOff=" " tooltip="{i18n>AttributeSwitchTooltip}">
 								<m:layoutData>
 									<m:FlexItemData growFactor="1" />
 								</m:layoutData>
