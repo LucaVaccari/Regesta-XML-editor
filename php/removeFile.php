@@ -2,10 +2,10 @@
 
 include 'global.php';
 
-if (!$_SESSION["logged"])
-    header("location: ../index.php");
+if (!((bool) $_SESSION["logged"]) || !isset($_SESSION["logged"]))
+    header("location: ../login.php");
 
-$fileId = $_GET["fileId"];
+    $fileId = $_GET["fileId"];
 $userId = $_SESSION["userId"];
 
 echo $fileId;

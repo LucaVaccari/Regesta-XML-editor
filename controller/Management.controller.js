@@ -8,14 +8,21 @@ sap.ui.define(
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
+    "sap/ui/model/resource/ResourceModel",
+    "sap/m/MessageToast",
   ],
-  (Controller, JSONModel, Fragment) => {
+  (Controller, JSONModel, Fragment, ResourceModel, MessageToast) => {
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Management", {
       onInit: function () {
-        jsonModel = new JSONModel(model);
         view = this.getView();
+
+        let i18Model = new ResourceModel({
+          bundleUrl: "i18n/management/i18n.properties",
+        });
+        view.setModel(i18Model, "i18n");
+        jsonModel = new JSONModel(model);
         view.setModel(jsonModel);
       },
 
@@ -78,7 +85,21 @@ sap.ui.define(
           let reader = new FileReader();
 
           reader.onload = (file) => {
-            let fileContent = file.currentTarget.result.replaceAll(/'/g, '"').replaceAll(/\n|\t/g, "");
+            let fileContent = file.currentTarget.result
+              .replaceAll(/'/g, '"')
+              .replaceAll(/\n|\t/g, "");
+
+
+            let parser = new DOMParser();
+            let parsererrorNS = parser.parseFromString('INVALID', 'text/xml').getElementsByTagName("parsererror")[0].namespaceURI;
+            let dom = parser.parseFromString(fileContent, 'text/xml');
+            if (dom.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0) {
+              let bundle = view.getModel("i18n").getResourceBundle();
+              var message = bundle.getText("FileUploadErrorText", fileName + ".xml");
+              MessageToast.show(message)
+              return;
+            }
+
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
             window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
@@ -86,6 +107,10 @@ sap.ui.define(
 
           reader.readAsText(file);
         });
+      },
+
+      onLogOut: function () {
+        window.location.href = "php/logOut.php";
       },
     });
   }

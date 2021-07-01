@@ -23,7 +23,7 @@ if (!isset($_SESSION["fileId"]))
   $_SESSION["fileId"] = -1;
 
 if (!isset($_SESSION["logged"]))
-  $_SESSION["logged"] = false;
+  $_SESSION["logged"] = 0;
 
 if (mysqli_connect_errno()) {
   die("Failed to connect with MySQL: " . mysqli_connect_error());

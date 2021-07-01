@@ -1,10 +1,10 @@
 <!-- <script id="alert" src="index.php"></script> -->
 
-<?php 
+<?php
 
 include 'php/global.php';
 
-$email = $_POST['email'];
+$account = $_POST['email'];
 $password = $_POST['psw'];
 
 //to prevent from mysqli injection  
@@ -13,7 +13,7 @@ $email = mysqli_real_escape_string($con, $email);
 $password = stripcslashes($password);
 $password = mysqli_real_escape_string($con, $password);
 
-$sql = ("SELECT * from accounts where email = '$email' and password = '$password'");
+$sql = ("SELECT * from accounts where (email = '$account' or name = '$account') and password = '$password'");
 
 $result = $con->query($sql);
 
