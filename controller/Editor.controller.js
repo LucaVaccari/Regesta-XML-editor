@@ -9,95 +9,27 @@ sap.ui.define(
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Editor", {
-      onInit: function () {
-        view = this.getView();
-
-        let i18Model = new ResourceModel({
-          bundleUrl: "i18n/editor/i18n.properties",
-        });
-        view.setModel(i18Model, "i18n");
-        jsonModel = new JSONModel(model);
-        view.setModel(jsonModel);
-
-        originalTree = view.byId("tree");
-
-        updateModel();
-        let initData = {
-          noAttributes: model.data,
-          attributes: model.allAttributes,
+      onAddAttribute: function () {
+        let newAttr = {
+          id: lastElementId++,
+          attributeKey: "name",
+          attributeValue: "value",
+          parentId: selectedItem.id,
         };
-        dataQueue[0] = JSON.parse(JSON.stringify(initData));
 
-        update();
-      },
-
-      onEdit: function () {
-        if (selectedItem != undefined) selectedItem.editing = true;
-        jsonModel.updateBindings(true);
-      },
-
-      onEditAttributes: function () {
-        closeKeyValueInputs();
-
-        if (!this._popover) {
-          this._popover = Fragment.load({
-            id: view.getId(),
-            name: "sap.ui.demo.walkthrough.view.AttributeEditing",
-            controller: this,
-          }).then(function (popover) {
-            view.addDependent(popover);
-            return popover;
-          });
-        }
-        this._popover.then(function (popover) {
-          popover.openBy(originalTree.getSelectedItem());
-          popoverView = popover;
-        });
-      },
-
-      onSubmit: function (event) {
-        selectedItem = findSubTreeById(
-          model.data[0],
-          getItemCustomId(event.getSource())
-        );
-        if (selectedItem != undefined) selectedItem.editing = false;
-
-        onModify();
-        update();
-      },
-
-      onKeyEditLive: function (event) {
-        let keyInput = event.getSource();
-        let id = getItemCustomId(event.getSource());
-        let subTree = findSubTreeById(model.data[0], id);
-        subTree.key = keyInput.getValue().replaceAll(/[^\w-_]+/g, "");
-
-        if (!subTree.key) {
-          subTree.key = "key";
+        while (
+          model.selectedAttributes.filter(
+            (a) => a.attributeKey == newAttr.attributeKey
+          ).length > 0
+        ) {
+          newAttr.attributeKey = newAttr.attributeKey + "_";
           jsonModel.updateBindings(true);
-          keyInput.selectText(0, 3);
         }
 
-        updateModel();
-        updatePreview();
+        model.selectedAttributes.push(newAttr);
+        model.allAttributes.push(newAttr);
         jsonModel.updateBindings(true);
-      },
-
-      onValueEditLive: function (event) {
-        let valueInput = event.getSource();
-        let id = getItemCustomId(event.getSource());
-        let subTree = findSubTreeById(model.data[0], id);
-        if (!Array.isArray(subTree.value))
-          subTree.value = valueInput
-            .getValue()
-            .replaceAll(
-              /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
-              ""
-            );
-
-        updateModel();
-        updatePreview();
-        jsonModel.updateBindings(true);
+        this.onAttributesModify();
       },
 
       onAdd: function () {
@@ -126,48 +58,110 @@ sap.ui.define(
         update();
       },
 
-      onRemove: function () {
-        closeKeyValueInputs();
+      onAttributeNameModifyLive: function (event) {
+        let attributeNameInput = event.getSource();
+        let id = getItemCustomId(attributeNameInput);
+        for (let attr of model.allAttributes) {
+          if (attr.id == id) {
+            attr.attributeKey = attributeNameInput
+              .getValue()
+              .replaceAll(/[^\w-_:]+|^:$/g, "");
 
-        if (selectedItem == undefined) return;
-
-        if (selectedItem.id == model.data[0].id) {
-          console.warn("Cannot remove root node");
-          return;
-        }
-
-        let id = selectedItem.id;
-
-        let parent = findParentFromId(model.data[0], id);
-        let subTree = findSubTreeById(model.data[0], id);
-
-        // remove attributes
-        removeAttributesInSubTree(selectedItem);
-        function removeAttributesInSubTree(tree) {
-          if (Array.isArray(tree.value)) {
-            model.allAttributes = model.allAttributes.filter(
-              (a) => a.parentId != tree.id
-            );
-            for (let el of tree.value) {
-              removeAttributesInSubTree(el);
+            if (!attr.attributeKey) {
+              attr.attributeKey = "attributeName";
+              jsonModel.updateBindings(true);
+              attributeNameInput.selectText(0, 50);
             }
-          } else {
-            model.allAttributes = model.allAttributes.filter(
-              (a) => a.parentId != tree.id
-            );
+
+            while (
+              model.selectedAttributes.filter(
+                (a) => a.attributeKey == attr.attributeKey
+              ).length > 1
+            ) {
+              attr.attributeKey = attr.attributeKey + "_";
+              jsonModel.updateBindings(true);
+              attributeNameInput.selectText(
+                attr.attributeKey.length - 1,
+                attr.attributeKey.length
+              );
+            }
+
+            updateModel();
+            updatePreview();
+
+            jsonModel.updateBindings(true);
+            break;
           }
         }
+      },
 
-        if (parent.value.length <= 1) {
-          parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
-        }
-
-        for (let key in selectedItem) delete subTree[key];
-
-        clearTree(model.data);
-
+      onAttributesModify: function () {
         onModify();
         update();
+      },
+
+      onAttributeValueModifyLive: function (event) {
+        let attributeValueInput = event.getSource();
+        let id = getItemCustomId(attributeValueInput);
+        for (let attr of model.allAttributes) {
+          if (attr.id == id) {
+            attr.attributeValue = attributeValueInput
+              .getValue()
+              .replaceAll(
+                /[^\w\s.,;\:\-_\'\?\^\|\\\/\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+                ""
+              );
+
+            updateModel();
+            updatePreview();
+
+            jsonModel.updateBindings(true);
+            break;
+          }
+        }
+      },
+
+      onBack: function () {
+        formatter = cleanFormatter;
+        let output = CustomJSONToXML(
+          model.data,
+          model.allAttributes,
+          formatter
+        ).replaceAll(/\t|\n/g, "");
+        let date = new Date();
+        let dateString = formatDateToSQL(date).split(" ")[0];
+        window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}&comeBack=false`;
+      },
+
+      onCancel: function () {
+        window.location.href = `management.php`;
+      },
+
+      onClearAttributes: function () {
+        let parentId = selectedItem.id;
+
+        model.allAttributes = model.allAttributes.filter(
+          (a) => a.parentId != parentId
+        );
+        model.selectedAttributes = [];
+        this.onAttributesModify();
+      },
+
+      onCompactXMLSwitch: function () {
+        formatter = compactXMLformatter;
+        previewFormatter = compactXMLPreviewFormatter;
+        model.preview.mimeType = "application/xml";
+        update();
+      },
+
+      onDownloadPreview: function () {
+        let output = CustomJSONToXML(
+          model.data,
+          model.preview.showAttributes ? model.allAttributes : [],
+          previewFormatter
+        );
+
+        download(model.title, output, model.preview.mimeType);
       },
 
       onDuplicate: function () {
@@ -238,25 +232,74 @@ sap.ui.define(
         update();
       },
 
-      onMoveUp: function (event) {
+      onEditAttributes: function () {
+        closeKeyValueInputs();
+
+        if (!this._popover) {
+          this._popover = Fragment.load({
+            id: view.getId(),
+            name: "sap.ui.demo.walkthrough.view.AttributeEditing",
+            controller: this,
+          }).then(function (popover) {
+            view.addDependent(popover);
+            return popover;
+          });
+        }
+        this._popover.then(function (popover) {
+          popover.openBy(originalTree.getSelectedItem());
+          popoverView = popover;
+        });
+      },
+
+      onEdit: function () {
+        if (selectedItem != undefined) selectedItem.editing = true;
+        jsonModel.updateBindings(true);
+      },
+
+      onInit: function () {
+        view = this.getView();
+
+        let i18Model = new ResourceModel({
+          bundleUrl: "i18n/editor/i18n.properties",
+        });
+        view.setModel(i18Model, "i18n");
+        jsonModel = new JSONModel(model);
+        view.setModel(jsonModel);
+
+        originalTree = view.byId("tree");
+
+        updateModel();
+        let initData = {
+          noAttributes: model.data,
+          attributes: model.allAttributes,
+        };
+        dataQueue[0] = JSON.parse(JSON.stringify(initData));
+
+        update();
+      },
+
+      onJSONSwitch: function () {
+        formatter = JSONformatter;
+        previewFormatter = JSONPreviewFormatter;
+        model.preview.mimeType = "application/json";
+        update();
+      },
+
+      onKeyEditLive: function (event) {
+        let keyInput = event.getSource();
         let id = getItemCustomId(event.getSource());
-        let parent = findParentFromId(model.data[0], id);
         let subTree = findSubTreeById(model.data[0], id);
+        subTree.key = keyInput.getValue().replaceAll(/[^\w-_]+/g, "");
 
-        if (id == model.data[0].id) {
-          console.warn("Cannot move root node");
-          return;
+        if (!subTree.key) {
+          subTree.key = "key";
+          jsonModel.updateBindings(true);
+          keyInput.selectText(0, 3);
         }
 
-        let index = parent.value.indexOf(subTree);
-        if (index > 0) {
-          [parent.value[index - 1], parent.value[index]] = [
-            parent.value[index],
-            parent.value[index - 1],
-          ];
-          onModify();
-          update();
-        }
+        updateModel();
+        updatePreview();
+        jsonModel.updateBindings(true);
       },
 
       onMoveDown: function (event) {
@@ -280,19 +323,25 @@ sap.ui.define(
         }
       },
 
-      onCancel: function () {
-        window.location.href = `management.php`;
-      },
+      onMoveUp: function (event) {
+        let id = getItemCustomId(event.getSource());
+        let parent = findParentFromId(model.data[0], id);
+        let subTree = findSubTreeById(model.data[0], id);
 
-      onUndo: function () {
-        if (dataQueueIndex >= 1) {
-          let previousData = JSON.parse(
-            JSON.stringify(dataQueue[--dataQueueIndex])
-          );
-          model.data = previousData.noAttributes;
-          model.allAttributes = previousData.attributes;
+        if (id == model.data[0].id) {
+          console.warn("Cannot move root node");
+          return;
         }
-        update();
+
+        let index = parent.value.indexOf(subTree);
+        if (index > 0) {
+          [parent.value[index - 1], parent.value[index]] = [
+            parent.value[index],
+            parent.value[index - 1],
+          ];
+          onModify();
+          update();
+        }
       },
 
       onRedo: function () {
@@ -306,12 +355,78 @@ sap.ui.define(
         update();
       },
 
+      onRemoveAttribute: function (event) {
+        let item = event.getParameters().listItem;
+        let id = getItemCustomId(item);
+        model.selectedAttributes = model.selectedAttributes.filter(
+          (a) => a.id != id
+        );
+        model.allAttributes = model.allAttributes.filter((a) => a.id != id);
+        this.onAttributesModify();
+      },
+
+      onRemove: function () {
+        closeKeyValueInputs();
+
+        if (selectedItem == undefined) return;
+
+        if (selectedItem.id == model.data[0].id) {
+          console.warn("Cannot remove root node");
+          return;
+        }
+
+        let id = selectedItem.id;
+
+        let parent = findParentFromId(model.data[0], id);
+        let subTree = findSubTreeById(model.data[0], id);
+
+        // remove attributes
+        removeAttributesInSubTree(selectedItem);
+        function removeAttributesInSubTree(tree) {
+          if (Array.isArray(tree.value)) {
+            model.allAttributes = model.allAttributes.filter(
+              (a) => a.parentId != tree.id
+            );
+            for (let el of tree.value) {
+              removeAttributesInSubTree(el);
+            }
+          } else {
+            model.allAttributes = model.allAttributes.filter(
+              (a) => a.parentId != tree.id
+            );
+          }
+        }
+
+        if (parent.value.length <= 1) {
+          parent.value = Array.isArray(subTree.value) ? "" : subTree.value;
+        }
+
+        for (let key in selectedItem) delete subTree[key];
+
+        clearTree(model.data);
+
+        onModify();
+        update();
+      },
+
       onReset: function () {
         let previousData = JSON.parse(JSON.stringify(dataQueue[0]));
         model.data = previousData.noAttributes;
         model.allAttributes = previousData.attributes;
         onModify();
         update();
+      },
+
+      onSave: function () {
+        formatter = cleanFormatter;
+        let output = CustomJSONToXML(
+          model.data,
+          model.allAttributes,
+          formatter
+        ).replaceAll(/\t|\n/g, "");
+        let date = new Date();
+        let dateString = formatDateToSQL(date).split(" ")[0];
+        window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}&comeBack=true`;
       },
 
       onSelect: function (event) {
@@ -332,168 +447,35 @@ sap.ui.define(
         jsonModel.updateBindings(true);
       },
 
-      onXMLSwitch: function () {
-        formatter = XMLformatter;
-        previewFormatter = XMLPreviewFormatter;
-        model.preview.mimeType = "application/xml";
-        update();
-      },
+      onSubmit: function (event) {
+        selectedItem = findSubTreeById(
+          model.data[0],
+          getItemCustomId(event.getSource())
+        );
+        if (selectedItem != undefined) selectedItem.editing = false;
 
-      onCompactXMLSwitch: function () {
-        formatter = compactXMLformatter;
-        previewFormatter = compactXMLPreviewFormatter;
-        model.preview.mimeType = "application/xml";
-        update();
-      },
-
-      onJSONSwitch: function () {
-        formatter = JSONformatter;
-        previewFormatter = JSONPreviewFormatter;
-        model.preview.mimeType = "application/json";
-        update();
-      },
-
-      onSave: function () {
-        formatter = cleanFormatter;
-        let output = CustomJSONToXML(
-          model.data,
-          model.allAttributes,
-          formatter
-        ).replaceAll(/\t|\n/g, "");
-        let date = new Date();
-        let dateString = formatDateToSQL(date).split(" ")[0];
-        window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}&comeBack=true`;
-      },
-
-      onBack: function () {
-        formatter = cleanFormatter;
-        let output = CustomJSONToXML(
-          model.data,
-          model.allAttributes,
-          formatter
-        ).replaceAll(/\t|\n/g, "");
-        let date = new Date();
-        let dateString = formatDateToSQL(date).split(" ")[0];
-        window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}&comeBack=false`;
-      },
-
-      onAttributesModify: function () {
         onModify();
         update();
       },
 
-      onAttributeNameModifyLive: function (event) {
-        let attributeNameInput = event.getSource();
-        let id = getItemCustomId(attributeNameInput);
-        for (let attr of model.allAttributes) {
-          if (attr.id == id) {
-            attr.attributeKey = attributeNameInput
-              .getValue()
-              .replaceAll(/[^\w-_:]+|^:$/g, "");
-
-            if (!attr.attributeKey) {
-              attr.attributeKey = "attributeName";
-              jsonModel.updateBindings(true);
-              attributeNameInput.selectText(0, 50);
-            }
-
-            while (
-              model.selectedAttributes.filter(
-                (a) => a.attributeKey == attr.attributeKey
-              ).length > 1
-            ) {
-              attr.attributeKey = attr.attributeKey + "_";
-              jsonModel.updateBindings(true);
-              attributeNameInput.selectText(
-                attr.attributeKey.length - 1,
-                attr.attributeKey.length
-              );
-            }
-
-            updateModel();
-            updatePreview();
-
-            jsonModel.updateBindings(true);
-            break;
-          }
+      onUndo: function () {
+        if (dataQueueIndex >= 1) {
+          let previousData = JSON.parse(
+            JSON.stringify(dataQueue[--dataQueueIndex])
+          );
+          model.data = previousData.noAttributes;
+          model.allAttributes = previousData.attributes;
         }
-      },
-
-      onAttributeValueModifyLive: function (event) {
-        let attributeValueInput = event.getSource();
-        let id = getItemCustomId(attributeValueInput);
-        for (let attr of model.allAttributes) {
-          if (attr.id == id) {
-            attr.attributeValue = attributeValueInput
-              .getValue()
-              .replaceAll(
-                /[^\w\s.,;\:\-_\'\?\^\|\\\/\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
-                ""
-              );
-
-            updateModel();
-            updatePreview();
-
-            jsonModel.updateBindings(true);
-            break;
-          }
-        }
-      },
-
-      onAddAttribute: function () {
-        let newAttr = {
-          id: lastElementId++,
-          attributeKey: "name",
-          attributeValue: "value",
-          parentId: selectedItem.id,
-        };
-
-        while (
-          model.selectedAttributes.filter(
-            (a) => a.attributeKey == newAttr.attributeKey
-          ).length > 0
-        ) {
-          newAttr.attributeKey = newAttr.attributeKey + "_";
-          jsonModel.updateBindings(true);
-        }
-
-        model.selectedAttributes.push(newAttr);
-        model.allAttributes.push(newAttr);
-        jsonModel.updateBindings(true);
-        this.onAttributesModify();
-      },
-
-      onRemoveAttribute: function (event) {
-        let item = event.getParameters().listItem;
-        let id = getItemCustomId(item);
-        model.selectedAttributes = model.selectedAttributes.filter(
-          (a) => a.id != id
-        );
-        model.allAttributes = model.allAttributes.filter((a) => a.id != id);
-        this.onAttributesModify();
-      },
-
-      onClearAttributes: function () {
-        let parentId = selectedItem.id;
-
-        model.allAttributes = model.allAttributes.filter(
-          (a) => a.parentId != parentId
-        );
-        model.selectedAttributes = [];
-        this.onAttributesModify();
-      },
-
-      onToggleAttributesVisibility: function (event) {
         update();
-      },
-
-      onTitleEdit: function () {
-        model.editingTitle = true;
-        jsonModel.updateBindings(true);
       },
 
       onTitleChange: function () {
         model.editingTitle = false;
+        jsonModel.updateBindings(true);
+      },
+
+      onTitleEdit: function () {
+        model.editingTitle = true;
         jsonModel.updateBindings(true);
       },
 
@@ -510,14 +492,28 @@ sap.ui.define(
         jsonModel.updateBindings(true);
       },
 
-      onDownloadPreview: function () {
-        let output = CustomJSONToXML(
-          model.data,
-          model.preview.showAttributes ? model.allAttributes : [],
-          previewFormatter
-        );
+      onValueEditLive: function (event) {
+        let valueInput = event.getSource();
+        let id = getItemCustomId(event.getSource());
+        let subTree = findSubTreeById(model.data[0], id);
+        if (!Array.isArray(subTree.value))
+          subTree.value = valueInput
+            .getValue()
+            .replaceAll(
+              /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+              ""
+            );
 
-        download(model.title, output, model.preview.mimeType);
+        updateModel();
+        updatePreview();
+        jsonModel.updateBindings(true);
+      },
+
+      onXMLSwitch: function () {
+        formatter = XMLformatter;
+        previewFormatter = XMLPreviewFormatter;
+        model.preview.mimeType = "application/xml";
+        update();
       },
 
       update: update,
