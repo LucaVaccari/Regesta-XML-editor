@@ -19,7 +19,7 @@
 
   if ($row["name"] != $_SESSION["username"] || $row["password"] != $_SESSION["password"]) {
     // echo '<script id="alert-message">', 'alertMessage;', '</script>';
-    // header("location: https://youtu.be/dQw4w9WgXcQ"); (Rick Roll)
+    header("location: https://youtu.be/dQw4w9WgXcQ"); // (Rick Roll)
   }
 
   echo "<script>
@@ -43,14 +43,15 @@
       lastModification: `" . $row["lastModification"] . "`, 
     });\n";
   }
-  echo "<script/>\n";
+  echo "</script>\n";
 
   // riempire l'array "files" del modello JS
   ?>
 
   <script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-theme="sap_belize" data-sap-ui-libs="sap.m" data-sap-ui-compatVersion="edge" data-sap-ui-xx-bindingSyntax="complex" data-sap-ui-async="true" data-sap-ui-onInit="module:sap/ui/demo/walkthrough/js/management" data-sap-ui-resourceroots='{
         "sap.ui.demo.walkthrough": "./"
-      }'></script>
+      }'>
+  </script>
 </head>
 
 <body class="sapUiBody" id="content"></body>

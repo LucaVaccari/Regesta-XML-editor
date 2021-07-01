@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:cd="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
-	<ResponsivePopover id="myPopover" title="Attributes" class=" sapUiContentPadding" placement="Bottom">
+	<ResponsivePopover id="myPopover" title="{i18n>AttributeTitle}" class=" sapUiContentPadding" placement="Bottom">
 		<beginButton>
 			<Button icon="sap-icon://add" press="onAddAttribute" tooltip="{i18n>AddAttributeButtonTooltip}" />
 		</beginButton>
@@ -8,7 +8,7 @@
 		</endButton>
 		<content>
 			<ScrollContainer>
-				<List noDataText="No attributes" id="attributesList" mode="Delete" delete="onRemoveAttribute" items="{path:'/selectedAttributes', templateShareable: false}">
+				<List noDataText="{i18n>NoAttributesText}" id="attributesList" mode="Delete" delete="onRemoveAttribute" items="{path:'/selectedAttributes', templateShareable: false}">
 					<CustomListItem cd:id="{id}">
 						<HBox >
 							<Input value="{attributeKey}" change="onAttributesModify" submit="onAttributesModify" liveChange="onAttributeNameModifyLive" cd:id="{id}" />

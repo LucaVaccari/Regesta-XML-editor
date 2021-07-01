@@ -11,9 +11,9 @@ sap.ui.define(
     return Controller.extend("sap.ui.demo.walkthrough.controller.Editor", {
       onInit: function () {
         view = this.getView();
-        
+
         let i18Model = new ResourceModel({
-          bundleUrl : "i18n/i18n_it.properties",
+          bundleUrl: "i18n/editor/i18n.properties",
         });
         view.setModel(i18Model, "i18n");
         jsonModel = new JSONModel(model);
@@ -365,7 +365,7 @@ sap.ui.define(
         window.location.href = `php/saveFile.php?fileName=${model.title}&fileContent=${output}&date=${dateString}&comeBack=true`;
       },
 
-      onBack: function() {
+      onBack: function () {
         formatter = cleanFormatter;
         let output = CustomJSONToXML(
           model.data,
@@ -456,7 +456,7 @@ sap.ui.define(
           newAttr.attributeKey = newAttr.attributeKey + "_";
           jsonModel.updateBindings(true);
         }
-        
+
         model.selectedAttributes.push(newAttr);
         model.allAttributes.push(newAttr);
         jsonModel.updateBindings(true);
