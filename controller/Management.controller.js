@@ -78,7 +78,9 @@ sap.ui.define(
           let reader = new FileReader();
 
           reader.onload = (file) => {
-            let fileContent = file.currentTarget.result.replaceAll(/'/g, '"').replaceAll(/\n|\t/g, "");
+            let fileContent = file.currentTarget.result
+              .replaceAll(/'/g, '"')
+              .replaceAll(/\n|\t/g, "");
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
             window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
@@ -86,6 +88,10 @@ sap.ui.define(
 
           reader.readAsText(file);
         });
+      },
+
+      onLogOut: function () {
+        window.location.href = "php/logOut.php";
       },
     });
   }
