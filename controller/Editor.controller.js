@@ -427,7 +427,7 @@ sap.ui.define(
             attr.attributeValue = attributeValueInput
               .getValue()
               .replaceAll(
-                /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+                /[^\w\s.,;\:\-_\'\?\^\|\\\/\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
                 ""
               );
 
