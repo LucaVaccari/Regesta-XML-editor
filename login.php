@@ -14,7 +14,7 @@
         <h1>LOG IN</h1>
         <br>
         <div class="form" id="myForm">
-            <form action="config.php" class="form-container" method="POST">
+            <form action="loginHandler.php" class="form-container" method="POST">
                 <label for="email" id="user" name="user"><b>Email</b></label>
                 <input type="text" placeholder="Enter Email" id="email" name="email" required>
 
@@ -28,4 +28,5 @@
         </div>
     </section>
 </body>
+
 </html>
