@@ -53,6 +53,15 @@ header {
   animation-delay: 2s;
 }
 
+header img {
+  display: block;
+}
+
+header img#small {
+  display: none;
+  margin-left: -90px;
+}
+
 /* TITLE TEXT */
 .center {
   justify-content: center;
@@ -235,6 +244,14 @@ footer #rightToLeft:hover {
     margin-top: 30%;
   }
 
+  header img {
+    display: none;
+  }
+
+  header img#small {
+    display: block;
+  }
+
   .center {
     margin-top: 100px;
   }
@@ -254,6 +271,12 @@ footer #rightToLeft:hover {
 
   footer #rightToLeft {
     visibility: visible;
+  }
+}
+
+@media (max-width: 350px) {
+  .open-button {
+    color: black;
   }
 }
 
