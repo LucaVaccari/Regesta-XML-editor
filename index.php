@@ -18,11 +18,12 @@ if (!session_id()) session_start();
         <header>
             <div>
                 <a href="#"><img src="resources/images/logo.png" height="60px" width="auto"></a>
+                <a href="#"><img src="resources/images/small-logo.png" height="60px" width="auto" id="small"></a>
                 <a href="signup.html"><button class="open-button" id="signup">Sign Up</button></a>
                 <a href="login.php"><button class="open-button" id="login">Log In</button></a>
                 <!-- <span>
                     <div class="form-popup" id="myForm">
-                         <form action="config.php" class="form-container" method="POST">
+                        <form action="config.php" class="form-container" method="POST">
                             <label for="email" id="user" name="user"><b>Email</b></label>
                             <input type="text" placeholder="Enter Email" name="email" required>
                             <label for="psw" id="pass" name="pass"><b>Password</b></label>
