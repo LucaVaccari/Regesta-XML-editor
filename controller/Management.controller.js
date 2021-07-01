@@ -91,8 +91,8 @@ sap.ui.define(
 
 
             let parser = new DOMParser();
-            let parsererrorNS = parser.parseFromString('INVALID', 'application/xml').getElementsByTagName("parsererror")[0].namespaceURI;
-            let dom = parser.parseFromString(xmlString, 'application/xml');
+            let parsererrorNS = parser.parseFromString('INVALID', 'text/xml').getElementsByTagName("parsererror")[0].namespaceURI;
+            let dom = parser.parseFromString(fileContent, 'text/xml');
             if (dom.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0) {
               let bundle = view.getModel("i18n").getResourceBundle();
               var message = bundle.getText("FileUploadErrorText", fileName);
