@@ -14,13 +14,11 @@
         $_SESSION["incorrectUser"] = 0;
 
     echo "<script>\n
-        let incorrectUser = " . $_SESSION["incorrectUser"] . ";\n
+        let incorrectUser = " . $_SESSION["incorrectUser"] . ";
         if (incorrectUser) {\n
-            console.log('Incorrect email, username or password');\n
-        } else {\n
-            
+            document.getElementById('alert').style.display = 'block';
         }
-    </script>\n"
+    </script>"
     ?>
 </head>
 
@@ -35,6 +33,8 @@
 
                 <label for="psw" id="pass" name="pass"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
+
+                <p id="alert" style="display: none">Incorrect email, username or password!</p><br>
 
                 <button type="submit" name="btn" class="login">Log In</button>
                 <a href="signup.php"><button type="button" name="btn" class="signup">Sign Up</button></a>
