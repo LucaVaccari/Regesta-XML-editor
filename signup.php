@@ -18,7 +18,7 @@
         if (doubleUser) {\n
             console.log('Username or email already registered');\n
         } else {\n
-            
+
         }
     </script>\n"
     ?>
@@ -29,7 +29,7 @@
         <h1>SIGN UP</h1>
         <br />
         <div class="form" id="myForm">
-            <form action="registration.php" class="form-container" method="POST">
+            <form action="signupHandler.php" class="form-container" method="POST">
                 <label for="email" id="user" name="user"><b>Username</b></label>
                 <input type="text" placeholder="Enter Username" id="username" name="username" required>
 

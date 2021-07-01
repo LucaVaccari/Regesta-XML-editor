@@ -89,14 +89,21 @@ sap.ui.define(
               .replaceAll(/'/g, '"')
               .replaceAll(/\n|\t/g, "");
 
-
             let parser = new DOMParser();
-            let parsererrorNS = parser.parseFromString('INVALID', 'text/xml').getElementsByTagName("parsererror")[0].namespaceURI;
-            let dom = parser.parseFromString(fileContent, 'text/xml');
-            if (dom.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0) {
+            let parsererrorNS = parser
+              .parseFromString("INVALID", "text/xml")
+              .getElementsByTagName("parsererror")[0].namespaceURI;
+            let dom = parser.parseFromString(fileContent, "text/xml");
+            if (
+              dom.getElementsByTagNameNS(parsererrorNS, "parsererror").length >
+              0
+            ) {
               let bundle = view.getModel("i18n").getResourceBundle();
-              var message = bundle.getText("FileUploadErrorText", fileName + ".xml");
-              MessageToast.show(message)
+              var message = bundle.getText(
+                "FileUploadErrorText",
+                fileName + ".xml"
+              );
+              MessageToast.show(message);
               return;
             }
 
@@ -110,7 +117,7 @@ sap.ui.define(
       },
 
       onLogOut: function () {
-        window.location.href = "php/logOut.php";
+        window.location.href = "php/logout.php";
       },
     });
   }

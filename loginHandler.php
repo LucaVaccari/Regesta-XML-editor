@@ -22,7 +22,9 @@ if ($result->num_rows > 0) {
     $_SESSION["password"] = $row["password"];
     $_SESSION["userId"] = $row["id"];
     $_SESSION["logged"] = 1;
+    unset($_SESSION["incorrectUser"]);
     header("location: management.php");
 } else {
+    $_SESSION["incorrectUser"] = 1;
     header("location: login.php");
 }

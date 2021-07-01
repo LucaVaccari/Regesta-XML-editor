@@ -5,8 +5,23 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>XML Visual Editor | Sign Up</title>
-    <link rel="stylesheet" type="text/css" href="css/login-style.css">
-    </link>
+    <link rel="stylesheet" type="text/css" href="css/login-style.css" />
+
+    <?php
+    if (!session_id()) session_start();
+
+    if (!isset($_SESSION["incorrectUser"]) || $_SESSION["incorrectUser"] == NULL || empty($_SESSION["incorrectUser"]))
+        $_SESSION["incorrectUser"] = 0;
+
+    echo "<script>\n
+        let incorrectUser = " . $_SESSION["incorrectUser"] . ";\n
+        if (incorrectUser) {\n
+            console.log('Incorrect email, username or password');\n
+        } else {\n
+            
+        }
+    </script>\n"
+    ?>
 </head>
 
 <body>
