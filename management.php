@@ -28,7 +28,8 @@
     let model = {
       files: [],
     };
-  </script>\n";
+    model.username = '" . $row["name"] . "';\n
+    </script>\n";
 
 
   $sql = ("SELECT * from files where userId = " . $userId);
