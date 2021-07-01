@@ -21,8 +21,8 @@
                 <label for="psw" id="pass" name="pass"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
-                <button type="submit" id="btn" name="btn" class="login">Log In</button>
-                <a href="signup.html"><button type="button" id="btn" name="btn" class="signup">Sign Up</button></a>
+                <button type="submit" name="btn" class="login">Log In</button>
+                <a href="signup.php"><button type="button" name="btn" class="signup">Sign Up</button></a>
                 <a href="index.php"><button type="button" class="cancel">Cancel</button></a>
             </form>
         </div>

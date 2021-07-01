@@ -11,6 +11,9 @@
   <?php
   include "php/global.php";
 
+  if (!$_SESSION["logged"] || !isset($_SESSION["logged"]))
+    header("location: login.php");
+
   $userId = $_SESSION["userId"];
 
   $sql = "SELECT * from accounts where id = " . $userId;

@@ -18,7 +18,7 @@ session_start();
             <div>
                 <a href="#"><img src="resources/images/logo.png" height="60px" width="auto"></a>
                 <a href="#"><img src="resources/images/small-logo.png" height="60px" width="auto" id="small"></a>
-                <a href="signup.html"><button class="open-button" id="signup">Sign Up</button></a>
+                <a href="signup.php"><button class="open-button" id="signup">Sign Up</button></a>
                 <a href="login.php"><button class="open-button" id="login">Log In</button></a>
                 <a href="php/logOut.php"><button class="open-button" id="logout">Log Out</button></a>
             </div>
@@ -30,7 +30,6 @@ session_start();
 
             echo "<script>\n
                 let logged = " . $_SESSION["logged"] . ";\n
-                console.log(logged);\n
                 document.getElementById('signup').style.display = logged ? 'none' : 'block';\n
                 document.getElementById('login').style.display = logged ? 'none' : 'block';\n
                 document.getElementById('logout').style.display = logged ? 'block' : 'none';\n

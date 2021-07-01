@@ -13,11 +13,12 @@ $txtPass = $_POST['psw'];
 
 $sql = "SELECT name, email from accounts WHERE name = '" . $txtName . "' or email = '" . $txtEmail . "'";
 $result = $con->query($sql);
-if ($result->num_rows > 0)
-    header("location: signup.html");
-else {
+if ($result->num_rows > 0) {
+    $_SESSION["doubleUser"] = 1;
+    header("location: signup.php");
+} else {
     $sql = "INSERT INTO `accounts` (`name`, `id`,`email`,`password`) VALUES ('$txtName', $id,'$txtEmail', '$txtPass')";
     $con->query($sql);
-
+    unset($_SESSION["doubleUser"]);
     header("location: login.php");
 }
