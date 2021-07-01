@@ -4,7 +4,7 @@
 
 include 'php/global.php';
 
-$account = $_POST['email'];
+$account = $_POST['email-username'];
 $password = $_POST['psw'];
 
 //to prevent from mysqli injection  
