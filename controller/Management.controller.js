@@ -9,8 +9,9 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/ui/core/Fragment",
     "sap/ui/model/resource/ResourceModel",
+    "sap/m/MessageToast",
   ],
-  (Controller, JSONModel, Fragment, ResourceModel) => {
+  (Controller, JSONModel, Fragment, ResourceModel, MessageToast) => {
     "use strict";
 
     return Controller.extend("sap.ui.demo.walkthrough.controller.Management", {
@@ -87,6 +88,18 @@ sap.ui.define(
             let fileContent = file.currentTarget.result
               .replaceAll(/'/g, '"')
               .replaceAll(/\n|\t/g, "");
+
+
+            let parser = new DOMParser();
+            let parsererrorNS = parser.parseFromString('INVALID', 'application/xml').getElementsByTagName("parsererror")[0].namespaceURI;
+            let dom = parser.parseFromString(xmlString, 'application/xml');
+            if (dom.getElementsByTagNameNS(parsererrorNS, 'parsererror').length > 0) {
+              let bundle = view.getModel("i18n").getResourceBundle();
+              var message = bundle.getText("FileUploadErrorText", fileName);
+              MessageToast.show(message)
+              return;
+            }
+
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
             window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
