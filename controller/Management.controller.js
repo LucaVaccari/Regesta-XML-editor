@@ -83,17 +83,20 @@ sap.ui.define(
 
           let file = jQuery.sap.domById(fileUploader.getId() + "-fu").files[0];
           let reader = new FileReader();
-
           reader.onload = (file) => {
             let fileContent = file.currentTarget.result
-              .replaceAll(/'/g, '"')
-              .replaceAll(/\n|\t/g, "");
+              .replaceAll(/\n|\t/g, "")
+              .replaceAll(/\s+/g, " ")
+              .replaceAll(/>\s+</g, "><")
+              .replaceAll(/'/g, "''");
+
+            console.log(fileContent);
 
             let parser = new DOMParser();
             let parsererrorNS = parser
-              .parseFromString("INVALID", "text/xml")
+              .parseFromString("INVALID", "application/xml")
               .getElementsByTagName("parsererror")[0].namespaceURI;
-            let dom = parser.parseFromString(fileContent, "text/xml");
+            let dom = parser.parseFromString(fileContent, "application/xml");
             if (
               dom.getElementsByTagNameNS(parsererrorNS, "parsererror").length >
               0
@@ -107,6 +110,7 @@ sap.ui.define(
               return;
             }
 
+            console.log(fileContent);
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
             window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;

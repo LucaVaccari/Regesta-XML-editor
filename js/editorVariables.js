@@ -22,7 +22,7 @@ model.fileChanged = false;
 model.somethingSelected = false;
 model.isRootSelected = false;
 model.preview.fontSize = 20;
-model.preview.mimeType = "text/xml";
+model.preview.mimeType = "application/xml";
 model.preview.showAttributes = true;
 model.editingTitle = false;
 

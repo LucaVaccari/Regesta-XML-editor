@@ -11,9 +11,9 @@
                         <m:Button icon="sap-icon://delete" press="onClearFiles" tooltip="{i18n>DeleteAllFilesButtonTooltip}" />
                         <m:ToolbarSpacer />
                         <m:Button icon="sap-icon://visits" press="onLogOut" text="{i18n>LogOutButtonText}" tooltip="{i18n>LogOutButtonTooltip}" />
-                        <m:Avatar />
+                        <!-- <m:Avatar /> -->
                     </m:OverflowToolbar>
-                    <f:GridList id="gridList" class="sapUiResponsiveMargin" mode="Delete" delete="onDelete" headerText="{i18n>YourFilesText}" items="{/files}" noDataText="No files yet..." width="90%">
+                    <f:GridList id="gridList" class="sapUiResponsiveMargin" mode="Delete" delete="onDelete" headerText="{i18n>YourFilesText}" items="{/files}" noDataText="{i18n>NoFilesText}" width="90%">
                         <f:GridListItem cd:id="{id}">
                             <m:VBox alignItems="Center" cd:id="{id}">
                                 <m:Title text="{name}" />

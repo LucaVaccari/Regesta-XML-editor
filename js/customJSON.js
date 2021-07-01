@@ -2,7 +2,7 @@ function XMLtoCustomJSON(xml) {
   let attributes = [];
   let doc = new DOMParser().parseFromString(
     xml.replaceAll(/\n|\t/g, "").replaceAll(/>\s*</g, "><"),
-    "text/xml"
+    "application/xml"
   );
 
   let root = doc.getRootNode();

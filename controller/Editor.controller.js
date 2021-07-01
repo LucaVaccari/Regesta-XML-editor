@@ -335,14 +335,14 @@ sap.ui.define(
       onXMLSwitch: function () {
         formatter = XMLformatter;
         previewFormatter = XMLPreviewFormatter;
-        model.preview.mimeType = "text/xml";
+        model.preview.mimeType = "application/xml";
         update();
       },
 
       onCompactXMLSwitch: function () {
         formatter = compactXMLformatter;
         previewFormatter = compactXMLPreviewFormatter;
-        model.preview.mimeType = "text/xml";
+        model.preview.mimeType = "application/xml";
         update();
       },
 
@@ -427,7 +427,7 @@ sap.ui.define(
             attr.attributeValue = attributeValueInput
               .getValue()
               .replaceAll(
-                /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+                /[^\w\s.,;\:\-_\'\?\^\|\\\/\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
                 ""
               );
 
@@ -494,6 +494,19 @@ sap.ui.define(
 
       onTitleChange: function () {
         model.editingTitle = false;
+        jsonModel.updateBindings(true);
+      },
+
+      onTitleModifyLive: function (event) {
+        let titleInput = event.getSource();
+        model.title = titleInput
+          .getValue()
+          .replaceAll(/[^\w-_]+/g, "")
+          .slice(0, 30);
+
+        updateModel();
+        updatePreview();
+
         jsonModel.updateBindings(true);
       },
 
