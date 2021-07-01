@@ -1,5 +1,3 @@
-<!-- <script id="alert" src="index.php"></script> -->
-
 <?php
 
 include 'php/global.php';
@@ -26,7 +24,5 @@ if ($result->num_rows > 0) {
     $_SESSION["logged"] = true;
     header("location: management.php");
 } else {
-    // echo <script type="text/javascript"> 'alertMessage();' '</script>';
-    // header("location: register.html");
+    header("location: login.html");
 }
-?>
