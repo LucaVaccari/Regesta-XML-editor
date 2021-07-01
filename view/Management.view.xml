@@ -4,22 +4,22 @@
             <m:content>
                 <m:VBox width="100%" height="100%">
                     <m:OverflowToolbar>
-                        <m:Button icon="sap-icon://home" press="onHomePage" tooltip="Back to home page" />
-                        <m:Label text="Ciao {/username} !" />
+                        <m:Button icon="sap-icon://home" press="onHomePage" tooltip="{i18n>HomeButtonTooltip}" />
+                        <m:Label text="{i18n>GreetingsText} {/username} !" />
                         <m:ToolbarSpacer />
-                        <m:Button icon="sap-icon://add-document" press="onAdd" tooltip="Add a new XML document (choose whether you want to upload it or create it empty)" />
-                        <m:Button icon="sap-icon://delete" press="onClearFiles" tooltip="Delete all of your files (debug purpose)" />
+                        <m:Button icon="sap-icon://add-document" press="onAdd" tooltip="{i18n>AddFileButtonTooltip}" />
+                        <m:Button icon="sap-icon://delete" press="onClearFiles" tooltip="{i18n>DeleteAllFilesButtonTooltip}" />
                         <m:ToolbarSpacer />
                         <m:Button icon="sap-icon://visits" press="onLogOut" text="Log out" tooltip="Log out from your account and go back to the home page" />
                         <m:Avatar />
                     </m:OverflowToolbar>
-                    <f:GridList id="gridList" class="sapUiResponsiveMargin" mode="Delete" delete="onDelete" headerText="Your files" items="{/files}" noDataText="No files yet..." width="90%">
+                    <f:GridList id="gridList" class="sapUiResponsiveMargin" mode="Delete" delete="onDelete" headerText="{i18n>YourFilesText}" items="{/files}" noDataText="No files yet..." width="90%">
                         <f:GridListItem cd:id="{id}">
                             <m:VBox alignItems="Center" cd:id="{id}">
                                 <m:Title text="{name}" />
                                 <m:Label text="{lastModification}" />
-                                <m:Button text="Edit" icon="sap-icon://edit" press="onEdit" cd:id="{id}" />
-                                <m:Button text="Download" icon="sap-icon://download" press="onDownload" cd:id="{id}" />
+                                <m:Button text="{i18n>EditFileBUttonText}" icon="sap-icon://edit" press="onEdit" cd:id="{id}" tooltip="{i18n>EditFileButtonTooltp}" />
+                                <m:Button text="{i18n>DownloadFileButtonText}" icon="sap-icon://download" press="onDownload" cd:id="{id}" tooltip="{i18n>DownloadFileButtonTooltip}" />
                             </m:VBox>
                         </f:GridListItem>
                     </f:GridList>
