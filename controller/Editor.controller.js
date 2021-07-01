@@ -497,6 +497,19 @@ sap.ui.define(
         jsonModel.updateBindings(true);
       },
 
+      onTitleModifyLive: function (event) {
+        let titleInput = event.getSource();
+        model.title = titleInput
+          .getValue()
+          .replaceAll(/[^\w-_]+/g, "")
+          .slice(0, 30);
+
+        updateModel();
+        updatePreview();
+
+        jsonModel.updateBindings(true);
+      },
+
       onDownloadPreview: function () {
         let output = CustomJSONToXML(
           model.data,

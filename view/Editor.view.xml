@@ -5,7 +5,7 @@
 				<m:OverflowToolbar>
 					<m:ToolbarSpacer />
 					<m:Title visible="{=!${/editingTitle}}" text="{/title}" id="titleLabel" />
-					<m:Input visible="{/editingTitle}" value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" width="50%" />
+					<m:Input visible="{/editingTitle}" value="{/title}" id="titleInput" submit="onTitleChange" change="onTitleChange" liveChange="onTitleModifyLive" width="50%" />
 					<m:Button icon="sap-icon://edit" press="onTitleEdit" tooltip="{i18n>ChangeFileNameButtonTooltip}" />
 					<m:ToolbarSpacer />
 				</m:OverflowToolbar>
