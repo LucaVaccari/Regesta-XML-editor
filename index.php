@@ -21,8 +21,8 @@ if (!session_id()) session_start();
                 <a href="signup.html"><button class="open-button" id="signup">Sign Up</button></a>
                 <a href="login.php"><button class="open-button" id="login">Log In</button></a>
                 <!-- <span>
-                    <!-- <div class="form-popup" id="myForm">
-                        <!-- <form action="config.php" class="form-container" method="POST">
+                    <div class="form-popup" id="myForm">
+                         <form action="config.php" class="form-container" method="POST">
                             <label for="email" id="user" name="user"><b>Email</b></label>
                             <input type="text" placeholder="Enter Email" name="email" required>
                             <label for="psw" id="pass" name="pass"><b>Password</b></label>
@@ -38,7 +38,7 @@ if (!session_id()) session_start();
         <div class="center">
             <h1>XML Visual Editor</h1>
             <h3>Import your file and start editing it!</h3>
-            <a class="button" href="management.php">IMPORT</a>
+            <a class="button" href="management.php">START EDITING</a>
         </div>
         <footer>
             <div class="texts">
@@ -89,7 +89,7 @@ if (!session_id()) session_start();
             document.getElementByClassName("alert-message").style.display = block;
         }
     </script> -->
-    
+
 </body>
 
 </html>
