@@ -84,10 +84,10 @@ sap.ui.define(
           let reader = new FileReader();
           reader.onload = (file) => {
             let fileContent = file.currentTarget.result
-              .replaceAll(/\n|\t/g, "")
+              .replaceAll(/\n|\t/g, " ")
               .replaceAll(/\s+/g, " ")
-              .replaceAll(/>\s+</g, "><")
-              .replaceAll(/'/g, "''");
+              .replaceAll(/>\s+</g, "><");
+              //.replaceAll(/'/g, "''");
 
             console.log(fileContent);
 
@@ -106,13 +106,14 @@ sap.ui.define(
                 fileName + ".xml"
               );
               MessageToast.show(message);
+              console.log(dom);
               return;
             }
 
             console.log(fileContent);
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
-            window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent}&date=${dateString}`;
+            window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent.replaceAll(/'/g, "''")}&date=${dateString}`;
           };
 
           reader.readAsText(file);
