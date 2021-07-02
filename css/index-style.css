@@ -9,7 +9,7 @@
 }
 
 body {
-  background-image: url("../resources/images/bg-image.png"); /*PROVVISORIO*/
+  background-image: url("../resources/images/background.png"); /*PROVVISORIO*/
   color: #414341;
   overflow: hidden;
 }
@@ -237,7 +237,7 @@ footer #rightToLeft:hover {
 
 @media (max-width: 700px) {
   body {
-    background-image: url("../resources/images/bg-image-mobile.png"); /*PROVVISORIO*/
+    background-image: url("../resources/images/background.png"); /*PROVVISORIO*/
   }
 
   section {
