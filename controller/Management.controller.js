@@ -58,7 +58,13 @@ sap.ui.define(
       onDownload: function (event) {
         let id = getItemCustomId(event.getSource());
         let element = model.files.filter((file) => file.id == id)[0];
-        download(`${element.name}.xml`, element.content);
+        download(
+          `${element.name}.xml`,
+          element.content
+            .replaceAll("&gt;", ">")
+            .replaceAll("&lt;", "<")
+            .replaceAll("&quot;", '"')
+        );
       },
 
       onClearFiles: function () {
@@ -87,7 +93,7 @@ sap.ui.define(
               .replaceAll(/\n|\t/g, " ")
               .replaceAll(/\s+/g, " ")
               .replaceAll(/>\s+</g, "><");
-              //.replaceAll(/'/g, "''");
+            //.replaceAll(/'/g, "''");
 
             console.log(fileContent);
 
@@ -113,7 +119,10 @@ sap.ui.define(
             console.log(fileContent);
             let date = new Date();
             let dateString = formatDateToSQL(date).split(" ")[0];
-            window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent.replaceAll(/'/g, "''")}&date=${dateString}`;
+            window.location.href = `php/addFile.php?fileName=${fileName}&fileContent=${fileContent.replaceAll(
+              /'/g,
+              "''"
+            )}&date=${dateString}`;
           };
 
           reader.readAsText(file);

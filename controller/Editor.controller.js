@@ -65,7 +65,7 @@ sap.ui.define(
           if (attr.id == id) {
             attr.attributeKey = attributeNameInput
               .getValue()
-              .replaceAll(/[^\w-_:]+|^:$/g, "");
+              .replaceAll(/[^\w-_:'"]+|^:$/g, "");
 
             if (!attr.attributeKey) {
               attr.attributeKey = "attributeName";
@@ -289,7 +289,7 @@ sap.ui.define(
         let keyInput = event.getSource();
         let id = getItemCustomId(event.getSource());
         let subTree = findSubTreeById(model.data[0], id);
-        subTree.key = keyInput.getValue().replaceAll(/[^\w-_]+/g, "");
+        subTree.key = keyInput.getValue().replaceAll(/[^\w-_\'\"]+/g, "");
 
         if (!subTree.key) {
           subTree.key = "key";
@@ -483,7 +483,7 @@ sap.ui.define(
         let titleInput = event.getSource();
         model.title = titleInput
           .getValue()
-          .replaceAll(/[^\w-_]+/g, "")
+          .replaceAll(/[^\w-_\'\"']+/g, "")
           .slice(0, 30);
 
         updateModel();
@@ -500,7 +500,7 @@ sap.ui.define(
           subTree.value = valueInput
             .getValue()
             .replaceAll(
-              /[^\w\s.,;\:\-_\'\?\^\|\\\/\"\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
+              /[^\w\s.,;\:\-_\?\^\|\\\/\`~@#!+*\(\)£$%&=àèéìòù°§ç]+/g,
               ""
             );
 

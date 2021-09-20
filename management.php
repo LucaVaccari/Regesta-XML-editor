@@ -37,17 +37,19 @@
   $sql = ("SELECT * from files where userId = " . $userId);
   $result = $con->query($sql);
 
-  echo "<script>\n";
-  while ($row = mysqli_fetch_array($result)) {
-    echo "model.files.push({
-      id: " . $row["fileId"] . ",
-      userId: " . $row["userId"] . ",
-      name: `" . $row["fileName"] . "`,
-      content: `" . htmlspecialchars($row["fileContent"]) . "`,
-      lastModification: `" . $row["lastModification"] . "`, 
-    });\n";
+  if ($result) {
+    echo "<script>\n";
+    while ($row = mysqli_fetch_array($result)) {
+      echo "model.files.push({
+        id: " . $row["fileId"] . ",
+        userId: " . $row["userId"] . ",
+        name: `" . $row["fileName"] . "`,
+        content: `" . htmlspecialchars($row["fileContent"]) . "`,
+        lastModification: `" . $row["lastModification"] . "`, 
+      });\n";
+    }
+    echo "</script>\n";
   }
-  echo "</script>\n";
   ?>
 
   <script id="sap-ui-bootstrap" src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js" data-sap-ui-theme="sap_belize" data-sap-ui-libs="sap.m" data-sap-ui-compatVersion="edge" data-sap-ui-xx-bindingSyntax="complex" data-sap-ui-async="true" data-sap-ui-onInit="module:sap/ui/demo/walkthrough/js/management" data-sap-ui-resourceroots='{

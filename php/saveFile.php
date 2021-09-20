@@ -13,12 +13,12 @@ $lastModification = $_GET['date'];
 
 $sql = <<<EOD
 UPDATE files
-SET userId = $userId, fileName = "$fileName", fileContent = $fileContent, lastModification = "$lastModification"
+SET userId = $userId, fileName = "$fileName", fileContent = '$fileContent', lastModification = "$lastModification"
 where fileId = $fileId
 EOD;
 $con->query($sql);
 
-echo $_GET["comeBack"];
+echo $sql;
 
 if ($_GET["comeBack"] == "true")
     header("location: ../editor.php");
