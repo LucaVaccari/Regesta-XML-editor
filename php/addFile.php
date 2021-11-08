@@ -8,7 +8,7 @@ if (!$_SESSION["logged"] || !isset($_SESSION["logged"]))
 $sql = ('SELECT COALESCE(MAX(fileId), 0) from files');
 $result = $con->query($sql);
 
-if ($result->num_rows <= 0)
+if (!$result === true || $result->num_rows <= 0)
     $fileId = 0;
 else {
     $result = mysqli_fetch_row($result);

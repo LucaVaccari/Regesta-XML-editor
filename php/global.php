@@ -3,10 +3,10 @@
 if (!session_id())
   session_start();
 
-$host = "sql11.freemysqlhosting.net";
-$user = "sql11421864";
-$password = 'mdTT1WcU9a';
-$db_name = "sql11421864";
+$host = "localhost";
+$user = "root";
+$password = '';
+$db_name = "regesta-xml-editor-db";
 
 $con = mysqli_connect($host, $user, $password, $db_name);
 
